@@ -6,8 +6,8 @@
     "start": "npm run dev",
     "build": "npm run build:clean && npm run build:tailwind",
     "build:clean": "rimraf -i ./static/src/output.css",
-    "build:tailwind": "tailwindcss -i ./static/src/input.css -o ./static/src/output.css --minify",
-    "dev": "tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch --minify",
+    "build:tailwind": "tailwindcss -i ./static/src/input.css -o ./static/src/output.css ",
+    "dev": "tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch ",
     "tailwindcss": "node ./node_modules/tailwindcss/lib/cli.js"
   },
   "devDependencies": {

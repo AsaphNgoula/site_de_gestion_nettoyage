@@ -132,12 +132,14 @@ COMPRESS_ROOT = BASE_DIR / 'static'
 
 COMPRESS_ENABLED = True
 
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 # settings.py
 
-COMPRESS_PRECOMPILERS = (
-    ('text/tailwindcss', 'npx tailwindcss --input {infile} --output {outfile}'),
-    # Ou l'ancien :
-    # ('text/css', 'tailwindcss-cli -i {infile} -o {outfile}'),
-)
 
+STATICFILES_FINDERS = [  "compressor.finders.CompressorFinder",
+                         "django.contrib.staticfiles.finders.FileSystemFinder",
+                         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+                         ]
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = False  # garde False en dev
