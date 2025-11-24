@@ -1,0 +1,49 @@
+# --- Environnements Python / uv ---
+.venv/
+.uv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+
+# --- Fichiers temporaires et logs ---
+*.log
+*.pot
+*.pyproj
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# --- Django ---
+db.sqlite3
+/media/
+staticfiles/
+.env
+.env.*
+*.sqlite3
+
+# --- Tailwind / Node.js ---
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+
+# --- Build & cache front-end ---
+static/css/output.css
+static/dist/
+static/build/
+*.map
+
+# --- IDEs / éditeurs ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Systèmes / OS ---
+*.orig
+*~
