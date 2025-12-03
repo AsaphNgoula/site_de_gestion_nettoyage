@@ -1,14 +1,836 @@
 {% extends "_base.html" %}
+{% load static %}
 
-<!-- caroussel-->
+{% block title %}NG Conciergerie - Accueil{% endblock %}
 
+{% block extra_css %}
+<!-- Metadonnées pour le responsive -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
 
-<div class="grid gap-4">
-    <div>
-        <img class="h-auto max-w-full rounded-base" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+<style>
+    /* ===== RESET ESSENTIEL ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* ===== ANIMATIONS POUR LES IMAGES ===== */
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px) scale(1.05);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px) scale(1.05);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+    
+    @keyframes fadeInZoom {
+        from {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+    
+    .slide-in-right {
+        animation: slideInRight 0.8s ease-out forwards;
+    }
+    
+    .slide-in-left {
+        animation: slideInLeft 0.8s ease-out forwards;
+    }
+    
+    .fade-in-zoom {
+        animation: fadeInZoom 1s ease-out forwards;
+    }
+    
+    .fade-out {
+        animation: fadeOut 0.5s ease-out forwards;
+    }
+    
+    /* ===== CAROUSEL RESPONSIVE ===== */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 85vh;
+        overflow: hidden;
+        margin-top: -20px;
+    }
+    
+    /* Mobile: Petits écrans (iPhone SE, etc.) */
+    @media (max-width: 375px) {
+        .carousel-container {
+            height: 50vh;
+        }
+    }
+    
+    /* Mobile: Écrans moyens */
+    @media (min-width: 376px) and (max-width: 480px) {
+        .carousel-container {
+            height: 55vh;
+        }
+    }
+    
+    /* Mobile large / Petite tablette */
+    @media (min-width: 481px) and (max-width: 767px) {
+        .carousel-container {
+            height: 60vh;
+        }
+    }
+    
+    /* Tablette */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .carousel-container {
+            height: 70vh;
+        }
+    }
+    
+    /* Desktop */
+    @media (min-width: 1025px) and (max-width: 1440px) {
+        .carousel-container {
+            height: 75vh;
+        }
+    }
+    
+    /* Grand écran */
+    @media (min-width: 1441px) {
+        .carousel-container {
+            height: 80vh;
+        }
+    }
+    
+    /* ===== CAROUSEL WRAPPER ===== */
+    .carousel-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    /* ===== ÉLÉMENTS DU CAROUSEL ===== */
+    .carousel-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        display: none;
+    }
+    
+    .carousel-item.active {
+        opacity: 1;
+        display: block;
+        animation: fadeInZoom 1s ease-out;
+    }
+    
+    .carousel-item.next {
+        display: block;
+        z-index: 2;
+    }
+    
+    .carousel-item.prev {
+        display: block;
+        z-index: 1;
+    }
+    
+    /* ===== IMAGES ===== */
+    .carousel-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+    
+    /* Optimisation mobile */
+    @media (max-width: 767px) {
+        .carousel-image {
+            object-position: center center;
+        }
+    }
+    
+    /* ===== TEXTE SUPERPOSÉ FIXE ===== */
+    .carousel-text-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 25; /* Au-dessus des images mais sous les boutons */
+        text-align: center;
+        pointer-events: none; /* Pour ne pas bloquer les interactions */
+    }
+    
+    .carousel-text-content {
+        pointer-events: auto; /* Réactiver les interactions pour le contenu */
+        max-width: 800px;
+        padding: 0 20px;
+    }
+    
+    .carousel-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        line-height: 1.2;
+    }
+    
+    .carousel-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: white;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        line-height: 1.6;
+    }
+    
+    /* Responsive du texte */
+    @media (max-width: 1024px) {
+        .carousel-title {
+            font-size: 2.5rem;
+        }
+        .carousel-subtitle {
+            font-size: 1.2rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .carousel-title {
+            font-size: 2rem;
+        }
+        .carousel-subtitle {
+            font-size: 1.1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .carousel-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+        .carousel-subtitle {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    /* Très petits écrans */
+    @media (max-width: 375px) {
+        .carousel-title {
+            font-size: 1.4rem;
+        }
+        .carousel-subtitle {
+            font-size: 0.85rem;
+        }
+    }
+    
+    /* ===== INDICATEURS ===== */
+    .carousel-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 30; /* Au-dessus du texte */
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 20px;
+        backdrop-filter: blur(5px);
+    }
+    
+    @media (max-width: 480px) {
+        .carousel-indicators {
+            bottom: 15px;
+            gap: 6px;
+            padding: 8px;
+        }
+    }
+    
+    .carousel-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+    }
+    
+    @media (max-width: 480px) {
+        .carousel-indicator {
+            width: 8px;
+            height: 8px;
+        }
+    }
+    
+    .carousel-indicator:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.2);
+    }
+    
+    .carousel-indicator.active {
+        background: white;
+        transform: scale(1.3);
+    }
+    
+    /* ===== BOUTONS DE NAVIGATION ===== */
+    .carousel-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 30; /* Au-dessus du texte */
+        background: rgba(0, 0, 0, 0.4);
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.8;
+    }
+    
+    /* Taille adaptative pour mobile */
+    @media (max-width: 767px) {
+        .carousel-nav-btn {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .carousel-nav-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    
+    /* Très petits écrans */
+    @media (max-width: 375px) {
+        .carousel-nav-btn {
+            width: 36px;
+            height: 36px;
+            opacity: 0.7;
+        }
+        
+        .carousel-nav-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+    
+    .carousel-nav-btn:hover {
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .carousel-nav-btn:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+    
+    .carousel-nav-btn.prev {
+        left: 15px;
+    }
+    
+    .carousel-nav-btn.next {
+        right: 15px;
+    }
+    
+    /* Sur mobile, espacer plus les boutons des bords */
+    @media (max-width: 480px) {
+        .carousel-nav-btn.prev {
+            left: 10px;
+        }
+        
+        .carousel-nav-btn.next {
+            right: 10px;
+        }
+    }
+    
+    .carousel-nav-btn svg {
+        color: white;
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* ===== SAFE AREA POUR IPHONE ===== */
+    @supports (padding-top: env(safe-area-inset-top)) {
+        .carousel-container {
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .carousel-indicators {
+            bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+    }
+    
+    /* ===== CORRECTION POUR LES TABLETTES ===== */
+    @media (orientation: landscape) and (max-height: 600px) {
+        .carousel-container {
+            height: 70vh;
+        }
+        
+        .carousel-indicators {
+            bottom: 10px;
+        }
+        
+        .carousel-title {
+            font-size: 2rem;
+        }
+        
+        .carousel-subtitle {
+            font-size: 1rem;
+        }
+    }
+    
+    /* ===== ANIMATION AUTOMATIQUE ===== */
+    @keyframes autoSlide {
+        0%, 20% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        25%, 95% {
+            opacity: 0;
+            transform: scale(1.02);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .auto-slide {
+        animation: autoSlide 5s infinite;
+    }
+    
+    /* ===== ACCESSIBILITÉ ===== */
+    @media (prefers-reduced-motion: reduce) {
+        .slide-in-right,
+        .slide-in-left,
+        .fade-in-zoom,
+        .fade-out,
+        .auto-slide {
+            animation: none !important;
+            transition: opacity 0.3s ease !important;
+        }
+    }
+    
+    /* ===== CORRECTION DÉBORDEMENT ===== */
+    .no-overflow {
+        overflow: hidden !important;
+        position: relative;
+    }
+    
+    /* ===== SECTION SUIVANTE ===== */
+    .section-after-carousel {
+        padding: 4rem 0;
+        background: #f8f9fa;
+    }
+    
+    .section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- PRELOAD des images -->
+{% for slide in carousel_images %}
+    {% if slide.is_active and slide.image %}
+    <link rel="preload" href="{{ slide.image.url }}" as="image" />
+    {% endif %}
+{% endfor %}
+
+<div id="carousel-container" class="carousel-container no-overflow">
+    
+    <!-- Carousel wrapper -->
+    <div class="carousel-wrapper">
+        {% for slide in carousel_images %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" 
+             data-index="{{ forloop.counter0 }}"
+             data-animation-type="{% cycle 'zoom' 'slide-right' 'slide-left' 'zoom' %}">
+            <img src="{{ slide.image.url }}" 
+                 class="carousel-image"
+                 alt="{{ slide.title|default:'Carousel image' }}"
+                 loading="lazy"
+                 onerror="this.onerror=null; this.src='{% static 'images/clean1.jpg' %}';">
+        </div>
+        {% empty %}
+        <!-- Fallback si aucune image -->
+        <div class="carousel-item active" data-index="0" data-animation-type="zoom">
+            <img src="{% static 'images/clean1.jpg' %}" 
+                 class="carousel-image"
+                 alt="Nettoyage professionnel"
+                 loading="lazy">
+        </div>
+        <div class="carousel-item" data-index="1" data-animation-type="slide-right">
+            <img src="{% static 'images/clean2.jpg' %}" 
+                 class="carousel-image"
+                 alt="Hygiène parfaite"
+                 loading="lazy">
+        </div>
+        <div class="carousel-item" data-index="2" data-animation-type="slide-left">
+            <img src="{% static 'images/clean3.jpg' %}" 
+                 class="carousel-image"
+                 alt="Expertise reconnue"
+                 loading="lazy">
+        </div>
+        {% endfor %}
     </div>
-   
+
+    <!-- Texte superposé FIXE (toujours visible) -->
+    <div class="carousel-text-overlay">
+        <div class="carousel-text-content">
+            <h1 class="carousel-title">Bienvenue chez N&G Conciergerie</h1>
+            <p class="carousel-subtitle">
+                Votre partenaire de confiance pour un nettoyage professionnel et efficace. 
+                Nous offrons des services de qualité supérieure pour tous vos besoins en matière de propreté.
+            </p>
+        </div>
     </div>
+
+    <!-- Slider indicators -->
+    <div class="carousel-indicators">
+        {% for slide in carousel_images %}
+        <button type="button" 
+                class="carousel-indicator {% if forloop.first %}active{% endif %}"
+                aria-label="Afficher la slide {{ forloop.counter }}"
+                data-slide-to="{{ forloop.counter0 }}">
+        </button>
+        {% empty %}
+        <button type="button" class="carousel-indicator active" data-slide-to="0"></button>
+        <button type="button" class="carousel-indicator" data-slide-to="1"></button>
+        <button type="button" class="carousel-indicator" data-slide-to="2"></button>
+        {% endfor %}
+    </div>
+
+    <!-- Navigation buttons -->
+    <button type="button" 
+            class="carousel-nav-btn prev"
+            aria-label="Image précédente">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    
+    <button type="button" 
+            class="carousel-nav-btn next"
+            aria-label="Image suivante">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
 </div>
 
+<!-- Section après le carousel -->
+<div class="section-after-carousel">
+    <div class="container mx-auto px-4">
+        <h2 class="section-title">Nos Services Professionnels</h2>
+        <h2 class="text-xl md:text-2xl font-light text-gray-700 font-montserrat text-center leading-relaxed max-w-4xl mx-auto px-4">
+            Des solutions de nettoyage professionnelles adaptées pour répondre à vos besoins uniques
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                <div class="text-green-600 mb-4">
+                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Résidentiel</h3>
+                <p class="text-gray-600 font-montserrat">Un service complet pour votre maison, adapté à vos besoins spécifiques.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                <div class="text-green-600 mb-4">
+                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Commercial</h3>
+                <p class="text-gray-600 font-montserrat">Des espaces professionnels impeccables pour optimiser votre productivité.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                <div class="text-green-600 mb-4">
+                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Industriel</h3>
+                <p class="text-gray-600 font-montserrat">Solutions spécialisées pour les environnements industriels exigeants.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== ÉLÉMENTS DU CAROUSEL =====
+        const carouselContainer = document.getElementById('carousel-container');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.carousel-indicator');
+        const prevBtn = document.querySelector('.carousel-nav-btn.prev');
+        const nextBtn = document.querySelector('.carousel-nav-btn.next');
+        
+        let currentIndex = 0;
+        let isAnimating = false;
+        let autoSlideInterval;
+        
+        // ===== FONCTIONS UTILITAIRES =====
+        function updateCarousel(newIndex, direction) {
+            if (isAnimating || newIndex === currentIndex) return;
+            
+            isAnimating = true;
+            const totalItems = carouselItems.length;
+            const prevIndex = currentIndex;
+            
+            // Calculer le nouvel index (boucle)
+            if (newIndex < 0) newIndex = totalItems - 1;
+            if (newIndex >= totalItems) newIndex = 0;
+            
+            // Récupérer les éléments
+            const currentItem = carouselItems[prevIndex];
+            const nextItem = carouselItems[newIndex];
+            
+            // Déterminer l'animation en fonction de la direction
+            let animationClass = 'fade-in-zoom';
+            if (direction === 'next') {
+                animationClass = 'slide-in-left';
+            } else if (direction === 'prev') {
+                animationClass = 'slide-in-right';
+            } else {
+                // Pour les indicateurs, utiliser le type d'animation défini
+                const animationType = nextItem.getAttribute('data-animation-type');
+                animationClass = animationType === 'slide-right' ? 'slide-in-right' : 
+                               animationType === 'slide-left' ? 'slide-in-left' : 'fade-in-zoom';
+            }
+            
+            // Ajouter la classe d'animation à l'élément suivant
+            nextItem.classList.add(animationClass);
+            nextItem.classList.add('next');
+            
+            // Animation de sortie pour l'élément actuel
+            currentItem.classList.add('fade-out');
+            currentItem.classList.remove('active');
+            
+            // Après l'animation de sortie
+            setTimeout(() => {
+                currentItem.classList.remove('fade-out', 'next', 'prev');
+                currentItem.style.display = 'none';
+                
+                // Afficher le nouvel élément
+                nextItem.style.display = 'block';
+                nextItem.classList.remove('next', animationClass);
+                nextItem.classList.add('active');
+                
+                // Mettre à jour l'index
+                currentIndex = newIndex;
+                
+                // Mettre à jour les indicateurs
+                updateIndicators();
+                
+                isAnimating = false;
+                
+                // Réinitialiser l'auto-slide
+                resetAutoSlide();
+            }, 500); // Correspond à la durée de fade-out
+        }
+        
+        function updateIndicators() {
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                    indicator.setAttribute('aria-current', 'true');
+                } else {
+                    indicator.classList.remove('active');
+                    indicator.setAttribute('aria-current', 'false');
+                }
+            });
+        }
+        
+        function goToSlide(index) {
+            const direction = index > currentIndex ? 'next' : 'prev';
+            updateCarousel(index, direction);
+        }
+        
+        function nextSlide() {
+            updateCarousel(currentIndex + 1, 'next');
+        }
+        
+        function prevSlide() {
+            updateCarousel(currentIndex - 1, 'prev');
+        }
+        
+        function startAutoSlide() {
+            // Désactiver l'auto-slide sur mobile pour économiser la batterie
+            if (window.innerWidth <= 768) return;
+            
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(() => {
+                nextSlide();
+            }, 5000); // Change toutes les 5 secondes
+        }
+        
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+        
+        function handleResize() {
+            // Ajuster la hauteur si nécessaire
+            const isMobile = window.innerWidth <= 768;
+            const isLandscape = window.innerWidth > window.innerHeight;
+            
+            if (isMobile && isLandscape) {
+                carouselContainer.style.height = '70vh';
+            }
+            
+            // Réinitialiser l'auto-slide
+            resetAutoSlide();
+        }
+        
+        // ===== ÉVÉNEMENTS =====
+        // Boutons de navigation
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        
+        // Indicateurs
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', function() {
+                const slideIndex = parseInt(this.getAttribute('data-slide-to'));
+                goToSlide(slideIndex);
+            });
+        });
+        
+        // Navigation clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+        
+        // Swipe sur mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        carouselContainer.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        carouselContainer.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe gauche -> image suivante
+                    nextSlide();
+                } else {
+                    // Swipe droite -> image précédente
+                    prevSlide();
+                }
+            }
+        }
+        
+        // Pause auto-slide au hover
+        carouselContainer.addEventListener('mouseenter', function() {
+            clearInterval(autoSlideInterval);
+        });
+        
+        carouselContainer.addEventListener('mouseleave', function() {
+            startAutoSlide();
+        });
+        
+        // ===== INITIALISATION =====
+        function init() {
+            // S'assurer que toutes les images ont la bonne taille
+            carouselItems.forEach(item => {
+                if (!item.classList.contains('active')) {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Mettre à jour les indicateurs
+            updateIndicators();
+            
+            // Démarrer l'auto-slide
+            startAutoSlide();
+            
+            // Ajuster pour les iPhones avec encoche
+            if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
+                document.documentElement.style.setProperty('--safe-area-inset-top', env('safe-area-inset-top'));
+                document.documentElement.style.setProperty('--safe-area-inset-bottom', env('safe-area-inset-bottom'));
+            }
+        }
+        
+        // Événement de redimensionnement
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(handleResize, 100);
+        });
+        
+        // Lancer l'initialisation
+        init();
+    });
+</script>
 {% endblock %}

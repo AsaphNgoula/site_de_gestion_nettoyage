@@ -1,154 +1,305 @@
-<!-- templates/_base.html -->
-{% load compress %} 
+{% load compress %}
 {% load static %}
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    
+    <!-- Titre dynamique -->
+    <title>{% block title %}NG Conciergerie - Nettoyage Professionnel{% endblock %}</title>
+    
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    
+    <!-- Tailwind CSS compressé -->
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
+    
+    <!-- CSS supplémentaire spécifique aux pages -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Google Fonts Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Style personnalisé pour la navbar */
+      .navbar-item {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        position: relative;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        color: white !important;
+      }
+      
+      .navbar-item:hover {
+        background-color: #9CAF88 !important; /* Vert sauge */
+        color: white !important;
+        transform: translateY(-2px);
+      }
+      
+      .navbar-item::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: #9CAF88;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+      
+      .navbar-item:hover::after {
+        width: 80%;
+      }
+      
+      /* Pour les liens actifs */
+      .navbar-item.active {
+        background-color: rgba(156, 175, 136, 0.1);
+      }
+      
+      .navbar-item.active:hover {
+        background-color: #9CAF88 !important;
+      }
+      
+      /* Style pour le menu mobile */
+      .mobile-nav-item {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        color: #374151 !important;
+        transition: all 0.3s ease;
+      }
+      
+      .mobile-nav-item:hover {
+        background-color: #9CAF88 !important;
+        color: white !important;
+      }
+      
+      /* Fond de la navbar */
+      .navbar-bg {
+        background-color: #2d3748; /* Gris foncé pour contraste avec texte blanc */
+      }
+    </style>
   </head>
 
-  
-<body class="font-montserrat ">
-    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-3 shadow-lg sticky top-0 z-50 h-20">
-        <div
-            class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl h-full"
-        >
-            <a href="#" class="flex items-center h-full">
-                <img 
-                    src="{{MEDIA_URL}}images/conciergerie.jpg" 
-                    alt="NG Conciergerie" 
-                    class="h-12 w-auto object-cover"
-                >
-            </a>
+  <body class="font-montserrat">
+    <!-- Navbar -->
+    <nav class="navbar-bg border-gray-700 px-4 lg:px-6 py-3 shadow-lg sticky top-0 z-50">
+      <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <a href="{% url 'proclean:home' %}" class="flex items-center">
+          <img
+            src="{% static 'images/conciergerie.jpg' %}"
+            alt="NG Conciergerie"
+            class="h-16 w-auto object-contain"
+          />
+        </a>
 
-            <div class="hidden lg:flex items-center justify-center flex-1 h-full">
-                <ul
-                    class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center"
-                >
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >Accueil</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >Services</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >À propos</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >Contact</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >Galerie</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-3 text-gray-700 lg:hover:text-green-600 lg:p-0 transition duration-300 font-medium"
-                            >Recrutement</a
-                        >
-                    </li>
-                </ul>
-            </div>
-
-            <div class="flex items-center lg:order-2 lg:hidden">
-                <button
-                    data-collapse-toggle="mobile-menu"
-                    type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                >
-                    <svg
-                        class="w-6 h-6"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                            clip-rule="evenodd"
-                        ></path>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="hidden w-full lg:hidden lg:order-1" id="mobile-menu">
-                <ul class="flex flex-col mt-4 font-medium border-t border-gray-200">
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300 border-b border-gray-100"
-                            >Accueil</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300 border-b border-gray-100"
-                            >Service</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300 border-b border-gray-100"
-                            >À propos</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300 border-b border-gray-100"
-                            >Contact</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300 border-b border-gray-100"
-                            >Gallery</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-3 px-3 text-gray-700 hover:text-green-600 hover:bg-gray-50 transition duration-300"
-                            >Recrutement</a
-                        >
-                    </li>
-                </ul>
-            </div>
+        <div class="hidden lg:flex items-center justify-center flex-1">
+          <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-4 lg:mt-0 items-center">
+            <li>
+              <a
+                href="{% url 'proclean:home' %}"
+                class="navbar-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                >Accueil</a
+              >
+            </li>
+            <li>
+              <a
+                href="#services"
+                class="navbar-item"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="#about"
+                class="navbar-item"
+                >À propos</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contact"
+                class="navbar-item"
+                >Contact</a
+              >
+            </li>
+            <li>
+              <a
+                href="#gallery"
+                class="navbar-item"
+                >Galerie</a
+              >
+            </li>
+            <li>
+              <a
+                href="#recruitment"
+                class="navbar-item"
+                >Recrutement</a
+              >
+            </li>
+          </ul>
         </div>
+
+        <div class="flex items-center lg:order-2 lg:hidden">
+          <button
+            data-collapse-toggle="mobile-menu"
+            type="button"
+            class="inline-flex items-center p-2 text-sm text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Menu Mobile -->
+      <div class="lg:hidden hidden" id="mobile-menu">
+        <ul class="flex flex-col mt-4 font-medium border-t border-gray-600">
+          <li>
+            <a
+              href="{% url 'proclean:home' %}"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              >Accueil</a
+            >
+          </li>
+          <li>
+            <a
+              href="#services"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              >Services</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              >À propos</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              >Contact</a
+            >
+          </li>
+          <li>
+            <a
+              href="#gallery"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              >Galerie</a
+            >
+          </li>
+          <li>
+            <a
+              href="#recruitment"
+              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300 border-b border-gray-600"
+              >Recrutement</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
     
-
-    <script src="{% static 'js/flowbite.min.js' %}"></script>
-</body>
+    <!-- Contenu principal -->
+    <main>
+      {% block content %}
+      <!-- Le contenu des pages va être inséré ici -->
+      {% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <img
+              src="{% static 'images/conciergerie.jpg' %}"
+              alt="NG Conciergerie"
+              class="h-12 w-auto object-contain mb-4"
+            />
+            <p class="text-gray-400 font-montserrat">Votre partenaire en nettoyage professionnel</p>
+          </div>
+          <div class="text-center md:text-right">
+            <p class="text-gray-400 font-montserrat">© 2024 NG Conciergerie. Tous droits réservés.</p>
+            <p class="text-gray-400 mt-2 font-montserrat">contact@ngconciergerie.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    
+    <!-- JS supplémentaire spécifique aux pages -->
+    {% block extra_js %}{% endblock %}
+    
+    <!-- Script pour le menu mobile -->
+    <script>
+      // Menu mobile toggle
+      const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Fermer le menu en cliquant à l'extérieur
+        document.addEventListener('click', function(event) {
+          if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        });
+        
+        // Ajouter la police Montserrat aux éléments mobiles
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+          item.style.fontFamily = "'Montserrat', sans-serif";
+          item.style.fontWeight = "500";
+        });
+        
+        // Ajouter la couleur blanche au texte mobile au hover
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.color = 'white';
+          });
+          item.addEventListener('mouseleave', function() {
+            this.style.color = '#374151';
+          });
+        });
+      }
+      
+      // Détecter la page active pour mettre en surbrillance le lien correspondant
+      document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navItems = document.querySelectorAll('.navbar-item');
+        
+        navItems.forEach(item => {
+          if (item.getAttribute('href') === currentPath || 
+              (currentPath === '/' && item.getAttribute('href') === '{% url "proclean:home" %}')) {
+            item.classList.add('active');
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
