@@ -8,21 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
 
 <style>
-    /* ===== RESET ESSENTIEL ===== */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    html, body {
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    /* ===== ANIMATIONS POUR LES IMAGES ===== */
+    /* ===== ANIMATIONS POUR LES IMAGES (conservées pour le carousel) ===== */
     @keyframes slideInRight {
         from {
             opacity: 0;
@@ -81,72 +67,8 @@
         animation: fadeOut 0.5s ease-out forwards;
     }
     
-    /* ===== CAROUSEL RESPONSIVE ===== */
-    .carousel-container {
-        position: relative;
-        width: 100%;
-        height: 85vh;
-        overflow: hidden;
-        margin-top: -20px;
-    }
-    
-    /* Mobile: Petits écrans (iPhone SE, etc.) */
-    @media (max-width: 375px) {
-        .carousel-container {
-            height: 50vh;
-        }
-    }
-    
-    /* Mobile: Écrans moyens */
-    @media (min-width: 376px) and (max-width: 480px) {
-        .carousel-container {
-            height: 55vh;
-        }
-    }
-    
-    /* Mobile large / Petite tablette */
-    @media (min-width: 481px) and (max-width: 767px) {
-        .carousel-container {
-            height: 60vh;
-        }
-    }
-    
-    /* Tablette */
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .carousel-container {
-            height: 70vh;
-        }
-    }
-    
-    /* Desktop */
-    @media (min-width: 1025px) and (max-width: 1440px) {
-        .carousel-container {
-            height: 75vh;
-        }
-    }
-    
-    /* Grand écran */
-    @media (min-width: 1441px) {
-        .carousel-container {
-            height: 80vh;
-        }
-    }
-    
-    /* ===== CAROUSEL WRAPPER ===== */
-    .carousel-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-    
-    /* ===== ÉLÉMENTS DU CAROUSEL ===== */
+    /* ===== CORRECTION POUR CAROUSEL CUSTOM ===== */
     .carousel-item {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
         opacity: 0;
         transition: opacity 0.5s ease;
         display: none;
@@ -168,285 +90,33 @@
         z-index: 1;
     }
     
-    /* ===== IMAGES ===== */
-    .carousel-image {
+    /* ===== STYLES POUR LES NOUVELLES CARTES ===== */
+    .service-card-custom {
+        background-color: #f8f9fa; /* bg-neutral-primary-soft */
+        border: 1px solid #e5e7eb; /* border-default */
+        border-radius: 0.75rem; /* rounded-base */
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-xs */
+        transition: all 0.3s ease;
+    }
+    
+    .service-card-custom:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .service-image {
         width: 100%;
-        height: 100%;
+        height: 200px;
         object-fit: cover;
-        object-position: center;
-        display: block;
-    }
-    
-    /* Optimisation mobile */
-    @media (max-width: 767px) {
-        .carousel-image {
-            object-position: center center;
-        }
-    }
-    
-    /* ===== TEXTE SUPERPOSÉ FIXE ===== */
-    .carousel-text-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 25; /* Au-dessus des images mais sous les boutons */
-        text-align: center;
-        pointer-events: none; /* Pour ne pas bloquer les interactions */
-    }
-    
-    .carousel-text-content {
-        pointer-events: auto; /* Réactiver les interactions pour le contenu */
-        max-width: 800px;
-        padding: 0 20px;
-    }
-    
-    .carousel-title {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 3rem;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 1.5rem;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-        line-height: 1.2;
-    }
-    
-    .carousel-subtitle {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.3rem;
-        font-weight: 400;
-        color: white;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-        line-height: 1.6;
-    }
-    
-    /* Responsive du texte */
-    @media (max-width: 1024px) {
-        .carousel-title {
-            font-size: 2.5rem;
-        }
-        .carousel-subtitle {
-            font-size: 1.2rem;
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .carousel-title {
-            font-size: 2rem;
-        }
-        .carousel-subtitle {
-            font-size: 1.1rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .carousel-title {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-        .carousel-subtitle {
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-    }
-    
-    /* Très petits écrans */
-    @media (max-width: 375px) {
-        .carousel-title {
-            font-size: 1.4rem;
-        }
-        .carousel-subtitle {
-            font-size: 0.85rem;
-        }
-    }
-    
-    /* ===== INDICATEURS ===== */
-    .carousel-indicators {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 8px;
-        z-index: 30; /* Au-dessus du texte */
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
-        backdrop-filter: blur(5px);
-    }
-    
-    @media (max-width: 480px) {
-        .carousel-indicators {
-            bottom: 15px;
-            gap: 6px;
-            padding: 8px;
-        }
-    }
-    
-    .carousel-indicator {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 0;
-    }
-    
-    @media (max-width: 480px) {
-        .carousel-indicator {
-            width: 8px;
-            height: 8px;
-        }
-    }
-    
-    .carousel-indicator:hover {
-        background: rgba(255, 255, 255, 0.8);
-        transform: scale(1.2);
-    }
-    
-    .carousel-indicator.active {
-        background: white;
-        transform: scale(1.3);
-    }
-    
-    /* ===== BOUTONS DE NAVIGATION ===== */
-    .carousel-nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 30; /* Au-dessus du texte */
-        background: rgba(0, 0, 0, 0.4);
-        border: none;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        opacity: 0.8;
-    }
-    
-    /* Taille adaptative pour mobile */
-    @media (max-width: 767px) {
-        .carousel-nav-btn {
-            width: 40px;
-            height: 40px;
-        }
-        
-        .carousel-nav-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-    }
-    
-    /* Très petits écrans */
-    @media (max-width: 375px) {
-        .carousel-nav-btn {
-            width: 36px;
-            height: 36px;
-            opacity: 0.7;
-        }
-        
-        .carousel-nav-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-    }
-    
-    .carousel-nav-btn:hover {
-        background: rgba(0, 0, 0, 0.6);
-        opacity: 1;
-        transform: translateY(-50%) scale(1.1);
-    }
-    
-    .carousel-nav-btn:active {
-        transform: translateY(-50%) scale(0.95);
-    }
-    
-    .carousel-nav-btn.prev {
-        left: 15px;
-    }
-    
-    .carousel-nav-btn.next {
-        right: 15px;
-    }
-    
-    /* Sur mobile, espacer plus les boutons des bords */
-    @media (max-width: 480px) {
-        .carousel-nav-btn.prev {
-            left: 10px;
-        }
-        
-        .carousel-nav-btn.next {
-            right: 10px;
-        }
-    }
-    
-    .carousel-nav-btn svg {
-        color: white;
-        width: 24px;
-        height: 24px;
+        border-radius: 0.75rem; /* rounded-base */
     }
     
     /* ===== SAFE AREA POUR IPHONE ===== */
     @supports (padding-top: env(safe-area-inset-top)) {
-        .carousel-container {
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+        .full-height-carousel {
+            margin-top: env(safe-area-inset-top);
+            height: calc(100vh - 80px - env(safe-area-inset-top));
         }
-        
-        .carousel-indicators {
-            bottom: calc(20px + env(safe-area-inset-bottom));
-        }
-    }
-    
-    /* ===== CORRECTION POUR LES TABLETTES ===== */
-    @media (orientation: landscape) and (max-height: 600px) {
-        .carousel-container {
-            height: 70vh;
-        }
-        
-        .carousel-indicators {
-            bottom: 10px;
-        }
-        
-        .carousel-title {
-            font-size: 2rem;
-        }
-        
-        .carousel-subtitle {
-            font-size: 1rem;
-        }
-    }
-    
-    /* ===== ANIMATION AUTOMATIQUE ===== */
-    @keyframes autoSlide {
-        0%, 20% {
-            opacity: 1;
-            transform: scale(1);
-        }
-        25%, 95% {
-            opacity: 0;
-            transform: scale(1.02);
-        }
-        100% {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    .auto-slide {
-        animation: autoSlide 5s infinite;
     }
     
     /* ===== ACCESSIBILITÉ ===== */
@@ -454,86 +124,60 @@
         .slide-in-right,
         .slide-in-left,
         .fade-in-zoom,
-        .fade-out,
-        .auto-slide {
+        .fade-out {
             animation: none !important;
             transition: opacity 0.3s ease !important;
         }
-    }
-    
-    /* ===== CORRECTION DÉBORDEMENT ===== */
-    .no-overflow {
-        overflow: hidden !important;
-        position: relative;
-    }
-    
-    /* ===== SECTION SUIVANTE ===== */
-    .section-after-carousel {
-        padding: 4rem 0;
-        background: #f8f9fa;
-    }
-    
-    .section-title {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #2d3748;
-        text-align: center;
-        margin-bottom: 3rem;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- PRELOAD des images -->
+<!-- PRELOAD des images du carousel -->
 {% for slide in carousel_images %}
     {% if slide.is_active and slide.image %}
     <link rel="preload" href="{{ slide.image.url }}" as="image" />
     {% endif %}
 {% endfor %}
 
-<div id="carousel-container" class="carousel-container no-overflow">
+<!-- CAROUSEL EN HAUTEUR RESTANTE -->
+<div id="carousel-container" class="full-height-carousel relative w-full h-[calc(100vh-80px)] md:h-[calc(100vh-70px)] lg:h-[calc(100vh-80px)] bg-black overflow-hidden mt-0">
     
     <!-- Carousel wrapper -->
-    <div class="carousel-wrapper">
+    <div class="carousel-wrapper relative w-full h-full overflow-hidden">
         {% for slide in carousel_images %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}" 
+        <div class="carousel-item {% if forloop.first %}active{% endif %} absolute top-0 left-0 w-full h-full" 
              data-index="{{ forloop.counter0 }}"
              data-animation-type="{% cycle 'zoom' 'slide-right' 'slide-left' 'zoom' %}">
+            <!-- IMAGE EN PLEINE TAILLE -->
             <img src="{{ slide.image.url }}" 
-                 class="carousel-image"
+                 class="carousel-image w-full h-full object-cover object-center absolute top-0 left-0 min-w-full min-h-full"
                  alt="{{ slide.title|default:'Carousel image' }}"
-                 loading="lazy"
-                 onerror="this.onerror=null; this.src='{% static 'images/clean1.jpg' %}';">
+                 loading="eager"
+                 width="1920"
+                 height="1080"
+                 onerror="this.onerror=null; this.src='{% static 'images/clean1.jpg' %}';"
+                 style="display: block; margin: 0; padding: 0;">
         </div>
         {% empty %}
         <!-- Fallback si aucune image -->
-        <div class="carousel-item active" data-index="0" data-animation-type="zoom">
+        <div class="carousel-item active absolute top-0 left-0 w-full h-full">
             <img src="{% static 'images/clean1.jpg' %}" 
-                 class="carousel-image"
-                 alt="Nettoyage professionnel"
-                 loading="lazy">
-        </div>
-        <div class="carousel-item" data-index="1" data-animation-type="slide-right">
-            <img src="{% static 'images/clean2.jpg' %}" 
-                 class="carousel-image"
-                 alt="Hygiène parfaite"
-                 loading="lazy">
-        </div>
-        <div class="carousel-item" data-index="2" data-animation-type="slide-left">
-            <img src="{% static 'images/clean3.jpg' %}" 
-                 class="carousel-image"
-                 alt="Expertise reconnue"
-                 loading="lazy">
+                 class="carousel-image w-full h-full object-cover object-center absolute top-0 left-0 min-w-full min-h-full"
+                 alt="NG Conciergerie"
+                 loading="eager"
+                 style="display: block; margin: 0; padding: 0;">
         </div>
         {% endfor %}
     </div>
 
-    <!-- Texte superposé FIXE (toujours visible) -->
-    <div class="carousel-text-overlay">
-        <div class="carousel-text-content">
-            <h1 class="carousel-title">Bienvenue chez N&G Conciergerie</h1>
-            <p class="carousel-subtitle">
+    <!-- Texte superposé -->
+    <div class="carousel-text-overlay absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center z-20 text-center pointer-events-none px-5">
+        <div class="carousel-text-content pointer-events-auto max-w-4xl px-5 w-11/12">
+            <h1 class="carousel-title font-montserrat font-bold text-white mb-6 text-shadow-lg leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+                Bienvenue chez N&G Conciergerie
+            </h1>
+            <p class="carousel-subtitle font-montserrat text-white mb-8 text-shadow-md leading-relaxed max-w-2xl mx-auto text-base sm:text-lg md:text-xl">
                 Votre partenaire de confiance pour un nettoyage professionnel et efficace. 
                 Nous offrons des services de qualité supérieure pour tous vos besoins en matière de propreté.
             </p>
@@ -541,78 +185,121 @@
     </div>
 
     <!-- Slider indicators -->
-    <div class="carousel-indicators">
+    <div class="carousel-indicators absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-30 py-3 px-5 bg-black/30 backdrop-blur-md rounded-3xl border border-white/10">
         {% for slide in carousel_images %}
         <button type="button" 
-                class="carousel-indicator {% if forloop.first %}active{% endif %}"
+                class="carousel-indicator w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer p-0 {% if forloop.first %}active bg-white scale-125{% endif %}"
                 aria-label="Afficher la slide {{ forloop.counter }}"
                 data-slide-to="{{ forloop.counter0 }}">
         </button>
         {% empty %}
-        <button type="button" class="carousel-indicator active" data-slide-to="0"></button>
-        <button type="button" class="carousel-indicator" data-slide-to="1"></button>
-        <button type="button" class="carousel-indicator" data-slide-to="2"></button>
+        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer p-0 active bg-white scale-125" data-slide-to="0"></button>
+        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer p-0" data-slide-to="1"></button>
+        <button type="button" class="carousel-indicator w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer p-0" data-slide-to="2"></button>
         {% endfor %}
     </div>
 
     <!-- Navigation buttons -->
     <button type="button" 
-            class="carousel-nav-btn prev"
-            aria-label="Image précédente">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            class="carousel-nav-btn prev absolute top-1/2 left-6 transform -translate-y-1/2 z-30 bg-black/30 border border-white/10 backdrop-blur-sm w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 opacity-80 hover:opacity-100 hover:bg-black/60 hover:scale-110 active:scale-95">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
     </button>
     
     <button type="button" 
-            class="carousel-nav-btn next"
-            aria-label="Image suivante">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            class="carousel-nav-btn next absolute top-1/2 right-6 transform -translate-y-1/2 z-30 bg-black/30 border border-white/10 backdrop-blur-sm w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 opacity-80 hover:opacity-100 hover:bg-black/60 hover:scale-110 active:scale-95">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
     </button>
 </div>
 
 <!-- Section après le carousel -->
-<div class="section-after-carousel">
+<section class="py-16 bg-white">
     <div class="container mx-auto px-4">
-        <h2 class="section-title">Nos Services Professionnels</h2>
-        <h2 class="text-xl md:text-2xl font-light text-gray-700 font-montserrat text-center leading-relaxed max-w-4xl mx-auto px-4">
-            Des solutions de nettoyage professionnelles adaptées pour répondre à vos besoins uniques
+        <h2 class="font-montserrat font-bold text-gray-800 text-center mb-4 text-3xl md:text-4xl">
+            Nos Services Professionnels
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                <div class="text-green-600 mb-4">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        <p class="font-montserrat text-gray-600 text-center mb-12 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">
+            Des solutions de nettoyage professionnelles adaptées pour répondre à vos besoins uniques
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+            <!-- Carte de service dynamique -->
+            <div class="service-card-custom max-w-sm p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
+                <!-- Image du service -->
+                {% if service.image %}
+                <a href="#">
+                    <img class="service-image rounded-xl mb-4" src="{{ service.image.url }}" alt="{{ service.title }}" />
+                </a>
+                {% else %}
+                <!-- Image par défaut si aucune image n'est uploadée -->
+                <a href="#">
+                    <img class="service-image rounded-xl mb-4" src="{% static 'images/service-default.jpg' %}" alt="{{ service.title }}" />
+                </a>
+                {% endif %}
+                
+                <!-- Titre du service -->
+                <a href="#">
+                    <h5 class="mt-2 mb-3 text-2xl font-semibold tracking-tight text-gray-900 hover:text-emerald-600 transition-colors duration-200">
+                        {{ service.title }}
+                    </h5>
+                </a>
+                
+                <!-- Description du service -->
+                <p class="mb-6 text-gray-600 leading-relaxed">
+                    {{ service.description|truncatewords:30 }}
+                </p>
+                
+                <!-- Bouton "En savoir plus" -->
+                <button type="button" 
+                        data-modal-target="service-modal" 
+                        data-modal-toggle="service-modal" 
+                        data-service-title="{{ service.title }}" 
+                        data-service-description="{{ service.description }}"
+                        class="inline-flex items-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 border border-gray-300 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-200">
+                    {{ service.button_text }}
+                    <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
                     </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Résidentiel</h3>
-                <p class="text-gray-600 font-montserrat">Un service complet pour votre maison, adapté à vos besoins spécifiques.</p>
+                </button>
             </div>
-            
-            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                <div class="text-green-600 mb-4">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            {% empty %}
+            <!-- Fallback si aucun service n'est configuré -->
+            {% for i in "123456" %}
+            <div class="service-card-custom max-w-sm p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
+                <a href="#">
+                    <img class="service-image rounded-xl mb-4" src="{% static 'images/service-default.jpg' %}" alt="Service {{ forloop.counter }}" />
+                </a>
+                <a href="#">
+                    <h5 class="mt-2 mb-3 text-2xl font-semibold tracking-tight text-gray-900 hover:text-emerald-600 transition-colors duration-200">
+                        Service {{ forloop.counter }}
+                    </h5>
+                </a>
+                <p class="mb-6 text-gray-600 leading-relaxed">
+                    Description du service sera ajoutée depuis l'administration.
+                </p>
+                <button type="button" 
+                        data-modal-target="service-modal" 
+                        data-modal-toggle="service-modal" 
+                        data-service-title="Service {{ forloop.counter }}" 
+                        data-service-description="Description du service sera ajoutée depuis l'administration."
+                        class="inline-flex items-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 border border-gray-300 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-200">
+                    En savoir plus
+                    <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
                     </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Commercial</h3>
-                <p class="text-gray-600 font-montserrat">Des espaces professionnels impeccables pour optimiser votre productivité.</p>
+                </button>
             </div>
-            
-            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                <div class="text-green-600 mb-4">
-                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-3 font-montserrat">Nettoyage Industriel</h3>
-                <p class="text-gray-600 font-montserrat">Solutions spécialisées pour les environnements industriels exigeants.</p>
-            </div>
+            {% endfor %}
+            {% endfor %}
         </div>
     </div>
-</div>
+</section>
+
+
 {% endblock %}
 
 {% block extra_js %}
@@ -669,12 +356,12 @@
             // Après l'animation de sortie
             setTimeout(() => {
                 currentItem.classList.remove('fade-out', 'next', 'prev');
-                currentItem.style.display = 'none';
+                currentItem.classList.add('hidden');
                 
                 // Afficher le nouvel élément
-                nextItem.style.display = 'block';
-                nextItem.classList.remove('next', animationClass);
+                nextItem.classList.remove('hidden', 'next', animationClass);
                 nextItem.classList.add('active');
+                nextItem.classList.remove('hidden');
                 
                 // Mettre à jour l'index
                 currentIndex = newIndex;
@@ -686,16 +373,21 @@
                 
                 // Réinitialiser l'auto-slide
                 resetAutoSlide();
-            }, 500); // Correspond à la durée de fade-out
+                
+                // Précharger l'image suivante
+                preloadNextImage();
+            }, 500);
         }
         
         function updateIndicators() {
             indicators.forEach((indicator, index) => {
                 if (index === currentIndex) {
-                    indicator.classList.add('active');
+                    indicator.classList.add('active', 'bg-white', 'scale-125');
+                    indicator.classList.remove('bg-white/40');
                     indicator.setAttribute('aria-current', 'true');
                 } else {
-                    indicator.classList.remove('active');
+                    indicator.classList.remove('active', 'bg-white', 'scale-125');
+                    indicator.classList.add('bg-white/40');
                     indicator.setAttribute('aria-current', 'false');
                 }
             });
@@ -714,6 +406,15 @@
             updateCarousel(currentIndex - 1, 'prev');
         }
         
+        function preloadNextImage() {
+            const nextIndex = (currentIndex + 1) % carouselItems.length;
+            const nextImage = carouselItems[nextIndex].querySelector('.carousel-image');
+            if (nextImage) {
+                const img = new Image();
+                img.src = nextImage.src;
+            }
+        }
+        
         function startAutoSlide() {
             // Désactiver l'auto-slide sur mobile pour économiser la batterie
             if (window.innerWidth <= 768) return;
@@ -721,7 +422,7 @@
             clearInterval(autoSlideInterval);
             autoSlideInterval = setInterval(() => {
                 nextSlide();
-            }, 5000); // Change toutes les 5 secondes
+            }, 5000);
         }
         
         function resetAutoSlide() {
@@ -729,17 +430,36 @@
             startAutoSlide();
         }
         
-        function handleResize() {
-            // Ajuster la hauteur si nécessaire
-            const isMobile = window.innerWidth <= 768;
-            const isLandscape = window.innerWidth > window.innerHeight;
+        function calculateCarouselHeight() {
+            // Calculer la hauteur du navbar pour ajuster le carousel
+            let navbarHeight = 80; // Valeur par défaut pour desktop
             
-            if (isMobile && isLandscape) {
-                carouselContainer.style.height = '70vh';
+            if (window.innerWidth <= 768) {
+                navbarHeight = 70; // Pour tablette
             }
             
-            // Réinitialiser l'auto-slide
-            resetAutoSlide();
+            if (window.innerWidth <= 480) {
+                navbarHeight = 60; // Pour mobile
+            }
+            
+            // Ajuster pour safe area iPhone
+            let safeAreaTop = 0;
+            if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
+                safeAreaTop = parseInt(getComputedStyle(document.documentElement)
+                    .getPropertyValue('--safe-area-inset-top') || '0px');
+            }
+            
+            const carouselHeight = window.innerHeight - navbarHeight - safeAreaTop;
+            carouselContainer.style.height = carouselHeight + 'px';
+            
+            // Ajuster également la hauteur des images
+            carouselItems.forEach(item => {
+                const img = item.querySelector('.carousel-image');
+                if (img) {
+                    img.style.height = carouselHeight + 'px';
+                    img.style.width = '100%';
+                }
+            });
         }
         
         // ===== ÉVÉNEMENTS =====
@@ -804,33 +524,85 @@
         // ===== INITIALISATION =====
         function init() {
             // S'assurer que toutes les images ont la bonne taille
-            carouselItems.forEach(item => {
-                if (!item.classList.contains('active')) {
-                    item.style.display = 'none';
+            carouselItems.forEach((item, index) => {
+                if (index !== 0) {
+                    item.classList.add('hidden');
+                }
+                
+                // Forcer le style inline pour les images
+                const img = item.querySelector('.carousel-image');
+                if (img) {
+                    img.style.margin = '0';
+                    img.style.padding = '0';
+                    img.style.border = '0';
+                    img.style.outline = '0';
+                    img.style.display = 'block';
                 }
             });
+            
+            // Calculer et définir la hauteur du carousel
+            calculateCarouselHeight();
             
             // Mettre à jour les indicateurs
             updateIndicators();
             
+            // Précharger la première image suivante
+            setTimeout(preloadNextImage, 1000);
+            
             // Démarrer l'auto-slide
             startAutoSlide();
             
-            // Ajuster pour les iPhones avec encoche
-            if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
-                document.documentElement.style.setProperty('--safe-area-inset-top', env('safe-area-inset-top'));
-                document.documentElement.style.setProperty('--safe-area-inset-bottom', env('safe-area-inset-bottom'));
-            }
+            // Forcer un recalcul du layout
+            setTimeout(() => {
+                carouselContainer.offsetHeight; // Force reflow
+            }, 50);
         }
         
         // Événement de redimensionnement
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', function() {
+            calculateCarouselHeight();
+            resetAutoSlide();
+        });
+        
         window.addEventListener('orientationchange', function() {
-            setTimeout(handleResize, 100);
+            setTimeout(function() {
+                calculateCarouselHeight();
+                resetAutoSlide();
+                carouselContainer.offsetHeight;
+            }, 100);
         });
         
         // Lancer l'initialisation
         init();
+        
+        // Correction supplémentaire après chargement complet
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                calculateCarouselHeight();
+            }, 100);
+        });
+        
+        // ===== GESTION DU MODAL FLOWBITE =====
+        // Initialiser tous les modaux Flowbite
+        const modalButtons = document.querySelectorAll('[data-modal-toggle="service-modal"]');
+        const modalTitle = document.getElementById('modal-service-title');
+        const modalDescription = document.getElementById('modal-service-description');
+        
+        modalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const serviceTitle = this.getAttribute('data-service-title');
+                const serviceDescription = this.getAttribute('data-service-description');
+                
+                // Mettre à jour le contenu du modal
+                modalTitle.textContent = serviceTitle;
+                modalDescription.textContent = serviceDescription;
+            });
+        });
+        
+        // Initialiser Flowbite modals
+        // Note: Flowbite doit être initialisé dans votre base.html
+        // Si vous avez des problèmes, vous pouvez ajouter cette ligne:
+        // import { Modal } from 'flowbite';
     });
 </script>
 {% endblock %}
