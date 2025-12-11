@@ -1,99 +1,121 @@
-{% load compress %}
-{% load static %}
+{% load compress %} {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    
+    <link
+      rel="icon"
+      href="{% static 'images/favicon.ico' %}"
+      type="image/x-icon"
+    />
+
     <!-- Titre dynamique -->
-    <title>{% block title %}NG Conciergerie - Nettoyage Professionnel{% endblock %}</title>
-    
+    <title>
+      {% block title %}NG Conciergerie - Nettoyage Professionnel{% endblock %}
+    </title>
+
     <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+
     <!-- Tailwind CSS compressé -->
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
-    
+
     <!-- CSS supplémentaire spécifique aux pages -->
     {% block extra_css %}{% endblock %}
-    
-    <!-- Google Fonts Montserrat -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-      /* Style personnalisé pour la navbar */
-      .navbar-item {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 500;
-        position: relative;
-        padding: 8px 16px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-        color: white !important;
-      }
-      
-      .navbar-item:hover {
-        background-color: #9CAF88 !important; /* Vert sauge */
-        color: white !important;
-        transform: translateY(-2px);
-      }
-      
-      .navbar-item::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 50%;
-        background-color: #9CAF88;
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-      }
-      
-      .navbar-item:hover::after {
-        width: 80%;
-      }
-      
-      /* Pour les liens actifs */
-      .navbar-item.active {
-        background-color: rgba(156, 175, 136, 0.1);
-      }
-      
-      .navbar-item.active:hover {
-        background-color: #9CAF88 !important;
-      }
-      
-      /* Style pour le menu mobile */
-      .mobile-nav-item {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 500;
-        color: #374151 !important;
-        transition: all 0.3s ease;
-      }
-      
-      .mobile-nav-item:hover {
-        background-color: #9CAF88 !important;
-        color: white !important;
-      }
-      
-      /* Fond de la navbar */
-      .navbar-bg {
-        background-color: #2d3748; /* Gris foncé pour contraste avec texte blanc */
-      }
-    </style>
-  </head>
 
+    <!-- Google Fonts Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    /* Style personnalisé pour la navbar */
+    .navbar-item {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+      position: relative;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      color: white !important;
+    }
+
+    .navbar-item:hover {
+      background-color: #9caf88 !important; /* Vert sauge */
+      color: white !important;
+      transform: translateY(-2px);
+    }
+
+    .navbar-item::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background-color: #9caf88;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .navbar-item:hover::after {
+      width: 80%;
+    }
+
+    /* Pour les liens actifs */
+    .navbar-item.active {
+      background-color: rgba(156, 175, 136, 0.1);
+    }
+
+    .navbar-item.active:hover {
+      background-color: #9caf88 !important;
+    }
+
+    /* Style pour le menu mobile */
+    .mobile-nav-item {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 500;
+      color: #374151 !important;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-item:hover {
+      background-color: #9caf88 !important;
+      color: white !important;
+    }
+
+    /* Fond de la navbar */
+    .navbar-bg {
+      background-color: #2d3748; /* Gris foncé pour contraste avec texte blanc */
+    }
+
+    /* Ajoutez ceci dans blog/templates/_base.html (dans le <head> ou dans le <style> déjà présent) */
+    .btn-send {
+      background-color: #9caf88 !important;
+      color: #ffffff !important;
+    }
+    .btn-send:hover {
+      background-color: #7a8b6f !important;
+    }
+  </style>
   <body class="font-montserrat">
     <!-- Navbar -->
-    <nav class="navbar-bg border-gray-700 px-4 lg:px-6 py-3 shadow-lg sticky top-0 z-50">
-      <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+    <nav
+      class="navbar-bg border-gray-900 px-4 lg:px-6 py-3 shadow-lg sticky top-0 z-50"
+    >
+      <div
+        class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+      >
         <a href="{% url 'proclean:home' %}" class="flex items-center">
           <img
             src="{% static 'images/conciergerie.jpg' %}"
@@ -103,7 +125,9 @@
         </a>
 
         <div class="hidden lg:flex items-center justify-center flex-1">
-          <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-4 lg:mt-0 items-center">
+          <ul
+            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-4 lg:mt-0 items-center"
+          >
             <li>
               <a
                 href="{% url 'proclean:home' %}"
@@ -112,39 +136,19 @@
               >
             </li>
             <li>
-              <a
-                href="#services"
-                class="navbar-item"
-                >Services</a
-              >
+              <a href="#services" class="navbar-item">Services</a>
             </li>
             <li>
-              <a
-                href="#about"
-                class="navbar-item"
-                >À propos</a
-              >
+              <a href="#about" class="navbar-item">À propos</a>
             </li>
             <li>
-              <a
-                href="#contact"
-                class="navbar-item"
-                >Contact</a
-              >
+              <a href="#contact" class="navbar-item">Contact</a>
             </li>
             <li>
-              <a
-                href="#gallery"
-                class="navbar-item"
-                >Galerie</a
-              >
+              <a href="#gallery" class="navbar-item">Galerie</a>
             </li>
             <li>
-              <a
-                href="#recruitment"
-                class="navbar-item"
-                >Recrutement</a
-              >
+              <a href="#recruitment" class="navbar-item">Recrutement</a>
             </li>
           </ul>
         </div>
@@ -170,7 +174,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Menu Mobile -->
       <div class="lg:hidden hidden" id="mobile-menu">
         <ul class="flex flex-col mt-4 font-medium border-t border-gray-600">
@@ -219,14 +223,14 @@
         </ul>
       </div>
     </nav>
-    
+
     <!-- Contenu principal -->
     <main>
       {% block content %}
       <!-- Le contenu des pages va être inséré ici -->
       {% endblock %}
     </main>
-    
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
       <div class="container mx-auto px-4">
@@ -237,66 +241,81 @@
               alt="NG Conciergerie"
               class="h-12 w-auto object-contain mb-4"
             />
-            <p class="text-gray-400 font-montserrat">Votre partenaire en nettoyage professionnel</p>
+            <p class="text-gray-400 font-montserrat">
+              Votre partenaire en nettoyage professionnel
+            </p>
           </div>
           <div class="text-center md:text-right">
-            <p class="text-gray-400 font-montserrat">© 2024 NG Conciergerie. Tous droits réservés.</p>
-            <p class="text-gray-400 mt-2 font-montserrat">contact@ngconciergerie.com</p>
+            <p class="text-gray-400 font-montserrat">
+              © 2025 N&G Conciergerie. Tous droits réservés.
+            </p>
+            <p class="text-gray-400 mt-2 font-montserrat">
+              contact@ngconciergerie.com
+            </p>
           </div>
         </div>
       </div>
     </footer>
-    
+
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    
+
     <!-- JS supplémentaire spécifique aux pages -->
     {% block extra_js %}{% endblock %}
-    
+
     <!-- Script pour le menu mobile -->
     <script>
       // Menu mobile toggle
-      const mobileMenuButton = document.querySelector('[data-collapse-toggle="mobile-menu"]');
-      const mobileMenu = document.getElementById('mobile-menu');
-      
+      const mobileMenuButton = document.querySelector(
+        '[data-collapse-toggle="mobile-menu"]'
+      );
+      const mobileMenu = document.getElementById("mobile-menu");
+
       if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
-          mobileMenu.classList.toggle('hidden');
+        mobileMenuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
         });
-        
+
         // Fermer le menu en cliquant à l'extérieur
-        document.addEventListener('click', function(event) {
-          if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && !mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
+        document.addEventListener("click", function (event) {
+          if (
+            !mobileMenu.contains(event.target) &&
+            !mobileMenuButton.contains(event.target) &&
+            !mobileMenu.classList.contains("hidden")
+          ) {
+            mobileMenu.classList.add("hidden");
           }
         });
-        
+
         // Ajouter la police Montserrat aux éléments mobiles
-        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+        document.querySelectorAll(".mobile-nav-item").forEach((item) => {
           item.style.fontFamily = "'Montserrat', sans-serif";
           item.style.fontWeight = "500";
         });
-        
+
         // Ajouter la couleur blanche au texte mobile au hover
-        document.querySelectorAll('.mobile-nav-item').forEach(item => {
-          item.addEventListener('mouseenter', function() {
-            this.style.color = 'white';
+        document.querySelectorAll(".mobile-nav-item").forEach((item) => {
+          item.addEventListener("mouseenter", function () {
+            this.style.color = "white";
           });
-          item.addEventListener('mouseleave', function() {
-            this.style.color = '#374151';
+          item.addEventListener("mouseleave", function () {
+            this.style.color = "#374151";
           });
         });
       }
-      
+
       // Détecter la page active pour mettre en surbrillance le lien correspondant
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         const currentPath = window.location.pathname;
-        const navItems = document.querySelectorAll('.navbar-item');
-        
-        navItems.forEach(item => {
-          if (item.getAttribute('href') === currentPath || 
-              (currentPath === '/' && item.getAttribute('href') === '{% url "proclean:home" %}')) {
-            item.classList.add('active');
+        const navItems = document.querySelectorAll(".navbar-item");
+
+        navItems.forEach((item) => {
+          if (
+            item.getAttribute("href") === currentPath ||
+            (currentPath === "/" &&
+              item.getAttribute("href") === '{% url "proclean:home" %}')
+          ) {
+            item.classList.add("active");
           }
         });
       });

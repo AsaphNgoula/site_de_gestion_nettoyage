@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📬 Nouveau message - NG Conciergerie</title>
+    <!-- Tailwind CSS pour emails -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#9CAF88',
+                        'sage-dark': '#869776',
+                        'sage-light': '#f0f4ee',
+                        'gray-dark': '#2d3748',
+                        'gray-800': '#2d3748',
+                        'gray-700': '#4a5568',
+                        'gray-600': '#718096',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Flowbite Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <style>
+        /* Styles spécifiques pour compatibilité email */
+        .bg-sage { background-color: #9CAF88 !important; }
+        .text-sage { color: #9CAF88 !important; }
+        .border-sage { border-color: #9CAF88 !important; }
+        .hover\:bg-sage-dark:hover { background-color: #869776 !important; }
+        
+        /* Force les styles inline pour compatibilité email */
+        @media only screen and (max-width: 600px) {
+            .mobile-stack { display: block !important; width: 100% !important; }
+            .mobile-text-center { text-align: center !important; }
+            .mobile-p-4 { padding: 1rem !important; }
+            .mobile-mt-4 { margin-top: 1rem !important; }
+        }
+        
+        /* Compatibilité Gmail */
+        u + .body { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 font-montserrat" style="font-family: 'Montserrat', 'Segoe UI', sans-serif;">
+    
+    <!-- Email Container -->
+    <div class="max-w-2xl mx-auto my-8 bg-white rounded-2xl shadow-xl overflow-hidden">
+        
+        <!-- Header avec votre couleur sage -->
+        <div class="bg-sage text-white p-8 text-center">
+            <div class="flex justify-center mb-6">
+                <!-- Logo/Icone -->
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-sage" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-3xl font-bold mb-2">NOUVEAU MESSAGE REÇU</h1>
+            <p class="text-lg opacity-90">Formulaire de contact • NG Conciergerie</p>
+            
+            <!-- Badge urgent -->
+            <div class="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded-full mt-4">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                À TRAITER SOUS 24H
+            </div>
+        </div>
+        
+        <!-- Contenu principal -->
+        <div class="p-8">
+            
+            <!-- Introduction -->
+            <div class="mb-8">
+                <p class="text-gray-700 text-lg">
+                    Bonjour, un nouveau message vient d'être soumis via votre formulaire de contact.
+                </p>
+            </div>
+            
+            <!-- Carte d'informations client -->
+            <div class="bg-sage-light border-2 border-sage rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-sage mb-6 flex items-center">
+                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                    </svg>
+                    Informations du contact
+                </h2>
+                
+                <!-- Grille d'informations -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Nom -->
+                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                        <div class="text-gray-600 text-sm font-medium mb-1">Nom complet</div>
+                        <div class="text-gray-900 font-semibold">{{ nom_complet }}</div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                        <div class="text-gray-600 text-sm font-medium mb-1">Email</div>
+                        <div class="text-sage font-semibold">
+                            <a href="mailto:{{ email }}" class="hover:underline">{{ email }}</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Téléphone -->
+                    {% if telephone and telephone != "Non spécifié" %}
+                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                        <div class="text-gray-600 text-sm font-medium mb-1">Téléphone</div>
+                        <div class="text-gray-900 font-semibold">
+                            <a href="tel:{{ telephone }}" class="hover:underline">{{ telephone }}</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Date -->
+                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                        <div class="text-gray-600 text-sm font-medium mb-1">Date d'envoi</div>
+                        <div class="text-gray-900 font-semibold">{{ date_envoi }}</div>
+                    </div>
+                </div>
+                
+                <!-- Référence -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="inline-flex items-center bg-sage text-white px-4 py-2 rounded-lg">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Référence : CONT-{{ id|stringformat:"06d" }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Message du client -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-3 text-sage" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Message du client
+                </h3>
+                <div class="bg-gray-50 border-l-4 border-sage rounded-r-lg p-6">
+                    <div class="text-gray-700 whitespace-pre-line">{{ message|linebreaks }}</div>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <!-- Bouton Administration -->
+                <a href="{{ admin_url }}" 
+                   class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"/>
+                    </svg>
+                    Voir dans l'administration
+                </a>
+                
+                <!-- Bouton Répondre -->
+                <a href="mailto:{{ email }}?subject=RE:%20Votre%20message%20à%20NG%20Conciergerie" 
+                   class="bg-sage hover:bg-sage-dark text-white font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd"/>
+                    </svg>
+                    Répondre au client
+                </a>
+            </div>
+            
+            <!-- Note importante -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-yellow-800">Note importante</h3>
+                        <div class="mt-2 text-sm text-yellow-700">
+                            <p>Pour maintenir un excellent service, merci de répondre à ce client dans les <strong>24 heures</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-gray-800 text-gray-300 p-8">
+            <div class="text-center">
+                <!-- Logo -->
+                <div class="text-sage text-2xl font-bold mb-4">NG CONCIERGERIE</div>
+                <p class="mb-6">Service de nettoyage professionnel</p>
+                
+                <!-- Liens -->
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="{{ site_url }}" class="text-gray-400 hover:text-sage transition duration-200">
+                        Site web
+                    </a>
+                    <a href="{{ site_url }}/contact" class="text-gray-400 hover:text-sage transition duration-200">
+                        Contact
+                    </a>
+                    <a href="{{ site_url }}/admin" class="text-gray-400 hover:text-sage transition duration-200">
+                        Administration
+                    </a>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="border-t border-gray-700 pt-6 text-sm text-gray-500">
+                    <p>Cet email a été généré automatiquement.</p>
+                    <p class="mt-1">© {% now "Y" %} NG Conciergerie. Tous droits réservés.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

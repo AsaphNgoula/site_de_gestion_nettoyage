@@ -9,6 +9,10 @@
 
 @source "../../../node_modules/flowbite";
 @source "../../../node_modules/flowbite-datepicker";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 /* cyrillic-ext */
 @font-face {
@@ -470,3 +474,18 @@
         font-family: 'Inter', sans-serif;
     }
 }
+
+
+:root {
+  --color-sage: #9CAF88;
+  --color-sage-dark: #869776;
+}
+
+
+@layer components {
+    .btn-sage {
+      @apply bg-[#9CAF88] hover:bg-[#869776] text-white font-medium 
+             py-2.5 px-5 rounded-lg transition duration-200 
+             focus:ring-4 focus:ring-[#9CAF88]/50 focus:outline-none;
+    }
+  }
