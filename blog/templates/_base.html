@@ -142,7 +142,7 @@
               <a href="#about" class="navbar-item">À propos</a>
             </li>
             <li>
-              <a href="#contact" class="navbar-item">Contact</a>
+              <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
             </li>
             <li>
               <a href="#gallery" class="navbar-item">Galerie</a>
@@ -201,7 +201,7 @@
           </li>
           <li>
             <a
-              href="#contact"
+              href="{% url 'proclean:contact' %}"
               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
               >Contact</a
             >

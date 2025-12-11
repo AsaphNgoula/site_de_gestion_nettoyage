@@ -2,7 +2,7 @@
 <form
   method="post"
   action="{% url 'proclean:send_message' %}"
-  class="max-w-2xl mx-auto bg-gray-800 rounded-xl shadow-md p-6 md:p-8"
+  class="max-w-lg mx-auto bg-gray-800 rounded-xl shadow-md p-5 md:p-6"
 >
   {% csrf_token %}
 
@@ -10,25 +10,26 @@
   {% if messages %}
     {% for message in messages %}
     <div
-      class="mb-6 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700 border border-green-200{% else %}bg-red-100 text-red-700 border border-red-200{% endif %} font-montserrat text-sm"
+      class="mb-5 p-3 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700 border border-green-200{% else %}bg-red-100 text-red-700 border border-red-200{% endif %} font-montserrat text-sm"
     >
       {{ message }}
     </div>
     {% endfor %}
   {% endif %}
 
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
+  <!-- Prénom et Nom sur la même ligne -->
+  <div class="grid grid-cols-2 gap-3 mb-4">
     <div>
       <label
         for="prenom"
-        class="block mb-2.5 text-sm font-medium text-white font-montserrat"
+        class="block mb-1.5 text-sm font-medium text-gray-300 font-montserrat"
         >Prénom *</label
       >
       <input
         type="text"
         id="prenom"
         name="prenom"
-        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2.5 font-montserrat placeholder-gray-400 transition-all duration-200"
+        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2 font-montserrat placeholder-gray-400 transition duration-200"
         placeholder="Votre prénom"
         required
       />
@@ -36,62 +37,66 @@
     <div>
       <label
         for="nom"
-        class="block mb-2.5 text-sm font-medium text-white font-montserrat"
+        class="block mb-1.5 text-sm font-medium text-gray-300 font-montserrat"
         >Nom *</label
       >
       <input
         type="text"
         id="nom"
         name="nom"
-        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2.5 font-montserrat placeholder-gray-400 transition-all duration-200"
+        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2 font-montserrat placeholder-gray-400 transition duration-200"
         placeholder="Votre nom"
         required
       />
     </div>
   </div>
 
-  <div class="mb-6">
-    <label
-      for="email"
-      class="block mb-2.5 text-sm font-medium text-white font-montserrat"
-      >Email *</label
-    >
-    <input
-      type="email"
-      id="email"
-      name="email"
-      class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2.5 font-montserrat placeholder-gray-400 transition-all duration-200"
-      placeholder="votre@email.com"
-      required
-    />
+  <!-- Email et Téléphone sur la même ligne -->
+  <div class="grid grid-cols-2 gap-3 mb-4">
+    <div>
+      <label
+        for="email"
+        class="block mb-1.5 text-sm font-medium text-gray-300 font-montserrat"
+        >Email *</label
+      >
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2 font-montserrat placeholder-gray-400 transition duration-200"
+        placeholder="votre@email.com"
+        required
+      />
+    </div>
+
+    <div>
+      <label
+        for="telephone"
+        class="block mb-1.5 text-sm font-medium text-gray-300 font-montserrat"
+        >Téléphone</label
+      >
+      <input
+        type="tel"
+        id="telephone"
+        name="telephone"
+        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2 font-montserrat placeholder-gray-400 transition duration-200"
+        placeholder="+33 1 23 45 67 89"
+      />
+    </div>
   </div>
 
-  <div class="mb-6">
-    <label
-      for="telephone"
-      class="block mb-2.5 text-sm font-medium text-white font-montserrat"
-      >Téléphone</label
-    >
-    <input
-      type="tel"
-      id="telephone"
-      name="telephone"
-      class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2.5 font-montserrat placeholder-gray-400 transition-all duration-200"
-      placeholder="+33 1 23 45 67 89"
-    />
-  </div>
-
-  <div class="mb-8">
+  <!-- Message seul sur une ligne -->
+  <div class="mb-5">
     <label
       for="message"
-      class="block mb-2.5 text-sm font-medium text-white font-montserrat"
+      class="block mb-1.5 text-sm font-medium text-gray-300 font-montserrat"
       >Message *</label
     >
     <textarea
       id="message"
       name="message"
-      rows="5"
-      class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2.5 font-montserrat placeholder-gray-400 transition-all duration-200 resize-y min-h-[120px]"
+      rows="3"
+      class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-2 focus:ring-[#9CAF88] focus:border-[#9CAF88] block w-full px-3 py-2 font-montserrat placeholder-gray-400 transition duration-200 resize-y min-h-[80px]"
       placeholder="Votre message..."
       required
     ></textarea>
@@ -103,8 +108,9 @@
 
   <button
     type="submit"
-    class="w-full bg-[#9CAF88] hover:bg-[#869776] text-white font-montserrat font-medium rounded-lg text-sm px-5 py-3.5 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg"
-  >
+    style="background-color: #9CAF88; color: white;"
+    class="w-full hover:bg-[#869776] font-montserrat font-medium rounded-lg text-sm px-4 py-2.5 transition duration-200 shadow-md hover:shadow-lg"
+>
     Envoyer le message
-  </button>
+</button>
 </form>
