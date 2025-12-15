@@ -51,7 +51,6 @@
     }
 
     .navbar-item:hover {
-      background-color: #9caf88 !important; /* Vert sauge */
       color: white !important;
       transform: translateY(-2px);
     }
@@ -142,8 +141,12 @@
               <a href="#about" class="navbar-item">À propos</a>
             </li>
             <li>
-              <a href="#gallery" class="navbar-item">Galerie</a>
-            </li>
+              <a
+                  href="{% url 'proclean:galerie' %}" 
+                  class="navbar-item {% if request.resolver_match.url_name == 'galerie' %}active{% endif %}"
+                  >Galerie</a
+              >
+          </li>
             <li>
               <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
             </li>
@@ -199,13 +202,13 @@
               >À propos</a
             >
           </li>
-          <li>
-            <a
-              href="#gallery"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
-              >Galerie</a
-            >
-          </li>
+            <li>
+              <a
+                href="{% url 'proclean:galerie' %}"
+                class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+                >Galerie</a
+              >
+            </li>
           <li>
             <a
               href="{% url 'proclean:contact' %}"

@@ -154,3 +154,10 @@ def confirmation(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+def galerie(request):
+    """
+    Vue pour afficher la page galerie
+    """
+    return render(request, 'galerie.html')
