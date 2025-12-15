@@ -103,3 +103,103 @@ class ContactMessage(models.Model):
     def nom_complet(self):
         """Retourne le nom complet"""
         return f"{self.prenom} {self.nom}"
+    
+
+
+
+class JobApplication(models.Model):
+    REGION_CHOICES = [
+        ('montreal_laval', 'Montréal / Laval'),
+        ('gatineau_ottawa', 'Gatineau / Ottawa'),
+        ('quebec', 'Québec'),
+        ('joliette_lanaudiere', 'Joliette / Lanaudière'),
+        ('valdor_abitibi', 'Val-d’Or / Abitibi'),
+        ('cotenord_saguenay', 'Côte-Nord / Saguenay'),
+        ('autre', 'Autre'),
+    ]
+    
+    AVAILABILITY_CHOICES = [
+        ('soir', 'Soir'),
+        ('fin_semaine', 'Fin de semaine'),
+        ('temps_partiel', 'Temps partiel'),
+        ('temps_plein', 'Temps plein'),
+        ('jours', 'Jours'),
+    ]
+    
+    # Informations personnelles
+    nom = models.CharField(max_length=100, verbose_name="Nom *")
+    prenom = models.CharField(max_length=100, verbose_name="Prénom *")
+    email = models.EmailField(verbose_name="Adresse e-mail *")
+    telephone = models.CharField(max_length=20, verbose_name="Téléphone *")
+    
+    # Préférences
+    region = models.CharField(
+        max_length=50, 
+        choices=REGION_CHOICES, 
+        verbose_name="Région où vous souhaitez travailler *"
+    )
+    region_autre = models.TextField(
+        blank=True, 
+        null=True, 
+        verbose_name="Autre région (préciser)"
+    )
+    
+    # Disponibilités (plusieurs choix possibles)
+    disponibilites = models.JSONField(
+        default=list,
+        verbose_name="Disponibilités *"
+    )
+    
+    # Expérience et transport
+    experience_menage = models.BooleanField(
+        default=False,
+        verbose_name="Avez-vous de l'expérience en entretien ménager ? *"
+    )
+    vehicule = models.BooleanField(
+        default=False,
+        verbose_name="Possédez-vous un véhicule ou moyen de transport fiable ? *"
+    )
+    
+    # Fichiers
+    cv = models.FileField(
+        upload_to='cv_applications/%Y/%m/%d/',
+        verbose_name="CV *",
+        help_text="Formats acceptés: PDF, DOC, DOCX (max 5MB)"
+    )
+    
+    # Message optionnel
+    message = models.TextField(
+        blank=True, 
+        null=True, 
+        verbose_name="Message additionnel"
+    )
+    
+    # Administration
+    date_soumission = models.DateTimeField(auto_now_add=True, verbose_name="Date de soumission")
+    traite = models.BooleanField(default=False, verbose_name="Traité")
+    notes = models.TextField(blank=True, null=True, verbose_name="Notes internes")
+    
+    # GDPR
+    consentement = models.BooleanField(
+        default=False,
+        verbose_name="J'accepte le traitement de mes données personnelles"
+    )
+    
+    class Meta:
+        verbose_name = "Candidature"
+        verbose_name_plural = "Candidatures"
+        ordering = ['-date_soumission']
+    
+    def __str__(self):
+        return f"{self.prenom} {self.nom} - {self.date_soumission.strftime('%d/%m/%Y')}"
+    
+    def get_disponibilites_display(self):
+        """Retourne les disponibilités formatées"""
+        disponibilites_dict = dict(self.AVAILABILITY_CHOICES)
+        return ", ".join([disponibilites_dict.get(d, d) for d in self.disponibilites])
+    
+    def get_region_display_full(self):
+        """Retourne la région complète"""
+        if self.region == 'autre' and self.region_autre:
+            return f"Autre: {self.region_autre}"
+        return self.get_region_display()

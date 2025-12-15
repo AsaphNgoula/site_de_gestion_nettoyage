@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #1A1F2C; color: white; padding: 20px; text-align: center; }
+        .content { background-color: #f9f9f9; padding: 20px; }
+        .info-item { margin-bottom: 10px; }
+        .label { font-weight: bold; color: #1A1F2C; }
+        .footer { background-color: #1A1F2C; color: white; padding: 10px; text-align: center; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>📄 Nouvelle candidature - NG Conciergerie</h2>
+        </div>
+        
+        <div class="content">
+            <p>Bonjour,</p>
+            <p>Une nouvelle candidature a été soumise via le site web.</p>
+            
+            <h3>Informations du candidat :</h3>
+            
+            <div class="info-item">
+                <span class="label">Nom complet :</span>
+                {{ application.prenom }} {{ application.nom }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Email :</span>
+                {{ application.email }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Téléphone :</span>
+                {{ application.telephone }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Région souhaitée :</span>
+                {{ application.get_region_display_full }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Disponibilités :</span>
+                {{ application.get_disponibilites_display }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Expérience ménage :</span>
+                {{ application.experience_menage|yesno:"Oui,Non" }}
+            </div>
+            
+            <div class="info-item">
+                <span class="label">Véhicule personnel :</span>
+                {{ application.vehicule|yesno:"Oui,Non" }}
+            </div>
+            
+            {% if application.message %}
+            <div class="info-item">
+                <span class="label">Message :</span><br>
+                {{ application.message|linebreaks }}
+            </div>
+            {% endif %}
+            
+            <div class="info-item">
+                <span class="label">Date de soumission :</span>
+                {{ application.date_soumission|date:"d/m/Y H:i" }}
+            </div>
+            
+            <p style="margin-top: 30px;">
+                <a href="{{ admin_url }}" style="background-color: #9CAF88; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                    Voir dans l'administration
+                </a>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p>Cet email a été envoyé automatiquement depuis le site NG Conciergerie</p>
+            <p>{{ site_url }}</p>
+        </div>
+    </div>
+</body>
+</html>

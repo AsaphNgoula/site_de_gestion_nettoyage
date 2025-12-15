@@ -39,73 +39,259 @@
     />
   </head>
   <style>
-    /* Style personnalisé pour la navbar */
-    .navbar-item {
-      font-family: "Montserrat", sans-serif;
-      font-weight: 500;
-      position: relative;
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-      color: white !important;
-    }
+    
+    /* ===== STYLES EXISTANTS ===== */
+        /* Style personnalisé pour la navbar */
+        .navbar-item {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            color: white !important;
+        }
 
-    .navbar-item:hover {
-      color: white !important;
-      transform: translateY(-2px);
-    }
+        .navbar-item:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
 
-    .navbar-item::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 50%;
-      background-color: #9caf88;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
+        .navbar-item::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #9caf88;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
 
-    .navbar-item:hover::after {
-      width: 80%;
-    }
+        .navbar-item:hover::after {
+            width: 80%;
+        }
 
-    /* Pour les liens actifs */
-    .navbar-item.active {
-      background-color: rgba(156, 175, 136, 0.1);
-    }
+        /* Pour les liens actifs */
+        .navbar-item.active {
+            background-color: rgba(156, 175, 136, 0.1);
+        }
 
-    .navbar-item.active:hover {
-      background-color: #9caf88 !important;
-    }
+        .navbar-item.active:hover {
+            background-color: #9caf88 !important;
+        }
 
-    /* Style pour le menu mobile */
-    .mobile-nav-item {
-      font-family: "Montserrat", sans-serif;
-      font-weight: 500;
-      color: #374151 !important;
-      transition: all 0.3s ease;
-    }
+        /* Style pour le menu mobile */
+        .mobile-nav-item {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
+            color: #374151 !important;
+            transition: all 0.3s ease;
+        }
 
-    .mobile-nav-item:hover {
-      background-color: #9caf88 !important;
-      color: white !important;
-    }
+        .mobile-nav-item:hover {
+            background-color: #9caf88 !important;
+            color: white !important;
+        }
 
-    /* Fond de la navbar */
-    .navbar-bg {
-      background-color: #2d3748; /* Gris foncé pour contraste avec texte blanc */
-    }
+        /* Fond de la navbar */
+        .navbar-bg {
+            background-color: #2d3748; /* Gris foncé pour contraste avec texte blanc */
+        }
 
-    /* Ajoutez ceci dans blog/templates/_base.html (dans le <head> ou dans le <style> déjà présent) */
-    .btn-send {
-      background-color: #9caf88 !important;
-      color: #ffffff !important;
-    }
-    .btn-send:hover {
-      background-color: #7a8b6f !important;
-    }
+        /* Bouton envoyer */
+        .btn-send {
+            background-color: #9caf88 !important;
+            color: #ffffff !important;
+        }
+        .btn-send:hover {
+            background-color: #7a8b6f !important;
+        }
+        
+        /* ===== NOUVEAUX STYLES POUR LES BOUTONS ===== */
+        
+        /* Animation shimmer pour le bouton */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        /* Animation de pulsation douce */
+        @keyframes gentle-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        /* Animation de flottement */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        /* Style amélioré du bouton premium */
+        .btn-premium {
+            background: linear-gradient(135deg, #9CAF88 0%, #7A8B6F 100%);
+            border: 2px solid rgba(156, 175, 136, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(156, 175, 136, 0.2);
+        }
+        
+        .btn-premium:hover {
+            background: linear-gradient(135deg, #B8C9A8 0%, #9CAF88 100%);
+            border-color: rgba(184, 201, 168, 0.5);
+            box-shadow: 0 10px 30px rgba(156, 175, 136, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .btn-premium:active {
+            transform: translateY(-1px) scale(0.99);
+            transition: all 0.1s;
+        }
+        
+        /* Effet de vague au survol */
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-premium:hover::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        
+        /* ===== STYLES GÉNÉRAUX POUR VOTRE SITE ===== */
+        
+        /* Variables de couleur */
+        :root {
+            --sage-green: #9CAF88;
+            --sage-light: #B8C9A8;
+            --sage-dark: #7A8B6F;
+            --dark-blue: #1A1F2C;
+            --dark-blue-light: #2A3040;
+            --dark-blue-lighter: #3A4154;
+            --white: #FFFFFF;
+            --gray-light: #E8EDF0;
+            --gray-medium: #8C9AA8;
+        }
+        
+        /* Styles de base */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-blue);
+            color: var(--gray-light);
+        }
+        
+        /* Texte en gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--sage-green), var(--sage-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Cartes premium */
+        .premium-card {
+            background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+            border: 1px solid rgba(156, 175, 136, 0.2);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-card:hover {
+            border-color: var(--sage-green);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        /* Badge premium */
+        .badge-premium {
+            background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Effet de survol glow */
+        .glow-on-hover {
+            transition: all 0.4s ease;
+        }
+        
+        .glow-on-hover:hover {
+            box-shadow: 0 0 25px rgba(156, 175, 136, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        /* Animation fade-in-up */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .premium-card:hover {
+                transform: translateY(-4px);
+            }
+            
+            .btn-premium:hover {
+                animation: none;
+            }
+        }
+        
+        /* Accessibilité */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
   </style>
   <body class="font-montserrat">
     <!-- Navbar -->
@@ -151,7 +337,7 @@
               <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
             </li>
             <li>
-              <a href="#recruitment" class="navbar-item">Recrutement</a>
+              <a href="{% url 'proclean:recrutement' %}" class="navbar-item">Recrutement</a>
             </li>
           </ul>
         </div>
@@ -218,7 +404,7 @@
           </li>
           <li>
             <a
-              href="#recruitment"
+              href="{% url 'proclean:recrutement' %}"
               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300 border-b border-gray-600"
               >Recrutement</a
             >

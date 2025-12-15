@@ -1,8 +1,8 @@
 # blog/proclean/admin.py
 from django.contrib import admin
-from .models import Service, CarouselImage, ServiceCard, ContactMessage
+from .models import Service, CarouselImage, ServiceCard, ContactMessage,JobApplication
 
-# Register your models here.
+# Register your models here. 
 
 class AdminService(admin.ModelAdmin):
     list_display = ('id', 'name', 'description', 'image')
@@ -70,3 +70,29 @@ class ContactMessageAdmin(admin.ModelAdmin):
         updated = queryset.update(lu=False)
         self.message_user(request, f"{updated} message(s) marqué(s) comme non lu.")
     marquer_comme_non_lu.short_description = "Marquer comme non lu"
+
+
+@admin.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ('nom_complet', 'email', 'region', 'date_soumission', 'traite')
+    list_filter = ('region', 'experience_menage', 'vehicule', 'traite', 'date_soumission')
+    search_fields = ('nom', 'prenom', 'email', 'telephone')
+    readonly_fields = ('date_soumission',)
+    fieldsets = (
+        ('Informations personnelles', {
+            'fields': ('nom', 'prenom', 'email', 'telephone')
+        }),
+        ('Préférences de travail', {
+            'fields': ('region', 'region_autre', 'disponibilites', 'experience_menage', 'vehicule')
+        }),
+        ('Documents et message', {
+            'fields': ('cv', 'message')
+        }),
+        ('Administration', {
+            'fields': ('date_soumission', 'traite', 'notes', 'consentement')
+        }),
+    )
+    
+    def nom_complet(self, obj):
+        return f"{obj.prenom} {obj.nom}"
+    nom_complet.short_description = 'Candidat'
