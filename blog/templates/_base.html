@@ -142,10 +142,10 @@
               <a href="#about" class="navbar-item">À propos</a>
             </li>
             <li>
-              <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
+              <a href="#gallery" class="navbar-item">Galerie</a>
             </li>
             <li>
-              <a href="#gallery" class="navbar-item">Galerie</a>
+              <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
             </li>
             <li>
               <a href="#recruitment" class="navbar-item">Recrutement</a>
@@ -201,16 +201,16 @@
           </li>
           <li>
             <a
-              href="{% url 'proclean:contact' %}"
+              href="#gallery"
               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
-              >Contact</a
+              >Galerie</a
             >
           </li>
           <li>
             <a
-              href="#gallery"
+              href="{% url 'proclean:contact' %}"
               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
-              >Galerie</a
+              >Contact</a
             >
           </li>
           <li>
@@ -234,29 +234,189 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-8">
       <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="mb-6 md:mb-0">
-            <img
-              src="{% static 'images/conciergerie.jpg' %}"
-              alt="NG Conciergerie"
-              class="h-12 w-auto object-contain mb-4"
-            />
-            <p class="text-gray-400 font-montserrat">
+        <!-- Grid principal -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Colonne 1 : Logo et description -->
+          <div>
+            <a href="{% url 'proclean:home' %}" class="flex items-center mb-4">
+              <img
+                src="{% static 'images/conciergerie.jpg' %}"
+                alt="NG Conciergerie"
+                class="h-12 w-auto object-contain mr-3"
+              />
+              <span class="text-xl font-bold font-montserrat">NG Conciergerie</span>
+            </a>
+            <p class="text-gray-300 font-montserrat mb-4">
               Votre partenaire en nettoyage professionnel
             </p>
+            <!-- Flowbite Badges pour les certifications -->
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-flex items-center bg-gray-700 text-gray-300 text-xs font-montserrat px-3 py-1 rounded-full">
+                <svg class="w-4 h-4 mr-1 text-[#9CAF88]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Certifié
+              </span>
+              <span class="inline-flex items-center bg-gray-700 text-gray-300 text-xs font-montserrat px-3 py-1 rounded-full">
+                <svg class="w-4 h-4 mr-1 text-[#9CAF88]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                Insuré
+              </span>
+            </div>
           </div>
-          <div class="text-center md:text-right">
-            <p class="text-gray-400 font-montserrat">
-              © 2025 N&G Conciergerie. Tous droits réservés.
+          
+          <!-- Colonne 2 : Liens de navigation -->
+          <div>
+            <h2 class="text-lg font-bold text-white font-montserrat mb-4 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-[#9CAF88]" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clip-rule="evenodd"/>
+              </svg>
+              Navigation
+            </h2>
+            <ul class="space-y-2">
+              <!-- Flowbite List Group Style -->
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                </svg>
+                <a href="{% url 'proclean:home' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  Accueil
+                </a>
+              </li>
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                </svg>
+                <a href="#services" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  Services
+                </a>
+              </li>
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <a href="#about" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  À propos
+                </a>
+              </li>
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                </svg>
+                <a href="#gallery" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  Galerie
+                </a>
+              </li>
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                </svg>
+                <a href="{% url 'proclean:contact' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  Contact
+                </a>
+              </li>
+              <li class="flex items-center group">
+                <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                </svg>
+                <a href="#recruitment" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                  Recrutement
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Colonne 3 : Contact et horaires -->
+          <div>
+            <h2 class="text-lg font-bold text-white font-montserrat mb-4 flex items-center">
+              <svg class="w-5 h-5 mr-2 text-[#9CAF88]" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+              Contact
+            </h2>
+            <!-- Flowbite List Group pour les informations de contact -->
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#9CAF88] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                </svg>
+                <div>
+                  <p class="font-medium text-white font-montserrat">Email</p>
+                  <a href="mailto:contact@ngconciergerie.com" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                    contact@ngconciergerie.com
+                  </a>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#9CAF88] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+                <div>
+                  <p class="font-medium text-white font-montserrat">Téléphone</p>
+                  <a href="tel:+33123456789" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                    +33 1 23 45 67 89
+                  </a>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#9CAF88] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <p class="font-medium text-white font-montserrat">Horaires</p>
+                  <p class="text-gray-300 font-montserrat">Lun - Ven: 8h - 18h</p>
+                  <p class="text-gray-300 font-montserrat">Sam: 9h - 13h</p>
+                </div>
+              </li>
+            </ul>
+            
+            <!-- Flowbite Badge pour urgence -->
+            <div class="mt-6 p-4 bg-gray-700 rounded-lg border-l-4 border-[#9CAF88]">
+              <p class="text-sm text-white font-montserrat">
+                <span class="font-bold">Service d'urgence disponible</span><br>
+                <span class="text-gray-300">7j/7 - 24h/24</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Séparateur -->
+        <hr class="my-8 border-gray-700">
+        
+        <!-- Bas du footer -->
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <!-- Copyright -->
+          <div class="mb-4 md:mb-0">
+            <p class="text-gray-400 text-sm font-montserrat">
+              © 2025 <span class="text-[#9CAF88] font-semibold">N&G Conciergerie</span>. Tous droits réservés.
             </p>
-            <p class="text-gray-400 mt-2 font-montserrat">
-              contact@ngconciergerie.com
+            <p class="text-gray-500 text-xs font-montserrat mt-1">
+              SIRET: 123 456 789 00010 • TVA: FR12345678901
             </p>
+          </div>
+          
+          <!-- Liens légaux -->
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#mentions-legales" class="text-gray-400 hover:text-[#9CAF88] text-sm font-montserrat transition duration-200">
+              Mentions légales
+            </a>
+            <a href="#politique-confidentialite" class="text-gray-400 hover:text-[#9CAF88] text-sm font-montserrat transition duration-200">
+              Politique de confidentialité
+            </a>
+            <a href="#cgv" class="text-gray-400 hover:text-[#9CAF88] text-sm font-montserrat transition duration-200">
+              CGV
+            </a>
+            <a href="#plan-site" class="text-gray-400 hover:text-[#9CAF88] text-sm font-montserrat transition duration-200">
+              Plan du site
+            </a>
           </div>
         </div>
       </div>
     </footer>
-
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
