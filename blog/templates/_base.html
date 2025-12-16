@@ -324,7 +324,7 @@
               <a href="#services" class="navbar-item">Services</a>
             </li>
             <li>
-              <a href="#about" class="navbar-item">À propos</a>
+              <a href="{% url 'proclean:about' %}" class="navbar-item">À propos</a>
             </li>
             <li>
               <a
@@ -383,7 +383,7 @@
           </li>
           <li>
             <a
-              href="#about"
+              href="{% url 'proclean:about' %}"
               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
               >À propos</a
             >
@@ -486,7 +486,7 @@
                 <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                 </svg>
-                <a href="#about" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                <a href="{% url 'proclean:about' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
                   À propos
                 </a>
               </li>
@@ -535,8 +535,8 @@
                 </svg>
                 <div>
                   <p class="font-medium text-white font-montserrat">Email</p>
-                  <a href="mailto:contact@ngconciergerie.com" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
-                    contact@ngconciergerie.com
+                  <a href="mailto:ng@ngconciergeriecom.com" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                    ng@ngconciergeriecom.com
                   </a>
                 </div>
               </li>
@@ -546,9 +546,19 @@
                 </svg>
                 <div>
                   <p class="font-medium text-white font-montserrat">Téléphone</p>
-                  <a href="tel:+33123456789" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
-                    +33 1 23 45 67 89
-                  </a>
+                  <a href="tel:4189062460" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                    +1 418-906-2460
+                  </a
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-[#9CAF88] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.           54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+                <div>
+                  <a href="tel:+1 4189062460" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                    +1 418-906-4850
+                  </a
                 </div>
               </li>
               <li class="flex items-start">

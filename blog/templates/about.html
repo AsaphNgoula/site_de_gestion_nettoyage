@@ -1,0 +1,441 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}NG Conciergerie - À Propos{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION - IMAGE FULL WIDTH -->
+<section class="relative min-h-[90vh] overflow-hidden">
+    <!-- Background Image with Gradient Overlay -->
+    <div class="absolute inset-0">
+        <img src="{% static 'images/welcomeImage.png' %}" 
+             alt="NG Conciergerie - Votre partenaire de confiance"
+             class="w-full h-full object-cover"
+             onerror="this.src='{% static 'images/clean1.jpg' %}'">
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1a237e] via-[#1a237e]/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#1a237e]/90 via-transparent to-[#283593]/90"></div>
+    </div>
+    
+    <!-- Content Overlay -->
+    <div class="relative z-10 h-full flex items-center">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 w-full">
+            <div class="max-w-2xl">
+                <!-- Badge -->
+                <div class="inline-flex items-center px-6 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8">
+                    <span class="text-sm font-montserrat font-semibold text-white uppercase tracking-wider">
+                        À Propos de Nous
+                    </span>
+                </div>
+                
+                <!-- Main Title -->
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-montserrat font-black text-white mb-6 leading-tight">
+                    Excellence en 
+                    <span class="text-[#9caf88]">Nettoyage</span> 
+                    Professionnel
+                </h1>
+                
+                <!-- Description -->
+                <p class="text-xl font-montserrat text-gray-200 mb-8 leading-relaxed max-w-xl">
+                    Depuis notre création, nous nous engageons à fournir des services de nettoyage 
+                    professionnels d'excellence qui dépassent constamment les attentes.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact" 
+                       class="inline-flex items-center justify-center px-8 py-4 bg-[#9caf88] text-white font-montserrat font-bold rounded-xl hover:bg-[#b8c9a8] hover:scale-105 transition-all duration-300 shadow-lg group">
+                        <svg class="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Nous Contacter
+                    </a>
+                    
+                    <a href="#services" 
+                       class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-montserrat font-bold rounded-xl hover:bg-white/20 hover:scale-105 transition-all duration-300">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Nos Services
+                    </a>
+                </div>
+                
+                <!-- Stats in hero -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white font-montserrat">500+</div>
+                        <div class="text-sm text-gray-300 font-montserrat">Clients</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white font-montserrat">98%</div>
+                        <div class="text-sm text-gray-300 font-montserrat">Satisfaction</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white font-montserrat">24/7</div>
+                        <div class="text-sm text-gray-300 font-montserrat">Disponible</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white font-montserrat">3+</div>
+                        <div class="text-sm text-gray-300 font-montserrat">Ans Expérience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- MISSION SECTION -->
+<section class="py-20 bg-white" id="mission">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Content -->
+            <div>
+                <span class="inline-block px-4 py-2 bg-[#9caf88]/10 text-[#9caf88] rounded-full text-sm font-montserrat font-semibold mb-4">
+                    Notre Mission
+                </span>
+                
+                <h2 class="text-3xl lg:text-4xl font-montserrat font-bold text-gray-900 mb-6">
+                    Redéfinir l'Excellence du 
+                    <span class="text-[#1a237e]">Nettoyage</span>
+                </h2>
+                
+                <div class="space-y-4 text-gray-600 font-montserrat leading-relaxed">
+                    <p class="text-lg">
+                        Chez NG Conciergerie, nous croyons que chaque espace mérite d'être traité avec le 
+                        plus grand soin et professionnalisme.
+                    </p>
+                    
+                    <p>
+                        Notre mission va au-delà du simple nettoyage. Nous créons des environnions sains, 
+                        accueillants et fonctionnels qui améliorent la qualité de vie et la productivité.
+                    </p>
+                    
+                    <p>
+                        Nous combinons expertise technique, produits écologiques et service client 
+                        exceptionnel pour délivrer des résultats qui font la différence.
+                    </p>
+                </div>
+                
+                <!-- Key Points -->
+                <div class="grid grid-cols-2 gap-6 mt-8">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#9caf88]/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-[#9caf88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="font-montserrat font-semibold text-gray-800">Qualité Garantie</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#9caf88]/20 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-[#9caf88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <span class="font-montserrat font-semibold text-gray-800">Sécurité Totale</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image -->
+            <div class="relative">
+                <div class="rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="{% static 'images/image_propos.jpg' %}" 
+                         alt="Notre équipe professionnelle"
+                         class="w-full h-[400px] object-cover"
+                         onerror="this.src='{% static 'images/clean1.jpg' %}'">
+                </div>
+                <!-- Decorative Element -->
+                <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-[#9caf88] rounded-2xl -z-10"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES SECTION -->
+<section class="py-20 bg-[#1a237e]" id="values">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-montserrat font-semibold mb-4">
+                Nos Valeurs Fondamentales
+            </span>
+            
+            <h2 class="text-3xl lg:text-4xl font-montserrat font-bold text-white mb-6">
+                Ce qui Nous <span class="text-[#9caf88]">Distingue</span>
+            </h2>
+            
+            <p class="text-xl text-gray-300 font-montserrat max-w-2xl mx-auto">
+                Les principes qui guident chaque intervention et chaque décision
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Excellence -->
+            <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#9caf88] transition-all duration-300 hover:-translate-y-2">
+                <div class="w-16 h-16 rounded-xl bg-[#9caf88] flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-montserrat font-bold text-white mb-4">Excellence</h3>
+                <p class="text-gray-300 font-montserrat">
+                    Nous visons la perfection dans chaque détail, avec des équipes formées 
+                    et des équipements professionnels.
+                </p>
+            </div>
+            
+            <!-- Fiabilité -->
+            <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#9caf88] transition-all duration-300 hover:-translate-y-2">
+                <div class="w-16 h-16 rounded-xl bg-[#9caf88] flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-montserrat font-bold text-white mb-4">Fiabilité</h3>
+                <p class="text-gray-300 font-montserrat">
+                    Vous pouvez compter sur nous. Respect des délais, transparence et 
+                    engagement sont nos promesses.
+                </p>
+            </div>
+            
+            <!-- Innovation -->
+            <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-[#9caf88] transition-all duration-300 hover:-translate-y-2">
+                <div class="w-16 h-16 rounded-xl bg-[#9caf88] flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-montserrat font-bold text-white mb-4">Innovation</h3>
+                <p class="text-gray-300 font-montserrat">
+                    Nous adoptons les dernières technologies et méthodes pour un nettoyage 
+                    plus efficace et durable.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section class="py-20 bg-gray-50" id="team">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Image -->
+            <div class="relative order-2 lg:order-1">
+                <div class="rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="{% static 'images/why-choose-us.jpg' %}" 
+                         alt="Notre équipe en action"
+                         class="w-full h-[500px] object-cover"
+                         onerror="this.src='{% static 'images/clean2.jpg' %}'">
+                </div>
+                <!-- Stats overlay -->
+                <div class="absolute bottom-8 left-8 bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-lg max-w-xs">
+                    <div class="text-4xl font-bold text-[#1a237e] font-montserrat">15+</div>
+                    <div class="text-lg font-montserrat font-semibold text-gray-800">Experts Certifiés</div>
+                    <div class="text-sm text-gray-600 font-montserrat">Dans notre équipe</div>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="order-1 lg:order-2">
+                <span class="inline-block px-4 py-2 bg-[#9caf88]/10 text-[#9caf88] rounded-full text-sm font-montserrat font-semibold mb-4">
+                    Notre Équipe
+                </span>
+                
+                <h2 class="text-3xl lg:text-4xl font-montserrat font-bold text-gray-900 mb-6">
+                    Des <span class="text-[#1a237e]">Professionnels</span> 
+                    Passionnés
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[#9caf88]/20 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-[#9caf88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-montserrat font-semibold text-gray-900 mb-2">Formation Continue</h3>
+                            <p class="text-gray-600 font-montserrat">
+                                Nos équipes suivent des formations régulières aux dernières techniques 
+                                et normes d'hygiène.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[#9caf88]/20 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-[#9caf88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-montserrat font-semibold text-gray-900 mb-2">Sélection Rigoureuse</h3>
+                            <p class="text-gray-600 font-montserrat">
+                                Chaque membre est soigneusement sélectionné, formé et supervisé 
+                                pour garantir l'excellence.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[#9caf88]/20 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6 text-[#9caf88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-montserrat font-semibold text-gray-900 mb-2">Culture d'Équipe</h3>
+                            <p class="text-gray-600 font-montserrat">
+                                Nous favorisons la collaboration et l'entraide pour offrir 
+                                un service cohérent et de qualité.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="py-20 bg-white" id="contact">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="inline-block px-4 py-2 bg-[#9caf88]/10 text-[#9caf88] rounded-full text-sm font-montserrat font-semibold mb-4">
+                Contactez-Nous
+            </span>
+            
+            <h2 class="text-3xl lg:text-4xl font-montserrat font-bold text-gray-900 mb-6">
+                Travaillons <span class="text-[#1a237e]">Ensemble</span>
+            </h2>
+            
+            <p class="text-xl text-gray-600 font-montserrat max-w-2xl mx-auto">
+                Discutons de vos besoins en nettoyage et trouvons la solution parfaite
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-montserrat font-bold text-gray-900 mb-6">
+                    Envoyez-nous un Message
+                </h3>
+                
+                <!-- Intégration du formulaire existant -->
+                {% include "sendmessage.html" %}
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="space-y-8">
+                <!-- Contact Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#1a237e] rounded-xl p-6">
+                        <div class="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-montserrat font-semibold text-white mb-2">Téléphone</h4>
+                        <a href="tel:+14189062460" class="text-[#9caf88] hover:text-[#b8c9a8] font-montserrat font-medium block">
+                            +1 418-906-2460
+                        </a>
+                        <a href="tel:+14189064850" class="text-[#9caf88] hover:text-[#b8c9a8] font-montserrat font-medium block">
+                            +1 418-906-4850
+                        </a>
+                        <p class="text-sm text-gray-300 font-montserrat mt-1">Lun-Sam: 8h-20h</p>
+                    </div>
+                    
+                    <div class="bg-[#1a237e] rounded-xl p-6">
+                        <div class="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-montserrat font-semibold text-white mb-2">Email</h4>
+                        <a href="mailto:ng@ngconciergeriecom.com" class="text-[#9caf88] hover:text-[#b8c9a8] font-montserrat font-medium block">
+                            ng@ngconciergeriecom.com
+                        </a>
+                        <p class="text-sm text-gray-300 font-montserrat mt-1">Réponse sous 24h</p>
+                    </div>
+                </div>
+                
+                <!-- Zone d'intervention -->
+                <div class="bg-gradient-to-r from-[#1a237e] to-[#283593] rounded-xl p-8">
+                    <h4 class="text-2xl font-montserrat font-bold text-white mb-4">Zone d'Intervention</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-[#9caf88]"></div>
+                            <span class="text-blue-900 font-montserrat">Montréal</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-[#9caf88]"></div>
+                            <span class="text-blue-900 font-montserrat">Laval</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-[#9caf88]"></div>
+                            <span class="text-blue-900 font-montserrat">Rive-Sud</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-[#9caf88]"></div>
+                            <span class="text-blue-900 font-montserrat">Rive-Nord</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 font-montserrat mt-4 text-sm">
+                        Service disponible dans toute la région métropolitaine
+                    </p>
+                </div>
+                
+                <!-- CTA -->
+                <div class="text-center">
+                    <a href="{% url 'proclean:contact' %}" 
+                       class="inline-flex items-center justify-center px-8 py-4 bg-[#9caf88] text-white font-montserrat font-bold rounded-xl hover:bg-[#b8c9a8] hover:scale-105 transition-all duration-300 shadow-lg w-full">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Demander un Devis Gratuit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="py-20 bg-gradient-to-r from-[#1a237e] to-[#283593]">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8 text-center">
+        <h2 class="text-3xl lg:text-4xl font-montserrat font-bold text-white mb-6">
+            Prêt pour un Nettoyage Professionnel ?
+        </h2>
+        
+        <p class="text-xl text-gray-200 font-montserrat mb-8">
+            Rejoignez nos nombreux clients satisfaits et découvrez la différence NG Conciergerie
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="tel:+33123456789" 
+               class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#1a237e] font-montserrat font-bold rounded-xl hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-lg">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                Nous Appeler Maintenant
+            </a>
+            
+            <a href="{% url 'proclean:contact' %}" 
+               class="inline-flex items-center justify-center px-8 py-4 bg-[#9caf88] text-white font-montserrat font-bold rounded-xl hover:bg-[#b8c9a8] hover:scale-105 transition-all duration-300 shadow-lg">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Envoyer un Message
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -559,3 +559,9 @@ def service_detail(request, service_slug):
         'service': service,
         'service_slug': service_slug
     })
+
+def about(request):
+    """
+    Vue pour afficher la page À propos
+    """
+    return render(request, 'about.html')

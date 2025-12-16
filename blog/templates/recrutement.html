@@ -310,24 +310,45 @@
 
 {% block content %}
 <!-- HERO SECTION -->
-<div class="relative bg-gradient-to-b from-[#1a237e] to-[#283593] py-20">
-    <div class="container mx-auto px-4 lg:px-8">
+<div class="relative bg-gradient-to-b from-[#1a237e] via-[#1a237e]/90 to-[#283593] min-h-[60vh] flex flex-col items-center justify-center overflow-hidden">
+    <!-- Image d'arrière-plan -->
+    <div class="absolute inset-0 z-0">
+        <div class="relative h-full">
+            <!-- Gradient overlay pour améliorer la lisibilité du texte -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1237e] via-[#1a27e]/70 to-[#1237e]/40 z-10"></div>
+            
+            <!-- Image -->
+            <img src="{% static 'images/recrutement.jpg' %}" 
+                 alt="Rejoignez notre équipe de nettoyage professionnel"
+                 class="w-full h-full object-cover"
+                 onerror="this.src='{% static 'images/clean1.jpg' %}'">
+        </div>
+    </div>
+    
+    <!-- Contenu texte au-dessus -->
+    <div class="container mx-auto px-4 lg:px-8 relative z-20 pt-12 pb-16">
         <div class="max-w-4xl mx-auto text-center">
-            <span class="badge-premium inline-flex items-center px-4 py-2 rounded-full text-white text-sm font-montserrat font-semibold mb-6">
+            <span class="inline-flex items-center px-4 py-2 rounded-full bg-[#9caf88] text-white text-sm font-montserrat font-semibold mb-6">
                 RECRUTEMENT
             </span>
             
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-montserrat font-black text-white mb-6">
-                Rejoignez Notre <span class="text-gradient">Équipe</span>
+                Rejoignez Notre <span class="text-[#9caf88]">Équipe</span>
             </h1>
             
-            <p class="text-xl font-montserrat text-gray-300 mb-8 leading-relaxed">
+            <p class="text-xl font-montserrat text-blue-900 mb-8 leading-relaxed max-w-3xl mx-auto">
                 Postulez pour devenir agent de nettoyage professionnel chez NG Conciergerie
             </p>
+            
+            <!-- Vous pouvez ajouter un bouton CTA ici si besoin -->
+            <!--
+            <a href="#formulaire" class="inline-flex items-center px-8 py-3 bg-[#9caf88] text-white font-montserrat font-semibold rounded-lg hover:bg-[#8a9c7a] transition-colors duration-300">
+                Postuler maintenant
+            </a>
+            -->
         </div>
     </div>
 </div>
-
 <!-- CONTENT SECTION -->
 <section class="py-16 bg-gradient-to-b from-gray-900 to-[#1a237e]">
     <div class="container mx-auto px-4 lg:px-8">
