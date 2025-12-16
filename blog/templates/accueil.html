@@ -8,6 +8,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
 
 <style>
+    /* Dans le bloc extra_css */
+.service-card-custom button:hover {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-color: #4CAF50 !important;
+}
+
+.service-card-custom button:hover span {
+    color: white !important;
+}
+
+.service-card-custom button:hover svg {
+    stroke: white !important;
+}
     /* ===== ANIMATIONS POUR LES IMAGES (conservées pour le carousel) ===== */
     @keyframes slideInRight {
         from {
@@ -216,85 +230,459 @@
 </div>
 
 <!-- Section après le carousel -->
-<section class="py-16 bg-white">
+<!-- Section après le carousel -->
+<!-- Section des Services -->
+<section class="py-16 bg-gradient-to-b from-gray-50 to-white">
     <div class="container mx-auto px-4">
-        <h2 class="font-montserrat font-bold text-gray-800 text-center mb-4 text-3xl md:text-4xl">
-            Nos Services Professionnels
-        </h2>
-        <p class="font-montserrat text-gray-600 text-center mb-12 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">
-            Des solutions de nettoyage professionnelles adaptées pour répondre à vos besoins uniques
-        </p>
+        <!-- En-tête de section -->
+        <div class="text-center mb-16">
+            <h2 class="font-montserrat font-bold text-[#1a237e] mb-4 text-3xl md:text-4xl lg:text-5xl">
+                Nos Services Professionnels
+            </h2>
+            <div class="w-24 h-1.5 bg-[#4CAF50] mx-auto mb-6"></div>
+            <p class="font-montserrat text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed">
+                Découvrez notre gamme complète de services de nettoyage professionnel, conçus pour répondre à tous vos besoins avec excellence et précision.
+            </p>
+        </div>
         
+        <!-- Grille des cartes -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for service in services %}
-            <!-- Carte de service dynamique -->
-            <div class="service-card-custom max-w-sm p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                <!-- Image du service -->
-                {% if service.image %}
-                <a href="#">
-                    <img class="service-image rounded-xl mb-4" src="{{ service.image.url }}" alt="{{ service.title }}" />
-                </a>
-                {% else %}
-                <!-- Image par défaut si aucune image n'est uploadée -->
-                <a href="#">
-                    <img class="service-image rounded-xl mb-4" src="{% static 'images/service-default.jpg' %}" alt="{{ service.title }}" />
-                </a>
-                {% endif %}
+            
+            <!-- Carte 1: Nettoyage Régulier -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Badge -->
+                <div class="absolute top-4 left-4 z-10">
+                    <span class="bg-[#1a237e] text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                        Populaire
+                    </span>
+                </div>
                 
-                <!-- Titre du service -->
-                <a href="#">
-                    <h5 class="mt-2 mb-3 text-2xl font-semibold tracking-tight text-gray-900 hover:text-emerald-600 transition-colors duration-200">
-                        {{ service.title }}
-                    </h5>
-                </a>
+                <!-- Image Container avec Overlay -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/clean3.jpg' %}" 
+                         alt="Nettoyage Régulier">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
                 
-                <!-- Description du service -->
-                <p class="mb-6 text-gray-600 leading-relaxed">
-                    {{ service.description|truncatewords:30 }}
-                </p>
-                
-                <!-- Bouton "En savoir plus" -->
-                <button type="button" 
-                        data-modal-target="service-modal" 
-                        data-modal-toggle="service-modal" 
-                        data-service-title="{{ service.title }}" 
-                        data-service-description="{{ service.description }}"
-                        class="inline-flex items-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 border border-gray-300 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-200">
-                    {{ service.button_text }}
-                    <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-                    </svg>
-                </button>
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage Régulier
+                        </h3>
+                        <div class="text-[#4CAF50] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. Idéal pour un entretien hebdomadaire ou mensuel.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage complet des sols</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Dépoussiérage des surfaces</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage des sanitaires</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Bouton avec effet hover vert sauge -->
+                    <button type="button" 
+        data-modal-target="service-modal" 
+        data-modal-toggle="service-modal" 
+        data-service-title="Nettoyage Régulier" 
+        data-service-description="Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. Idéal pour les maisons et appartements nécessitant un entretien hebdomadaire ou mensuel. Ce service comprend le nettoyage complet des sols, le dépoussiérage des surfaces, le nettoyage des sanitaires, le vidage des poubelles et le nettoyage des vitres intérieures."
+        class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+    <span class="group-hover/btn:text-white">En savoir plus</span>
+    <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+</button>
+                </div>
             </div>
-            {% empty %}
-            <!-- Fallback si aucun service n'est configuré -->
-            {% for i in "123456" %}
-            <div class="service-card-custom max-w-sm p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                <a href="#">
-                    <img class="service-image rounded-xl mb-4" src="{% static 'images/service-default.jpg' %}" alt="Service {{ forloop.counter }}" />
-                </a>
-                <a href="#">
-                    <h5 class="mt-2 mb-3 text-2xl font-semibold tracking-tight text-gray-900 hover:text-emerald-600 transition-colors duration-200">
-                        Service {{ forloop.counter }}
-                    </h5>
-                </a>
-                <p class="mb-6 text-gray-600 leading-relaxed">
-                    Description du service sera ajoutée depuis l'administration.
-                </p>
-                <button type="button" 
-                        data-modal-target="service-modal" 
-                        data-modal-toggle="service-modal" 
-                        data-service-title="Service {{ forloop.counter }}" 
-                        data-service-description="Description du service sera ajoutée depuis l'administration."
-                        class="inline-flex items-center text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 border border-gray-300 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-200">
-                    En savoir plus
-                    <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-                    </svg>
-                </button>
+            
+            <!-- Carte 2: Nettoyage en Profondeur -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Image Container -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/nettoyage_profondeur.jpg' %}" 
+                         alt="Nettoyage en Profondeur">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage en Profondeur
+                        </h3>
+                        <div class="text-[#4CAF50] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Un nettoyage intensif qui atteint les moindres recoins pour une propreté maximale. Parfait pour le nettoyage de printemps.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage derrière les appareils</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Décrasser joints et recoins</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Dégreissage complet cuisine</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Bouton -->
+                    <button type="button" 
+                            data-modal-target="service-modal" 
+                            data-modal-toggle="service-modal" 
+                            data-service-title="Nettoyage en Profondeur" 
+                            data-service-description="Un nettoyage intensif qui atteint les moindres recoins pour une propreté maximale. Parfait pour le nettoyage de printemps, après des travaux, ou pour une remise à neuf complète de votre espace. Ce service comprend le nettoyage derrière les appareils électroménagers, le décrasement des joints et recoins, le nettoyage des murs et plafonds, le dégraissage complet de la cuisine et le nettoyage approfondi des sanitaires."
+                            class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+                        <span class="group-hover/btn:text-white">En savoir plus</span>
+                        <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            {% endfor %}
-            {% endfor %}
+            
+            <!-- Carte 3: Nettoyage Industriel -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Badge -->
+                <div class="absolute top-4 left-4 z-10">
+                    <span class="bg-[#FF9800] text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                        Spécialisé
+                    </span>
+                </div>
+                
+                <!-- Image Container -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/nettoyage_industriel.jpg' %}" 
+                         alt="Nettoyage Industriel">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage Industriel
+                        </h3>
+                        <div class="text-[#4CAF50] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Service spécialisé pour les industries, nettoyage complet avant et après travaux. Équipements professionnels.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage post-travaux</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Dégraissage industriel</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Équipement professionnel</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Bouton -->
+                    <button type="button" 
+                            data-modal-target="service-modal" 
+                            data-modal-toggle="service-modal" 
+                            data-service-title="Nettoyage Airbnb" 
+                            data-service-description="Service de nettoyage professionnel spécialement conçu pour les locations Airbnb. Nous garantissons une propreté impeccable entre chaque location pour satisfaire vos clients. Ce service comprend le changement des draps et serviettes, le nettoyage rapide et efficace, la vérification des fournitures, le restockage des produits de base et un rapport de nettoyage détaillé."
+                            class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+                        <span class="group-hover/btn:text-white">En savoir plus</span>
+                        <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Carte 4: Nettoyage Airbnb -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Image Container -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/nettoyage_airbnb.jpg' %}" 
+                         alt="Nettoyage Airbnb">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage Airbnb
+                        </h3>
+                        <div class="text-[#4CAF50] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Service de nettoyage professionnel spécialement conçu pour les locations Airbnb. Garantie de propreté entre chaque location.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Changement draps/serviettes</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage rapide et efficace</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Restockage des produits</span>
+                        </li>
+                    </ul>
+                    
+                                        <!-- Bouton -->
+                    <button type="button" 
+                            data-modal-target="service-modal" 
+                            data-modal-toggle="service-modal" 
+                            data-service-title="Nettoyage Airbnb" 
+                            data-service-description="Service de nettoyage professionnel spécialement conçu pour les locations Airbnb. Nous garantissons une propreté impeccable entre chaque location pour satisfaire vos clients. Ce service comprend le changement des draps et serviettes, le nettoyage rapide et efficace, la vérification des fournitures, le restockage des produits de base et un rapport de nettoyage détaillé."
+                            class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+                        <span class="group-hover/btn:text-white">En savoir plus</span>
+                        <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Carte 5: Nettoyage de Tapis -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Image Container -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/nettoyage_tapis.jpg' %}" 
+                         alt="Nettoyage de Tapis">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage de Tapis
+                        </h3>
+                        <div class="text-[#84a785] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Service spécialisé de nettoyage de tapis avec équipement professionnel. Élimination des taches, odeurs et allergènes.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Prétraitement des taches</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage à la vapeur</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Désodorisation complète</span>
+                        </li>
+                    </ul>
+                    
+                    <button type="button" 
+                    data-modal-target="service-modal" 
+                    data-modal-toggle="service-modal" 
+                    data-service-title="Nettoyage de Tapis" 
+                    data-service-description="Service spécialisé de nettoyage de tapis avec équipement professionnel. Nous éliminons les taches, odeurs et allergènes pour redonner vie à vos tapis. Ce service comprend le prétraitement des taches, le nettoyage à la vapeur professionnel, la désodorisation, le traitement anti-taches et un séchage rapide."
+                    class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+                <span class="group-hover/btn:text-white">En savoir plus</span>
+                <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </button>
+                </div>
+            </div>
+            
+            <!-- Carte 6: Nettoyage Commercial -->
+            <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-[#4CAF50]/20">
+                <!-- Badge -->
+                <div class="absolute top-4 left-4 z-10">
+                    <span class="bg-[#2196F3] text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                        Entreprise
+                    </span>
+                </div>
+                
+                <!-- Image Container -->
+                <div class="relative h-64 overflow-hidden">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                         src="{% static 'images/nettoyage_commercial.jpg' %}" 
+                         alt="Nettoyage Commercial">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                <!-- Contenu de la carte -->
+                <div class="p-6">
+                    <!-- Titre et icône -->
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#1a237e] transition-colors duration-300">
+                            Nettoyage Commercial
+                        </h3>
+                        <div class="text-[#4CAF50] bg-[#4CAF50]/10 p-2 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Services de nettoyage professionnel pour bureaux, commerces et établissements. Programmes flexibles selon vos horaires.
+                    </p>
+                    
+                    <!-- Liste des points forts -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Nettoyage quotidien bureaux</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Entretien espaces communs</span>
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm">Contrat personnalisé</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Bouton -->
+                    <button type="button" 
+        data-modal-target="service-modal" 
+        data-modal-toggle="service-modal" 
+        data-service-title="Nettoyage Commercial" 
+        data-service-description="Services de nettoyage professionnel pour bureaux, commerces et établissements. Nous proposons des programmes flexibles adaptés aux horaires d'ouverture de votre entreprise. Ce service comprend le nettoyage quotidien des bureaux, l'entretien des espaces communs, le nettoyage des sanitaires professionnels, la gestion des déchets et un contrat personnalisé selon vos besoins."
+        class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+    <span class="group-hover/btn:text-white">En savoir plus</span>
+    <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+</button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Section CTA -->
+        <div class="mt-16 text-center">
+            <div class="bg-gradient-to-r from-[#1a237e] to-[#4CAF50] rounded-2xl p-8 md:p-12 shadow-xl">
+                <h3 class="text-white text-2xl md:text-3xl font-bold mb-4">
+                    Besoin d'un devis personnalisé ?
+                </h3>
+                <p class="text-white/90 mb-6 max-w-2xl mx-auto">
+                    Contactez-nous pour discuter de vos besoins spécifiques et obtenir un devis gratuit adapté à votre situation.
+                </p>
+                <a href="{% url 'proclean:contact' %}" 
+                   class="inline-flex items-center bg-white text-[#1a237e] px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 hover:scale-105 transition-all duration-300 shadow-lg">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Demander un devis
+                </a>
+            </div>
         </div>
     </div>
 </section>

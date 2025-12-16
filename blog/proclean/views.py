@@ -1,7 +1,7 @@
 # blog/proclean/views.py
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CarouselImage, ServiceCard, ContactMessage, JobApplication
+from .models import CarouselImage, ContactMessage, JobApplication
 from django.core.files.storage import default_storage
 import os
 from django.core.mail import EmailMultiAlternatives, send_mail  # AJOUTEZ send_mail ici
@@ -17,11 +17,27 @@ logger = logging.getLogger(__name__)
 
 def home(request):
     carousel_images = CarouselImage.objects.filter(is_active=True).order_by('id')
-    services = ServiceCard.objects.filter(is_active=True).order_by('order')
+    
+    # Liste statique des services (remplace par tes données)
+    services = [
+        {
+            'title': 'Nettoyage Régulier',
+            'description': 'Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant.',
+            'image': None,  # Tu peux ajouter des images statiques
+            'button_text': 'En savoir plus'
+        },
+        {
+            'title': 'Nettoyage en Profondeur',
+            'description': 'Un nettoyage intensif qui atteint les moindres recoins.',
+            'image': None,
+            'button_text': 'En savoir plus'
+        },
+        # ... ajoute les 4 autres services
+    ]
     
     return render(request, 'accueil.html', {
         'carousel_images': carousel_images,
-        'services': services,
+        'services': services,  # AJOUTE CETTE LIGNE
     })
 # envoie de message
 def send_message(request):
@@ -428,4 +444,118 @@ def gestion_candidatures(request):
     
     return render(request, 'admin/gestion_candidatures.html', {
         'candidatures': candidatures
+    })
+
+
+def service_detail(request, service_slug):
+    """Vue pour afficher les détails d'un service spécifique"""
+    services = {
+        'nettoyage-regulier': {
+            'title': 'Nettoyage Régulier',
+            'description': '''
+                Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. 
+                Idéal pour les maisons et appartements nécessitant un entretien hebdomadaire ou mensuel.
+                
+                Ce service comprend :
+                • Nettoyage complet des sols
+                • Dépoussiérage des surfaces
+                • Nettoyage des sanitaires
+                • Vidage des poubelles
+                • Nettoyage des vitres intérieures
+                
+                Fréquences disponibles : Hebdomadaire, Bi-mensuelle, Mensuelle
+            ''',
+            'image': 'services/regular-cleaning.jpg',
+            'price': 'À partir de 80$'
+        },
+        'nettoyage-profondeur': {
+            'title': 'Nettoyage en Profondeur',
+            'description': '''
+                Un nettoyage intensif qui atteint les moindres recoins. Parfait pour le nettoyage 
+                de printemps, après des travaux, ou pour une remise à neuf complète de votre espace.
+                
+                Ce service comprend :
+                • Nettoyage derrière les appareils électroménagers
+                • Décrasser les joints et recoins
+                • Nettoyage des murs et plafonds
+                • Dégreissage complet de la cuisine
+                • Nettoyage approfondi des sanitaires
+            ''',
+            'image': 'services/deep-cleaning.jpg',
+            'price': 'À partir de 150$'
+        },
+        'nettoyage-demenagement': {
+            'title': 'Nettoyage Déménagement',
+            'description': '''
+                Service spécialisé pour les déménagements. Nous assurons le nettoyage complet 
+                de votre ancien logement et préparons le nouveau pour votre arrivée.
+                
+                Ce service comprend :
+                • Nettoyage complet avant départ
+                • Nettoyage après travaux
+                • Préparation du logement pour nouvel arrivant
+                • Nettoyage des placards et armoires
+                • Désinfection complète
+            ''',
+            'image': 'services/move-cleaning.jpg',
+            'price': 'À partir de 200$'
+        },
+        'nettoyage-airbnb': {
+            'title': 'Nettoyage Airbnb',
+            'description': '''
+                Service de nettoyage professionnel spécialement conçu pour les locations Airbnb. 
+                Garantie d'une propreté impeccable entre chaque location.
+                
+                Ce service comprend :
+                • Changement des draps et serviettes
+                • Nettoyage rapide et efficace
+                • Vérification des fournitures
+                • Restockage des produits de base
+                • Rapport de nettoyage
+            ''',
+            'image': 'services/airbnb-cleaning.jpg',
+            'price': 'À partir de 100$ par nettoyage'
+        },
+        'nettoyage-tapis': {
+            'title': 'Nettoyage de Tapis',
+            'description': '''
+                Service spécialisé de nettoyage de tapis avec équipement professionnel. 
+                Élimination des taches, odeurs et allergènes.
+                
+                Ce service comprend :
+                • Prétraitement des taches
+                • Nettoyage à la vapeur professionnel
+                • Désodorisation
+                • Traitement anti-taches
+                • Séchage rapide
+            ''',
+            'image': 'services/carpet-cleaning.jpg',
+            'price': 'À partir de 50$ par pièce'
+        },
+        'nettoyage-commercial': {
+            'title': 'Nettoyage Commercial',
+            'description': '''
+                Services de nettoyage professionnel pour bureaux, commerces et établissements. 
+                Programmes flexibles adaptés aux horaires d'ouverture.
+                
+                Ce service comprend :
+                • Nettoyage quotidien des bureaux
+                • Entretien des espaces communs
+                • Nettoyage des sanitaires professionnels
+                • Gestion des déchets
+                • Contrat personnalisé selon vos besoins
+            ''',
+            'image': 'services/commercial-cleaning.jpg',
+            'price': 'Devis personnalisé selon superficie'
+        }
+    }
+    
+    service = services.get(service_slug)
+    
+    if not service:
+        return redirect('proclean:home')
+    
+    return render(request, 'service_detail.html', {
+        'service': service,
+        'service_slug': service_slug
     })

@@ -1,0 +1,108 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}NG Conciergerie - {{ service.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .service-detail-header {
+        background: linear-gradient(135deg, #1a237e 0%, #4CAF50 100%);
+        color: white;
+        padding: 4rem 0;
+    }
+    
+    .service-content {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 2rem;
+        margin-top: -3rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .price-badge {
+        background: #4CAF50;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 2rem;
+        font-weight: bold;
+        display: inline-block;
+    }
+    
+    .feature-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e8f5e9;
+    }
+    
+    .feature-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .back-button {
+        color: #1a237e;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .back-button:hover {
+        color: #4CAF50;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- En-tête du service -->
+<div class="service-detail-header">
+    <div class="container mx-auto px-4">
+        <nav class="mb-4">
+            <a href="{% url 'proclean:home' %}" class="back-button">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Retour aux services
+            </a>
+        </nav>
+        
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-2/3">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ service.title }}</h1>
+                <p class="text-xl opacity-90">{{ service.description|truncatewords:20 }}</p>
+            </div>
+            <div class="mt-6 md:mt-0">
+                <span class="price-badge">{{ service.price }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contenu détaillé -->
+<div class="container mx-auto px-4 py-8">
+    <div class="service-content">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Image -->
+            <div>
+                <img src="{% static service.image %}" 
+                     alt="{{ service.title }}" 
+                     class="w-full h-auto rounded-xl shadow-lg">
+            </div>
+            
+            <!-- Description -->
+            <div>
+                <h2 class="text-3xl font-bold text-[#1a237e] mb-6">Description du service</h2>
+                <div class="prose max-w-none">
+                    <p class="text-gray-700 whitespace-pre-line">{{ service.description }}</p>
+                </div>
+                
+                <!-- CTA -->
+                <div class="mt-8 pt-6 border-t">
+                    <p class="text-lg font-semibold mb-4">Intéressé par ce service ?</p>
+                    <a href="{% url 'proclean:contact' %}" 
+                       class="inline-flex items-center bg-[#1a237e] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#4CAF50] transition-colors duration-300">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        Demander un devis gratuit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

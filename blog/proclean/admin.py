@@ -1,6 +1,6 @@
 # blog/proclean/admin.py
 from django.contrib import admin
-from .models import Service, CarouselImage, ServiceCard, ContactMessage,JobApplication
+from .models import Service, CarouselImage, ContactMessage,JobApplication
 
 # Register your models here. 
 
@@ -12,23 +12,6 @@ class AdminCarouselImage(admin.ModelAdmin):
     list_display = ('id', 'title', 'image', 'is_active')
 admin.site.register(CarouselImage, AdminCarouselImage)
 
-@admin.register(ServiceCard)
-class ServiceCardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'service_type', 'order', 'is_active')
-    list_filter = ('is_active', 'service_type')
-    search_fields = ('title', 'description')
-    ordering = ('order',)
-    fieldsets = (
-        ('Informations de base', {
-            'fields': ('service_type', 'title', 'description', 'button_text')
-        }),
-        ('Image', {
-            'fields': ('image',)
-        }),
-        ('Configuration', {
-            'fields': ('order', 'is_active')
-        }),
-    )
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
