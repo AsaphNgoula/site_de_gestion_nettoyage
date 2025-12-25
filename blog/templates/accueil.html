@@ -599,17 +599,13 @@
                         </li>
                     </ul>
                     
-                    <button type="button" 
-                    data-modal-target="service-modal" 
-                    data-modal-toggle="service-modal" 
-                    data-service-title="Nettoyage de Tapis" 
-                    data-service-description="Service spécialisé de nettoyage de tapis avec équipement professionnel. Nous éliminons les taches, odeurs et allergènes pour redonner vie à vos tapis. Ce service comprend le prétraitement des taches, le nettoyage à la vapeur professionnel, la désodorisation, le traitement anti-taches et un séchage rapide."
+                    <a href="{% url 'proclean:nettoyage_tapis' %}" 
                     class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
-                <span class="group-hover/btn:text-white">En savoir plus</span>
-                <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </button>
+                     <span class="group-hover/btn:text-white">En savoir plus</span>
+                     <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                     </svg>
+                 </a>
                 </div>
             </div>
             
