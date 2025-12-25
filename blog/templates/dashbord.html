@@ -1,0 +1,557 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Dashboard Administrateur - NG Conciergerie{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Variables de couleurs */
+    :root {
+        --primary: #2E7D32;
+        --primary-light: #4CAF50;
+        --primary-dark: #1B5E20;
+        --secondary: #1565C0;
+        --accent: #FF9800;
+        --light: #F5F7FA;
+        --dark: #263238;
+        --gray: #546E7A;
+        --gray-light: #ECEFF1;
+        --success: #2E7D32;
+        --warning: #FF9800;
+        --danger: #DC2626;
+        --info: #1565C0;
+    }
+
+    /* Styles pour le dashboard */
+    .dashboard-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        color: white;
+        box-shadow: 0 10px 30px rgba(46, 125, 50, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 60%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    }
+
+    .dashboard-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Grille de statistiques */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--gray-light);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        border-color: var(--primary-light);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .stat-icon.candidatures {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: white;
+    }
+
+    .stat-icon.messages {
+        background: linear-gradient(135deg, var(--info) 0%, #42A5F5 100%);
+        color: white;
+    }
+
+    .stat-icon.carousel {
+        background: linear-gradient(135deg, var(--accent) 0%, #FFB74D 100%);
+        color: white;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--dark);
+        margin: 0.5rem 0;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--gray);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Sections de données */
+    .data-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .data-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--gray-light);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--gray-light);
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-title i {
+        color: var(--primary);
+    }
+
+    .view-all {
+        font-size: 0.875rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .view-all:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+    }
+
+    /* Liste des données */
+    .data-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .data-item {
+        padding: 1rem;
+        border-bottom: 1px solid var(--gray-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .data-item:hover {
+        background-color: var(--light);
+        border-radius: 8px;
+    }
+
+    .data-item:last-child {
+        border-bottom: none;
+    }
+
+    .data-info {
+        flex: 1;
+    }
+
+    .data-name {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 0.25rem;
+    }
+
+    .data-meta {
+        font-size: 0.875rem;
+        color: var(--gray);
+    }
+
+    .data-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-read {
+        background-color: rgba(46, 125, 50, 0.1);
+        color: var(--success);
+    }
+
+    .status-unread {
+        background-color: rgba(220, 38, 38, 0.1);
+        color: var(--danger);
+    }
+
+    .data-date {
+        font-size: 0.875rem;
+        color: var(--gray);
+        margin-left: 1rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--gray);
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* Boutons d'action */
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-light);
+    }
+
+    .btn-logout {
+        background: linear-gradient(135deg, var(--danger) 0%, #EF5350 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-logout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card, .data-section {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .data-section:nth-child(1) { animation-delay: 0.4s; }
+    .data-section:nth-child(2) { animation-delay: 0.5s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .data-sections {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+        }
+    }
+
+    /* Badge de notification */
+    .notification-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: var(--danger);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    /* Progress bar (optionnel pour les stats) */
+    .stat-progress {
+        height: 4px;
+        background: var(--gray-light);
+        border-radius: 2px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 1s ease;
+    }
+
+    .progress-bar.candidatures {
+        background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+    }
+
+    .progress-bar.messages {
+        background: linear-gradient(90deg, var(--info) 0%, #42A5F5 100%);
+    }
+
+    .progress-bar.carousel {
+        background: linear-gradient(90deg, var(--accent) 0%, #FFB74D 100%);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Header du Dashboard -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard Administrateur</h1>
+        <p class="dashboard-subtitle">Gérez et surveillez l'activité de NG Conciergerie</p>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon candidatures">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h3 class="stat-number">{{ total_candidatures }}</h3>
+            <p class="stat-label">Candidatures</p>
+            <div class="stat-progress">
+                <div class="progress-bar candidatures" style="width: {{ total_candidatures|default:0 }}%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon messages">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3 class="stat-number">{{ total_messages }}</h3>
+            <p class="stat-label">Messages</p>
+            <div class="stat-progress">
+                <div class="progress-bar messages" style="width: {{ total_messages|default:0 }}%"></div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon carousel">
+                <i class="fas fa-images"></i>
+            </div>
+            <h3 class="stat-number">{{ total_carousel }}</h3>
+            <p class="stat-label">Images Carousel</p>
+            <div class="stat-progress">
+                <div class="progress-bar carousel" style="width: {{ total_carousel|default:0 }}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sections de données -->
+    <div class="data-sections">
+        <!-- Dernières Candidatures -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-users"></i>
+                    Dernières Candidatures
+                </h2>
+                <a href="#" class="view-all">Voir tout</a>
+            </div>
+            
+            <ul class="data-list">
+                {% for application in JobApplication.objects.all|slice:":5" %}
+                <li class="data-item">
+                    <div class="data-info">
+                        <div class="data-name">{{ application.prenom }} {{ application.nom }}</div>
+                        <div class="data-meta">{{ application.email }}</div>
+                    </div>
+                    <div class="data-date">
+                        {{ application.date_soumission|date:"d/m/Y" }}
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty-state">
+                    <i class="fas fa-user-slash"></i>
+                    <p>Aucune candidature pour le moment.</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Derniers Messages -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-comments"></i>
+                    Derniers Messages
+                </h2>
+                <a href="#" class="view-all">Voir tout</a>
+            </div>
+            
+            <ul class="data-list">
+                {% for msg in ContactMessage.objects.all|slice:":5" %}
+                <li class="data-item">
+                    <div class="data-info">
+                        <div class="data-name">{{ msg.prenom }} {{ msg.nom }}</div>
+                        <div class="data-meta">{{ msg.email }}</div>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="data-status {{ msg.lu|yesno:'status-read,status-unread' }}">
+                            {{ msg.lu|yesno:"Lu,Non lu" }}
+                        </span>
+                        <span class="data-date">
+                            {{ msg.date_envoi|date:"d/m/Y" }}
+                        </span>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Aucun message pour le moment.</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="action-buttons">
+        <a href="{% url 'proclean:admin_logout' %}" class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i>
+            Déconnexion
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Ajout des icônes Font Awesome
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ajouter dynamiquement Font Awesome si non présent
+        if (!document.querySelector('link[href*="font-awesome"]')) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+            document.head.appendChild(link);
+        }
+
+        // Animation des chiffres des statistiques
+        const statNumbers = document.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => {
+            const finalValue = parseInt(stat.textContent);
+            let currentValue = 0;
+            const increment = finalValue / 50;
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= finalValue) {
+                    currentValue = finalValue;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(currentValue);
+            }, 20);
+        });
+
+        // Effet de survol sur les cartes
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const progressBar = card.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.transform = 'scaleX(1.05)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const progressBar = card.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.transform = 'scaleX(1)';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

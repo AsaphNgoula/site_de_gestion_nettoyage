@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib import admin
+
+
 # Create your models here.
 class Service(models.Model):
     name = models.CharField(max_length=100)
@@ -176,3 +179,24 @@ class JobApplication(models.Model):
         if self.region == 'autre' and self.region_autre:
             return f"Autre: {self.region_autre}"
         return self.get_region_display()
+    
+    def nom_complet(self):
+        """Retourne le nom complet"""
+        return f"{self.prenom} {self.nom}"
+    
+
+class JobRequest(models.Model):
+    nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    received_at = models.DateTimeField(auto_now_add=True)
+
+    def nom_complet(self):
+        return f"{self.prenom} {self.nom}"
+
+    nom_complet.short_description = "Nom complet"
+
+    def __str__(self):
+        return self.nom_complet()
+    

@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Connexion Administrateur{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-800">
+    <div class="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+        <h1 class="text-2xl font-bold text-white mb-6">Connexion Administrateur</h1>
+        {% if messages %}
+            <ul class="mb-4 text-red-500">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-300 mb-2">Nom d’utilisateur</label>
+                <input type="text" name="username" class="w-full p-2 rounded bg-gray-800 text-white" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-300 mb-2">Mot de passe</label>
+                <input type="password" name="password" class="w-full p-2 rounded bg-gray-800 text-white" required>
+            </div>
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white py-2 rounded font-bold">Se connecter</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

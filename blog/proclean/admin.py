@@ -1,6 +1,9 @@
 # blog/proclean/admin.py
 from django.contrib import admin
 from .models import Service, CarouselImage, ContactMessage,JobApplication
+from .models import JobApplication,JobRequest
+
+
 
 # Register your models here. 
 
@@ -76,6 +79,11 @@ class JobApplicationAdmin(admin.ModelAdmin):
         }),
     )
     
-    def nom_complet(self, obj):
-        return f"{obj.prenom} {obj.nom}"
-    nom_complet.short_description = 'Candidat'
+    
+@admin.register(JobRequest)
+class JobRequestAdmin(admin.ModelAdmin):
+    list_display = ('nom_complet', 'email', 'received_at')
+    list_filter = ('received_at',)
+    search_fields = ('nom', 'prenom', 'email')
+    ordering = ('-received_at',)
+

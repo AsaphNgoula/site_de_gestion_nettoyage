@@ -2,6 +2,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import CarouselImage, ContactMessage, JobApplication
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login,logout
+from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.core.files.storage import default_storage
 import os
 from django.core.mail import EmailMultiAlternatives, send_mail  # AJOUTEZ send_mail ici
@@ -565,3 +569,41 @@ def about(request):
     Vue pour afficher la page À propos
     """
     return render(request, 'about.html')
+
+@staff_member_required
+def dashboard(request):
+    total_candidatures = JobApplication.objects.count()
+    total_messages = ContactMessage.objects.count()
+    total_carousel = CarouselImage.objects.count()
+
+    context = {
+        'total_candidatures': total_candidatures,
+        'total_messages': total_messages,
+        'total_carousel': total_carousel,
+    }
+    return render(request, 'dashbord.html', context)
+
+def admin_login(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        return redirect(reverse('proclean:dashboard'))  # redirige vers le dashboard admin si déjà connecté
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_superuser:
+            login(request, user)
+            return redirect(reverse('proclean:dashboard'))  # redirige vers le dashboard après login
+        else:
+            messages.error(request, "Nom d'utilisateur ou mot de passe invalide.")
+
+    return render(request, "admin_login.html")
+
+def admin_logout(request):
+    logout(request)
+    messages.success(request, "Vous êtes bien déconnecté.")
+    return redirect('proclean:admin_login')
+
+
+def nettoyage_profondeur_detail(request):
+    return render(request, 'detail_nettoyage_profondeur.html')

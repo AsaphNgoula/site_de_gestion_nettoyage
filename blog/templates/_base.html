@@ -1,3 +1,4 @@
+<!-- templates/_base.html -->
 {% load compress %} {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
@@ -292,6 +293,43 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        
+        /* ===== STYLES SPÉCIFIQUES POUR LE BOUTON ADMIN ===== */
+        .admin-btn {
+            background-color: white !important;
+            color: #2d3748 !important;
+            border: 2px solid white;
+            font-weight: 600;
+            margin-left: 1rem;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background-color: #f7fafc !important;
+            color: #1a202c !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        .admin-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Pour le mobile */
+        .mobile-admin-btn {
+            background-color: white !important;
+            color: #2d3748 !important;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .mobile-admin-btn:hover {
+            background-color: #f7fafc !important;
+            color: #1a202c !important;
+        }
   </style>
   <body class="font-montserrat">
     <!-- Navbar -->
@@ -332,7 +370,7 @@
                   class="navbar-item {% if request.resolver_match.url_name == 'galerie' %}active{% endif %}"
                   >Galerie</a
               >
-          </li>
+            </li>
             <li>
               <a href="{% url 'proclean:contact' %}" class="navbar-item">Contact</a>
             </li>
@@ -340,6 +378,21 @@
               <a href="{% url 'proclean:recrutement' %}" class="navbar-item">Recrutement</a>
             </li>
           </ul>
+        </div>
+
+        <!-- Bouton Admin à droite (desktop) -->
+        <div class="hidden lg:flex items-center">
+          <a href="{% url 'proclean:admin_login' %}" class="admin-btn">
+            <span class="flex items-center">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              Admin
+            </span>
+          </a>
         </div>
 
         <div class="flex items-center lg:order-2 lg:hidden">
@@ -409,9 +462,34 @@
               >Recrutement</a
             >
           </li>
+          
+          <!-- Bouton Admin mobile -->
+          <li class="mt-4">
+            <a 
+              href="{% url 'proclean:admin_login' %}" 
+              class="mobile-admin-btn block py-3 px-4 text-center font-semibold hover:bg-gray-100 transition duration-300"
+            >
+              <span class="flex items-center justify-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Admin
+              </span>
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     <!-- Contenu principal -->
     <main>

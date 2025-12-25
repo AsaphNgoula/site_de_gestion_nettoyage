@@ -308,16 +308,16 @@
                     
                     <!-- Bouton avec effet hover vert sauge -->
                     <button type="button" 
-        data-modal-target="service-modal" 
-        data-modal-toggle="service-modal" 
-        data-service-title="Nettoyage Régulier" 
-        data-service-description="Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. Idéal pour les maisons et appartements nécessitant un entretien hebdomadaire ou mensuel. Ce service comprend le nettoyage complet des sols, le dépoussiérage des surfaces, le nettoyage des sanitaires, le vidage des poubelles et le nettoyage des vitres intérieures."
-        class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
-    <span class="group-hover/btn:text-white">En savoir plus</span>
-    <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-    </svg>
-</button>
+                        data-modal-target="service-modal" 
+                        data-modal-toggle="service-modal" 
+                        data-service-title="Nettoyage Régulier" 
+                        data-service-description="Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. Idéal pour les maisons et appartements nécessitant un entretien hebdomadaire ou mensuel. Ce service comprend le nettoyage complet des sols, le dépoussiérage des surfaces, le nettoyage des sanitaires, le vidage des poubelles et le nettoyage des vitres intérieures."
+                        class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+                        <span class="group-hover/btn:text-white">En savoir plus</span>
+                         <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
                 </div>
             </div>
             
@@ -373,17 +373,14 @@
                     </ul>
                     
                     <!-- Bouton -->
-                    <button type="button" 
-                            data-modal-target="service-modal" 
-                            data-modal-toggle="service-modal" 
-                            data-service-title="Nettoyage en Profondeur" 
-                            data-service-description="Un nettoyage intensif qui atteint les moindres recoins pour une propreté maximale. Parfait pour le nettoyage de printemps, après des travaux, ou pour une remise à neuf complète de votre espace. Ce service comprend le nettoyage derrière les appareils électroménagers, le décrasement des joints et recoins, le nettoyage des murs et plafonds, le dégraissage complet de la cuisine et le nettoyage approfondi des sanitaires."
-                            class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
-                        <span class="group-hover/btn:text-white">En savoir plus</span>
-                        <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </button>
+                    <!-- Remplacez le bouton actuel par : -->
+<a href="{% url 'proclean:nettoyage_profond' %}" 
+   class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
+    <span class="group-hover/btn:text-white">En savoir plus</span>
+    <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    </svg>
+</a>
                 </div>
             </div>
             

@@ -1,0 +1,13 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Connexion Administrateur</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-dark">Se connecter</button>
+  </form>
+</div>
+{% endblock %}

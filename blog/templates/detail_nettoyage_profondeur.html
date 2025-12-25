@@ -1,0 +1,740 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Nettoyage en Profondeur - NG Conciergerie{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+
+    /* ===== STYLES SPÉCIFIQUES ===== */
+    :root {
+        --sage-green: #9CAF88;
+        --sage-light: #B8C9A8;
+        --sage-dark: #7A8B6F;
+        --dark-blue: #1A1F2C;
+        --dark-blue-light: #2A3040;
+        --dark-blue-lighter: #3A4154;
+        --white: #FFFFFF;
+        --gray-light: #E8EDF0;
+        --gray-medium: #8C9AA8;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        height: 70vh;
+        min-height: 500px;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{% static 'images/nettoyage_profondeur.jpg' %}"); /* IMAGE SANS GRADIENT */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        transform: scale(1.1);
+        transition: transform 10s ease-out;
+    }
+
+    .hero-section:hover .hero-bg {
+        transform: scale(1);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+        /* Ajouter un overlay sur le contenu pour améliorer la lisibilité */
+        background: linear-gradient(to bottom, rgba(26, 31, 44, 0.7) 0%, rgba(26, 31, 44, 0.5) 50%, transparent 100%);
+    }
+
+    .hero-title {
+        font-size: 4.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 1s ease-out 0.3s both;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: var(--gray-light);
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        animation: fadeInUp 1s ease-out 0.6s both;
+        line-height: 1.6;
+    }
+
+    /* Floating elements */
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-element-2 {
+        animation: float 6s ease-in-out infinite 2s;
+    }
+
+    /* Services Section */
+    .service-card {
+        background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+        border: 1px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInUp 0.8s ease-out both;
+        animation-delay: calc(var(--animation-order) * 0.2s);
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156, 175, 136, 0.1), transparent);
+        transition: left 0.7s ease;
+    }
+
+    .service-card:hover::before {
+        left: 100%;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--sage-green);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4),
+                    0 0 100px rgba(156, 175, 136, 0.1);
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        color: white;
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .feature-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(156, 175, 136, 0.1);
+        display: flex;
+        align-items: center;
+        animation: slideInRight 0.8s ease-out both;
+        animation-delay: calc(var(--item-order) * 0.1s);
+    }
+
+    .feature-item:last-child {
+        border-bottom: none;
+    }
+
+    .check-icon {
+        color: var(--sage-green);
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        min-width: 24px;
+    }
+
+    /* CTA Button */
+    .cta-button {
+        background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-dark) 100%);
+        border: 2px solid var(--sage-green);
+        color: white;
+        padding: 1.25rem 3rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInUp 1s ease-out 1.2s both;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background-size: 200% 100%;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(156, 175, 136, 0.4),
+                    0 0 50px rgba(156, 175, 136, 0.2);
+        animation: shimmer 2s infinite linear;
+        background-position: 200% center;
+    }
+
+    .cta-button:active {
+        transform: translateY(-2px) scale(1.02);
+    }
+
+    /* Stats Section */
+    .stat-card {
+        background: rgba(156, 175, 136, 0.1);
+        border: 1px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        animation: fadeInUp 0.8s ease-out both;
+        animation-delay: calc(var(--stat-order) * 0.2s);
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        background: rgba(156, 175, 136, 0.15);
+        border-color: var(--sage-green);
+        transform: translateY(-5px);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    /* Parallax effect */
+    .parallax-element {
+        will-change: transform;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .service-card {
+            padding: 1.5rem;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.75rem;
+        }
+        
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-section,
+        .service-card,
+        .stat-card,
+        .cta-button,
+        .hero-title,
+        .hero-subtitle,
+        .feature-item {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    /* Loading animation */
+    .loading-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--sage-green), var(--sage-light));
+        z-index: 9999;
+        transition: width 0.3s ease;
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: float 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator span {
+        display: block;
+        width: 30px;
+        height: 50px;
+        border: 2px solid var(--sage-green);
+        border-radius: 15px;
+        position: relative;
+    }
+
+    .scroll-indicator span::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 10px;
+        background: var(--sage-green);
+        border-radius: 2px;
+        animation: scroll 2s infinite;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        100% { transform: translateX(-50%) translateY(20px); opacity: 0; }
+    }
+
+    /* Section spacing */
+    .section-spacing {
+        padding: 6rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .section-spacing {
+            padding: 4rem 0;
+        }
+    }
+
+    /* Gradient text */
+    .gradient-text {
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green), var(--sage-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 100%;
+        animation: shimmer 3s infinite linear;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Loading bar -->
+<div class="loading-bar"></div>
+
+<!-- Hero Section -->
+<section class="hero-section relative">
+    <div class="hero-bg parallax-element"></div>
+    <div class="hero-content">
+        <div class="container mx-auto px-4">
+            <div class="floating-element">
+                <div class="service-icon mx-auto">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                </div>
+            </div>
+            
+            <h1 class="hero-title gradient-text">Nettoyage en Profondeur</h1>
+            <p class="hero-subtitle">
+                Un nettoyage intensif qui atteint les moindres recoins pour une propreté maximale. 
+                Parfait pour le nettoyage de printemps, après des travaux, ou pour une remise à neuf complète.
+            </p>
+            
+            <div class="floating-element-2">
+                <a href="#details" class="cta-button">
+                    <span>Découvrir les détails</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service Details Section -->
+<section id="details" class="section-spacing bg-gradient-to-b from-[#0f172a] to-[#1e293b]">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Service Description -->
+            <div class="service-card" style="--animation-order: 1;">
+                <div class="floating-element">
+                    <div class="service-icon">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <h2 class="text-3xl font-bold text-white mb-6">
+                    Notre Service <span class="gradient-text">Premium</span>
+                </h2>
+                
+                <p class="text-gray-300 mb-8 leading-relaxed text-lg">
+                    Le Nettoyage en Profondeur est notre service le plus complet, conçu pour ceux qui recherchent 
+                    une propreté absolue. Notre équipe de professionnels utilise des équipements de pointe et des 
+                    produits écologiques pour atteindre chaque recoin, offrant ainsi un résultat impeccable et durable.
+                </p>
+                
+                <ul class="feature-list mb-8">
+                    <li class="feature-item" style="--item-order: 1;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Nettoyage derrière les appareils électroménagers</span>
+                    </li>
+                    <li class="feature-item" style="--item-order: 2;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Décrasser joints et recoins inaccessibles</span>
+                    </li>
+                    <li class="feature-item" style="--item-order: 3;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Dégreissage complet de la cuisine</span>
+                    </li>
+                    <li class="feature-item" style="--item-order: 4;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Nettoyage des murs et plafonds</span>
+                    </li>
+                    <li class="feature-item" style="--item-order: 5;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Nettoyage approfondi des sanitaires</span>
+                    </li>
+                    <li class="feature-item" style="--item-order: 6;">
+                        <span class="check-icon">✓</span>
+                        <span class="text-gray-300">Désinfection complète des surfaces</span>
+                    </li>
+                </ul>
+                
+                <div class="bg-gradient-to-r from-[#9CAF88]/10 to-transparent p-6 rounded-xl border-l-4 border-[#9CAF88]">
+                    <p class="text-gray-300">
+                        <span class="font-bold text-white">Idéal pour :</span> 
+                        Nettoyage de printemps, après travaux de rénovation, location saisonnière, 
+                        ou simplement pour retrouver un espace parfaitement propre et sain.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Benefits and Stats -->
+            <div class="service-card" style="--animation-order: 2;">
+                <div class="floating-element-2">
+                    <div class="service-icon">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <h2 class="text-3xl font-bold text-white mb-6">
+                    Avantages <span class="gradient-text">Exclusifs</span>
+                </h2>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="stat-card" style="--stat-order: 1;">
+                        <div class="stat-number">100%</div>
+                        <p class="text-gray-300 mt-2">Satisfaction Garantie</p>
+                    </div>
+                    <div class="stat-card" style="--stat-order: 2;">
+                        <div class="stat-number">24h</div>
+                        <p class="text-gray-300 mt-2">Service Rapide</p>
+                    </div>
+                    <div class="stat-card" style="--stat-order: 3;">
+                        <div class="stat-number">Éco</div>
+                        <p class="text-gray-300 mt-2">Produits Verts</p>
+                    </div>
+                    <div class="stat-card" style="--stat-order: 4;">
+                        <div class="stat-number">5★</div>
+                        <p class="text-gray-300 mt-2">Qualité Premium</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#9CAF88] to-[#7A8B6F] flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-white">Équipement Professionnel</h4>
+                            <p class="text-gray-300 mt-1">Nous utilisons du matériel industriel pour des résultats impeccables.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#9CAF88] to-[#7A8B6F] flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-white">Sécurité Totale</h4>
+                            <p class="text-gray-300 mt-1">Nos équipes sont formées et assurées pour votre tranquillité d'esprit.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-[#9CAF88] to-[#7A8B6F] flex items-center justify-content:center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-white">Flexibilité</h4>
+                            <p class="text-gray-300 mt-1">Nous nous adaptons à votre emploi du temps, même en dehors des heures ouvrables.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="mt-16 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">
+                Prêt pour une propreté <span class="gradient-text">exceptionnelle</span> ?
+            </h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                Contactez-nous dès maintenant pour obtenir un devis personnalisé 
+                et redécouvrez votre espace sous son meilleur jour.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="{% url 'proclean:contact' %}" class="cta-button">
+                    <span>Demander un Devis</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                
+                <a href="{% url 'proclean:home' %}#services" 
+                   class="px-10 py-5 border-2 border-[#9CAF88] text-[#9CAF88] rounded-lg font-semibold 
+                          hover:bg-[#9CAF88] hover:text-white transition-all duration-300 
+                          transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2">
+                    <span>Voir tous nos services</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+            
+            <p class="text-gray-400 mt-8">
+                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Réponse sous 24h • Devis gratuit • Sans engagement
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Loading bar animation
+        const loadingBar = document.querySelector('.loading-bar');
+        if (loadingBar) {
+            loadingBar.style.width = '100%';
+            setTimeout(() => {
+                loadingBar.style.opacity = '0';
+                setTimeout(() => {
+                    loadingBar.remove();
+                }, 300);
+            }, 500);
+        }
+
+        // Parallax effect
+        const parallaxElements = document.querySelectorAll('.parallax-element');
+        
+        function handleParallax() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            parallaxElements.forEach(element => {
+                element.style.transform = `translate3d(0px, ${rate}px, 0px)`;
+            });
+        }
+
+        window.addEventListener('scroll', handleParallax);
+        handleParallax();
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate service cards on scroll
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(card);
+        });
+
+        // Animate feature items on scroll
+        document.querySelectorAll('.feature-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(50px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            item.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Smooth scroll to details
+        const detailsLink = document.querySelector('a[href="#details"]');
+        if (detailsLink) {
+            detailsLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+
+        // Button hover effects
+        const buttons = document.querySelectorAll('.cta-button');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Page load animation
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.8s ease';
+            document.body.style.opacity = '1';
+        }, 100);
+
+        // Add floating animation to stats cards on hover
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+        });
+
+        // Scroll progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.className = 'fixed top-0 left-0 h-1 bg-gradient-to-r from-[#9CAF88] to-[#7A8B6F] z-50';
+        progressBar.style.width = '0%';
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+
+        console.log('Service detail page loaded with animations!');
+    });
+
+    // Handle page visibility changes for animations
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            // Restart floating animations when page becomes visible again
+            const floatingElements = document.querySelectorAll('.floating-element, .floating-element-2');
+            floatingElements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = '';
+                }, 10);
+            });
+        }
+    });
+</script>
+{% endblock %}

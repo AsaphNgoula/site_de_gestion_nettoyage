@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Gestion des Candidatures{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Candidatures</h1>
+
+  <table class="min-w-full bg-gray-800 text-white rounded-lg overflow-hidden">
+    <thead>
+      <tr class="bg-gray-700">
+        <th class="px-4 py-2">Nom complet</th>
+        <th class="px-4 py-2">Email</th>
+        <th class="px-4 py-2">Téléphone</th>
+        <th class="px-4 py-2">Région</th>
+        <th class="px-4 py-2">Date de soumission</th>
+        <th class="px-4 py-2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in candidatures %}
+      <tr class="border-t border-gray-700">
+        <td class="px-4 py-2">{{ c.nom_complet }}</td>
+        <td class="px-4 py-2">{{ c.email }}</td>
+        <td class="px-4 py-2">{{ c.telephone }}</td>
+        <td class="px-4 py-2">{{ c.get_region_display_full }}</td>
+        <td class="px-4 py-2">{{ c.date_soumission|date:"d/m/Y H:i" }}</td>
+        <td class="px-4 py-2">
+          <a href="{% url 'admin:proclean_jobapplication_change' c.id %}" class="text-green-400 hover:text-green-200">Voir / Modifier</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="px-4 py-2 text-center text-gray-400">Aucune candidature trouvée</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
