@@ -614,3 +614,13 @@ def nettoyage_regulier_detail(request):
 def nettoyage_industriel_detail(request):
     return render(request, 'detail_services/detail_nettoyage_industriel.html')
 
+def nettoyage_airbnb_detail(request):
+    return render(request, 'detail_services/detail_nettoyage_airbnb.html')
+
+
+def nettoyage_commercial_detail(request):
+    return render(request, 'detail_services/detail_nettoyage_commercial.html')
+
+def nettoyage_tapis_detail(request):
+    return render(request, 'detail_services/detail_nettoyage_tapis.html')
+

@@ -2113,6 +2113,12 @@
   .border-\[\#9caf88\]\/30 {
     border-color: color-mix(in oklab, #9caf88 30%, transparent);
   }
+  .border-\[\#D4AF37\] {
+    border-color: #D4AF37;
+  }
+  .border-\[\#FF5A5F\] {
+    border-color: #FF5A5F;
+  }
   .border-\[\#FF9800\] {
     border-color: #FF9800;
   }
@@ -2359,6 +2365,22 @@
     --tw-gradient-from: #1237e;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
+  .from-\[\#D4AF37\] {
+    --tw-gradient-from: #D4AF37;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-\[\#D4AF37\]\/10 {
+    --tw-gradient-from: color-mix(in oklab, #D4AF37 10%, transparent);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-\[\#FF5A5F\] {
+    --tw-gradient-from: #FF5A5F;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-\[\#FF5A5F\]\/10 {
+    --tw-gradient-from: color-mix(in oklab, #FF5A5F 10%, transparent);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
   .from-\[\#FF9800\] {
     --tw-gradient-from: #FF9800;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -2485,8 +2507,28 @@
     --tw-gradient-to: #869776;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
+  .to-\[\#B8C9A8\] {
+    --tw-gradient-to: #B8C9A8;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-\[\#B8971E\] {
+    --tw-gradient-to: #B8971E;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-\[\#E04A4F\] {
+    --tw-gradient-to: #E04A4F;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-\[\#E6C158\] {
+    --tw-gradient-to: #E6C158;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
   .to-\[\#F57C00\] {
     --tw-gradient-to: #F57C00;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-\[\#FF7A7F\] {
+    --tw-gradient-to: #FF7A7F;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-black {
@@ -2901,6 +2943,12 @@
   .text-\[\#84a785\] {
     color: #84a785;
   }
+  .text-\[\#D4AF37\] {
+    color: #D4AF37;
+  }
+  .text-\[\#FF5A5F\] {
+    color: #FF5A5F;
+  }
   .text-\[\#FF9800\] {
     color: #FF9800;
   }
@@ -3240,6 +3288,20 @@
     &:hover {
       @media (hover: hover) {
         background-color: #869776;
+      }
+    }
+  }
+  .hover\:bg-\[\#D4AF37\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #D4AF37;
+      }
+    }
+  }
+  .hover\:bg-\[\#FF5A5F\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #FF5A5F;
       }
     }
   }
