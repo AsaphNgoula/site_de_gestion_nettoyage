@@ -606,4 +606,7 @@ def admin_logout(request):
 
 
 def nettoyage_profondeur_detail(request):
-    return render(request, 'detail_nettoyage_profondeur.html')
+    return render(request, 'detail_services/detail_nettoyage_profondeur.html')
+
+def nettoyage_regulier_detail(request):
+    return render(request, 'detail_services/detail_nettoyage_regulier.html')

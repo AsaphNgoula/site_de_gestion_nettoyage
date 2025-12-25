@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-from .views import home, send_message, confirmation, contact, galerie,recrutement,nettoyage_profondeur_detail, recrutement_confirmation,admin_logout, gestion_candidatures,service_detail,about,dashboard,admin_login
+from .views import home,send_message,confirmation, contact, galerie,recrutement,nettoyage_profondeur_detail,nettoyage_regulier_detail, recrutement_confirmation,admin_logout, gestion_candidatures,service_detail,about,dashboard,admin_login
 
 app_name = 'proclean'
 
@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin-login/', admin_login, name='admin_login'),
     path('logout/', admin_logout, name='admin_logout'),
     path('services/nettoyage-profond/', nettoyage_profondeur_detail, name='nettoyage_profond'),
+    path('services/nettoyage-regulier/', nettoyage_regulier_detail, name='nettoyage_regulier'),
 
 ]

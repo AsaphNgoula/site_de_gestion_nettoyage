@@ -307,17 +307,13 @@
                     </ul>
                     
                     <!-- Bouton avec effet hover vert sauge -->
-                    <button type="button" 
-                        data-modal-target="service-modal" 
-                        data-modal-toggle="service-modal" 
-                        data-service-title="Nettoyage Régulier" 
-                        data-service-description="Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. Idéal pour les maisons et appartements nécessitant un entretien hebdomadaire ou mensuel. Ce service comprend le nettoyage complet des sols, le dépoussiérage des surfaces, le nettoyage des sanitaires, le vidage des poubelles et le nettoyage des vitres intérieures."
+                    <a href="{% url 'proclean:nettoyage_regulier' %}" 
                         class="w-full group/btn bg-white text-gray-900 font-semibold py-3.5 px-6 rounded-lg border-2 border-[#9caf88] transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg flex items-center justify-center hover:!bg-[#9caf88] hover:!text-white">
                         <span class="group-hover/btn:text-white">En savoir plus</span>
-                         <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                    </button>
+                    </a>
                 </div>
             </div>
             
@@ -368,7 +364,44 @@
                             <svg class="w-5 h-5 text-[#4CAF50] mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm">Dégreissage complet cuisine</span>
+                            <span/* Hero Section */
+                            .hero-section {
+                                height: 70vh;
+                                min-height: 500px;
+                                position: relative;
+                                overflow: hidden;
+                                animation: fadeIn 1.5s ease-out;
+                            }
+                        
+                            .hero-bg {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background: linear-gradient(rgba(26, 31, 44, 0.85), rgba(26, 31, 44, 0.95)),
+                                            url("{% static 'images/nettoyage_profondeur.jpg' %}");
+                                background-size: cover;
+                                background-position: center;
+                                background-attachment: fixed;
+                                transform: scale(1.1);
+                                transition: transform 10s ease-out;
+                            }
+                        
+                            .hero-section:hover .hero-bg {
+                                transform: scale(1);
+                            }
+                        
+                            .hero-content {
+                                position: relative;
+                                z-index: 2;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                text-align: center;
+                                padding: 0 20px;
+                            } class="text-sm">Dégreissage complet cuisine</span>
                         </li>
                     </ul>
                     
