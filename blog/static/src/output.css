@@ -2113,6 +2113,9 @@
   .border-\[\#9caf88\]\/30 {
     border-color: color-mix(in oklab, #9caf88 30%, transparent);
   }
+  .border-\[\#FF9800\] {
+    border-color: #FF9800;
+  }
   .border-gray-100 {
     border-color: var(--color-gray-100);
   }
@@ -2356,6 +2359,14 @@
     --tw-gradient-from: #1237e;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
+  .from-\[\#FF9800\] {
+    --tw-gradient-from: #FF9800;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-\[\#FF9800\]\/10 {
+    --tw-gradient-from: color-mix(in oklab, #FF9800 10%, transparent);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
   .from-black {
     --tw-gradient-from: var(--color-black);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -2472,6 +2483,10 @@
   }
   .to-\[\#869776\] {
     --tw-gradient-to: #869776;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-\[\#F57C00\] {
+    --tw-gradient-to: #F57C00;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .to-black {
@@ -2886,6 +2901,9 @@
   .text-\[\#84a785\] {
     color: #84a785;
   }
+  .text-\[\#FF9800\] {
+    color: #FF9800;
+  }
   .text-blue-900 {
     color: var(--color-blue-900);
   }
@@ -3222,6 +3240,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: #869776;
+      }
+    }
+  }
+  .hover\:bg-\[\#FF9800\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #FF9800;
       }
     }
   }

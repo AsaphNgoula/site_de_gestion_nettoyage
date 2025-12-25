@@ -610,3 +610,7 @@ def nettoyage_profondeur_detail(request):
 
 def nettoyage_regulier_detail(request):
     return render(request, 'detail_services/detail_nettoyage_regulier.html')
+
+def nettoyage_industriel_detail(request):
+    return render(request, 'detail_services/detail_nettoyage_industriel.html')
+
