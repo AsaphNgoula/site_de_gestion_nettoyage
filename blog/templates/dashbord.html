@@ -1,667 +1,890 @@
-{% extends "_base.html" %} {% load static %} {% block title %}Dashboard
-Administrateur - NG Conciergerie{% endblock %} {% block extra_css %}
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Dashboard Administrateur - NG Conciergerie{% endblock %}
+
+{% block extra_css %}
 <style>
-  /* Variables de couleurs */
-  :root {
-    --primary: #2e7d32;
-    --primary-light: #4caf50;
-    --primary-dark: #1b5e20;
-    --secondary: #1565c0;
-    --accent: #ff9800;
-    --light: #f5f7fa;
-    --dark: #263238;
-    --gray: #546e7a;
-    --gray-light: #eceff1;
-    --success: #2e7d32;
-    --warning: #ff9800;
-    --danger: #dc2626;
-    --info: #1565c0;
-  }
-
-  /* Styles pour le dashboard */
-  .dashboard-container {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    padding: 20px;
-  }
-
-  .dashboard-header {
-    background: linear-gradient(
-      135deg,
-      var(--primary-dark) 0%,
-      var(--primary) 100%
-    );
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    color: white;
-    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .dashboard-header::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 70%
-    );
-  }
-
-  .dashboard-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .dashboard-subtitle {
-    font-size: 1rem;
-    opacity: 0.9;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Grille de statistiques */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .stat-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--gray-light);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-    border-color: var(--primary-light);
-  }
-
-  .stat-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  .stat-icon.candidatures {
-    background: linear-gradient(
-      135deg,
-      var(--primary) 0%,
-      var(--primary-light) 100%
-    );
-    color: white;
-  }
-
-  .stat-icon.messages {
-    background: linear-gradient(135deg, var(--info) 0%, #42a5f5 100%);
-    color: white;
-  }
-
-  .stat-icon.carousel {
-    background: linear-gradient(135deg, var(--accent) 0%, #ffb74d 100%);
-    color: white;
-  }
-
-  .stat-number {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--dark);
-    margin: 0.5rem 0;
-  }
-
-  .stat-label {
-    font-size: 0.9rem;
-    color: var(--gray);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Sections de données */
-  .data-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .data-section {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--gray-light);
-  }
-
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--gray-light);
-  }
-
-  .section-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--dark);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .section-title i {
-    color: var(--primary);
-  }
-
-  .view-all {
-    font-size: 0.875rem;
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-
-  .view-all:hover {
-    color: var(--primary-dark);
-    text-decoration: underline;
-  }
-
-  /* Liste des données */
-  .data-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .data-item {
-    padding: 1rem;
-    border-bottom: 1px solid var(--gray-light);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.2s ease;
-  }
-
-  .data-item:hover {
-    background-color: var(--light);
-    border-radius: 8px;
-  }
-
-  .data-item:last-child {
-    border-bottom: none;
-  }
-
-  .data-info {
-    flex: 1;
-  }
-
-  .data-name {
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 0.25rem;
-  }
-
-  .data-meta {
-    font-size: 0.875rem;
-    color: var(--gray);
-  }
-
-  .data-status {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .status-read {
-    background-color: rgba(46, 125, 50, 0.1);
-    color: var(--success);
-  }
-
-  .status-unread {
-    background-color: rgba(220, 38, 38, 0.1);
-    color: var(--danger);
-  }
-
-  .data-date {
-    font-size: 0.875rem;
-    color: var(--gray);
-    margin-left: 1rem;
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--gray);
-  }
-
-  .empty-state i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-  }
-
-  /* Boutons d'action */
-  .action-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--gray-light);
-  }
-
-  .btn-logout {
-    background: linear-gradient(135deg, var(--danger) 0%, #ef5350 100%);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .btn-logout:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
-    color: white;
-    text-decoration: none;
-  }
-
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .stat-card,
-  .data-section {
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  .stat-card:nth-child(1) {
-    animation-delay: 0.1s;
-  }
-  .stat-card:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  .stat-card:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-  .data-section:nth-child(1) {
-    animation-delay: 0.4s;
-  }
-  .data-section:nth-child(2) {
-    animation-delay: 0.5s;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .data-sections {
-      grid-template-columns: 1fr;
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .stats-grid {
-      grid-template-columns: 1fr;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+    }
+
+    /* ===== VARIABLES DE COULEURS ===== */
+    :root {
+        --sage-green: #9CAF88;
+        --sage-light: #B8C9A8;
+        --sage-dark: #7A8B6F;
+        --dark-blue: #1A1F2C;
+        --dark-blue-light: #2A3040;
+        --dark-blue-lighter: #3A4154;
+        --white: #FFFFFF;
+        --gray-light: #E8EDF0;
+        --gray-medium: #8C9AA8;
+        --success: #10B981;
+        --warning: #F59E0B;
+        --danger: #EF4444;
+        --info: #3B82F6;
+    }
+
+    /* ===== STYLES DU DASHBOARD ===== */
+    .dashboard-container {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 2rem;
+        font-family: 'Montserrat', sans-serif;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Header Dashboard */
+    .dashboard-header {
+        background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+        border: 2px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        animation: slideInLeft 0.8s ease-out 0.3s both;
+    }
+
+    .dashboard-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156, 175, 136, 0.1), transparent);
+        transition: left 0.7s ease;
+    }
+
+    .dashboard-header:hover::before {
+        left: 100%;
     }
 
     .dashboard-title {
-      font-size: 2rem;
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+        animation: fadeInUp 0.8s ease-out 0.5s both;
     }
-  }
 
-  /* Badge de notification */
-  .notification-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--danger);
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      transform: scale(1);
+    .dashboard-subtitle {
+        font-size: 1.1rem;
+        color: var(--gray-medium);
+        animation: fadeInUp 0.8s ease-out 0.6s both;
     }
-    50% {
-      transform: scale(1.1);
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
     }
-  }
 
-  /* Progress bar (optionnel pour les stats) */
-  .stat-progress {
-    height: 4px;
-    background: var(--gray-light);
-    border-radius: 2px;
-    margin-top: 0.5rem;
-    overflow: hidden;
-  }
+    .stat-card {
+        background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+        border: 2px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out both;
+        animation-delay: calc(var(--card-index) * 0.2s);
+    }
 
-  .progress-bar {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 1s ease;
-  }
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156, 175, 136, 0.1), transparent);
+        transition: left 0.7s ease;
+    }
 
-  .progress-bar.candidatures {
-    background: linear-gradient(
-      90deg,
-      var(--primary) 0%,
-      var(--primary-light) 100%
-    );
-  }
+    .stat-card:hover::before {
+        left: 100%;
+    }
 
-  .progress-bar.messages {
-    background: linear-gradient(90deg, var(--info) 0%, #42a5f5 100%);
-  }
+    .stat-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--sage-green);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
+                    0 0 50px rgba(156, 175, 136, 0.1);
+    }
 
-  .progress-bar.carousel {
-    background: linear-gradient(90deg, var(--accent) 0%, #ffb74d 100%);
-  }
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .stat-label {
+        color: var(--gray-medium);
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .stat-icon {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        color: var(--sage-green);
+        opacity: 0.3;
+        font-size: 2.5rem;
+    }
+
+    /* Data Sections */
+    .data-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .data-section {
+        background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+        border: 2px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        transition: all 0.4s ease;
+        animation: fadeInUp 0.8s ease-out both;
+        animation-delay: calc(var(--section-index) * 0.3s);
+    }
+
+    .data-section:hover {
+        border-color: var(--sage-green);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(156, 175, 136, 0.2);
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+        margin: 0;
+    }
+
+    .section-badge {
+        background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+        color: var(--white);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+        border-radius: 9999px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    /* Latest Item Card */
+    .latest-card {
+        background: rgba(156, 175, 136, 0.1);
+        border: 2px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .latest-card:hover {
+        border-color: var(--sage-green);
+        transform: translateX(5px);
+        background: rgba(156, 175, 136, 0.15);
+    }
+
+    .latest-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .latest-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--white);
+    }
+
+    .latest-time {
+        color: var(--sage-green);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .latest-contact {
+        color: var(--gray-medium);
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .latest-message {
+        color: var(--gray-light);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        border-left: 3px solid var(--sage-green);
+        padding-left: 1rem;
+    }
+
+    /* Data List */
+    .data-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .data-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .data-list::-webkit-scrollbar-track {
+        background: rgba(156, 175, 136, 0.1);
+        border-radius: 3px;
+    }
+
+    .data-list::-webkit-scrollbar-thumb {
+        background: var(--sage-green);
+        border-radius: 3px;
+    }
+
+    .data-item {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(156, 175, 136, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease-out both;
+        animation-delay: calc(var(--item-index) * 0.1s);
+    }
+
+    .data-item:hover {
+        background: rgba(156, 175, 136, 0.05);
+        transform: translateX(5px);
+        border-color: var(--sage-green);
+    }
+
+    .data-item:last-child {
+        border-bottom: none;
+    }
+
+    .data-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .data-name {
+        font-weight: 600;
+        color: var(--white);
+    }
+
+    .data-details {
+        color: var(--gray-medium);
+        font-size: 0.9rem;
+    }
+
+    .data-date {
+        color: var(--sage-green);
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--gray-medium);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--sage-green);
+        opacity: 0.3;
+        margin-bottom: 1rem;
+    }
+
+    /* Logout Button */
+    .logout-container {
+        text-align: right;
+        padding-top: 2rem;
+        border-top: 2px solid rgba(156, 175, 136, 0.2);
+        animation: fadeInUp 0.8s ease-out 1s both;
+    }
+
+    .btn-logout {
+        background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-dark) 100%);
+        border: 2px solid var(--sage-green);
+        color: var(--white);
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        background-size: 200% 100%;
+    }
+
+    .btn-logout:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(156, 175, 136, 0.3);
+        animation: shimmer 2s infinite linear;
+        background-position: 200% center;
+    }
+
+    .btn-logout:active {
+        transform: translateY(-1px);
+    }
+
+    /* Admin Badge */
+    .admin-badge {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+        color: var(--white);
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        z-index: 100;
+        animation: float 4s ease-in-out infinite;
+        box-shadow: 0 5px 15px rgba(156, 175, 136, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1rem;
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .data-sections {
+            grid-template-columns: 1fr;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+        }
+        
+        .data-section {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .dashboard-container,
+        .dashboard-header,
+        .stat-card,
+        .data-section,
+        .data-item,
+        .btn-logout {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    /* Loading Animation */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeOut 0.5s ease-out 1.5s forwards;
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(156, 175, 136, 0.1);
+        border-top: 4px solid var(--sage-green);
+        border-radius: 50%;
+        animation: rotateSlow 1s linear infinite;
+    }
+
+    @keyframes rotateSlow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Gradient Text Effect */
+    .gradient-text {
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green), var(--sage-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 100%;
+        animation: shimmer 3s infinite linear;
+    }
 </style>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
+<!-- Loading Overlay -->
+<div class="loading-overlay">
+    <div class="loading-spinner"></div>
+</div>
+
+<!-- Admin Badge -->
+<div class="admin-badge">
+    <i class="fas fa-user-shield"></i>
+    <span>Administrateur</span>
+</div>
+
 <div class="dashboard-container">
-  <!-- Header du Dashboard -->
-  <div class="dashboard-header">
-    <h1 class="dashboard-title">Dashboard Administrateur</h1>
-    <p class="dashboard-subtitle">
-      Gérez et surveillez l'activité de NG Conciergerie
-    </p>
-  </div>
-
-  <!-- Statistiques -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon candidatures">
-        <i class="fas fa-file-alt"></i>
-      </div>
-      <h3 class="stat-number">{{ total_candidatures }}</h3>
-      <p class="stat-label">Candidatures</p>
-      <div class="stat-progress">
-        <div
-          class="progress-bar candidatures"
-          style="width: {{ total_candidatures|default:0 }}%"
-        ></div>
-      </div>
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard Administrateur</h1>
+        <p class="dashboard-subtitle">Surveillance et gestion en temps réel de l'activité NG Conciergerie</p>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon messages">
-        <i class="fas fa-envelope"></i>
-      </div>
-      <h3 class="stat-number">{{ total_messages }}</h3>
-      <p class="stat-label">Messages</p>
-      <div class="stat-progress">
-        <div
-          class="progress-bar messages"
-          style="width: {{ total_messages|default:0 }}%"
-        ></div>
-      </div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-icon carousel">
-        <i class="fas fa-images"></i>
-      </div>
-      <h3 class="stat-number">{{ total_carousel }}</h3>
-      <p class="stat-label">Images Carousel</p>
-      <div class="stat-progress">
-        <div
-          class="progress-bar carousel"
-          style="width: {{ total_carousel|default:0 }}%"
-        ></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sections de données -->
-  <div class="data-sections">
-    <!-- Dernières Candidatures -->
-    <div class="data-section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <i class="fas fa-users"></i>
-          Dernières Candidatures
-        </h2>
-        <a href="#" class="view-all">Voir tout</a>
-      </div>
-
-      {# Encadré pour la dernière candidature reçue (aperçu) #} {% if
-      latest_application %}
-      <div
-        class="stat-card"
-        style="
-          margin-bottom: 1rem;
-          padding: 1rem;
-          border-left: 4px solid var(--primary);
-        "
-      >
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            align-items: flex-start;
-          "
-        >
-          <div>
-            <div style="font-weight: 700; color: var(--dark)">
-              Nouvelle candidature : {{ latest_application.prenom }} {{
-              latest_application.nom }}
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card" style="--card-index: 1;">
+            <div class="stat-number">{{ total_candidatures }}</div>
+            <div class="stat-label">Candidatures</div>
+            <div class="stat-icon">
+                <i class="fas fa-file-alt"></i>
             </div>
-            <div style="color: var(--gray)">
-              {{ latest_application.email }} · {{ latest_application.telephone
-              }}
+        </div>
+        
+        <div class="stat-card" style="--card-index: 2;">
+            <div class="stat-number">{{ total_messages }}</div>
+            <div class="stat-label">Messages</div>
+            <div class="stat-icon">
+                <i class="fas fa-envelope"></i>
             </div>
-            {% if latest_application.message %}
-            <div style="margin-top: 0.5rem; color: var(--dark)">
-              {{ latest_application.message|linebreaksbr }}
+        </div>
+        
+        <div class="stat-card" style="--card-index: 3;">
+            <div class="stat-number">{{ total_carousel }}</div>
+            <div class="stat-label">Images Carousel</div>
+            <div class="stat-icon">
+                <i class="fas fa-images"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Sections -->
+    <div class="data-sections">
+        <!-- Latest Applications Section -->
+        <div class="data-section" style="--section-index: 1;">
+            <div class="section-header">
+                <h2><i class="fas fa-users mr-2"></i> Dernières Candidatures</h2>
+                <span class="section-badge">{{ latest_application_count }} Nouveaux</span>
+            </div>
+
+            {% if latest_application %}
+            <div class="latest-card">
+                <div class="latest-header">
+                    <div class="latest-name">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        {{ latest_application.prenom }} {{ latest_application.nom }}
+                    </div>
+                    <div class="latest-time">
+                        <i class="far fa-clock mr-1"></i>
+                        {{ latest_application.date_soumission|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+                
+                <div class="latest-contact">
+                    <i class="fas fa-envelope mr-1"></i> {{ latest_application.email }}
+                    <br>
+                    <i class="fas fa-phone mr-1"></i> {{ latest_application.telephone }}
+                </div>
+                
+                {% if latest_application.message %}
+                <div class="latest-message">
+                    {{ latest_application.message|linebreaksbr }}
+                </div>
+                {% endif %}
+                
+                <div style="text-align: right;">
+                    <button class="view-profile-btn" style="background: none; border: none; color: var(--sage-green); cursor: pointer;">
+                        <i class="fas fa-eye mr-1"></i> Voir le profil complet
+                    </button>
+                </div>
             </div>
             {% endif %}
-          </div>
-          <div style="text-align: right; color: var(--gray)">
-            {{ latest_application.date_soumission|date:"d/m/Y H:i" }}
-          </div>
-        </div>
-      </div>
-      {% endif %}
 
-      <ul class="data-list">
-        {% for application in JobApplication.objects.all|slice:":5" %}
-        <li class="data-item">
-          <div class="data-info">
-            <div class="data-name">
-              {{ application.prenom }} {{ application.nom }}
+            <ul class="data-list">
+                {% for application in JobApplication.objects.all|slice:":5" %}
+                <li class="data-item" style="--item-index: {{ forloop.counter }};">
+                    <div class="data-info">
+                        <div class="data-name">
+                            <i class="fas fa-user mr-1"></i>
+                            {{ application.prenom }} {{ application.nom }}
+                        </div>
+                        <div class="data-details">
+                            {{ application.email }}
+                        </div>
+                    </div>
+                    <div class="data-date">
+                        {{ application.date_soumission|date:"d/m/Y" }}
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <p>Aucune candidature pour le moment.</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Latest Messages Section -->
+        <div class="data-section" style="--section-index: 2;">
+            <div class="section-header">
+                <h2><i class="fas fa-comments mr-2"></i> Derniers Messages</h2>
+                <span class="section-badge">{{ latest_message_count }} Non lus</span>
             </div>
-            <div class="data-meta">{{ application.email }}</div>
-          </div>
-          <div class="data-date">
-            {{ application.date_soumission|date:"d/m/Y" }}
-          </div>
-        </li>
-        {% empty %}
-        <li class="empty-state">
-          <i class="fas fa-user-slash"></i>
-          <p>Aucune candidature pour le moment.</p>
-        </li>
-        {% endfor %}
-      </ul>
+
+            {% if latest_message %}
+            <div class="latest-card">
+                <div class="latest-header">
+                    <div class="latest-name">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        {{ latest_message.prenom }} {{ latest_message.nom }}
+                    </div>
+                    <div class="latest-time">
+                        <i class="far fa-clock mr-1"></i>
+                        {{ latest_message.date_envoi|date:"d/m/Y H:i" }}
+                    </div>
+                </div>
+                
+                <div class="latest-contact">
+                    <i class="fas fa-envelope mr-1"></i> {{ latest_message.email }}
+                    <br>
+                    <i class="fas fa-phone mr-1"></i> {{ latest_message.telephone }}
+                </div>
+                
+                <div class="latest-message">
+                    {{ latest_message.message|linebreaksbr|truncatechars:200 }}
+                </div>
+                
+                <div style="text-align: right;">
+                    <button class="view-message-btn" style="background: none; border: none; color: var(--sage-green); cursor: pointer;">
+                        <i class="fas fa-envelope-open mr-1"></i> Lire le message complet
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+            <ul class="data-list">
+                {% for msg in ContactMessage.objects.all|slice:":5" %}
+                <li class="data-item" style="--item-index: {{ forloop.counter }};">
+                    <div class="data-info">
+                        <div class="data-name">
+                            <i class="fas fa-user mr-1"></i>
+                            {{ msg.prenom }} {{ msg.nom }}
+                        </div>
+                        <div class="data-details">
+                            {{ msg.email|truncatechars:30 }}
+                        </div>
+                    </div>
+                    <div class="data-date">
+                        {{ msg.date_envoi|date:"d/m/Y" }}
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-comment-slash"></i>
+                    </div>
+                    <p>Aucun message pour le moment.</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
-    <!-- Derniers Messages -->
-    <div class="data-section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <i class="fas fa-comments"></i>
-          Derniers Messages
-        </h2>
-        <a href="#" class="view-all">Voir tout</a>
-      </div>
-
-      {# Encadré pour le dernier message reçu (affiché s'il existe) #} {% if
-      latest_message %}
-      <div
-        class="stat-card"
-        style="
-          margin-bottom: 1rem;
-          padding: 1rem;
-          border-left: 4px solid var(--info);
-        "
-      >
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            align-items: flex-start;
-          "
-        >
-          <div>
-            <div style="font-weight: 700; color: var(--dark)">
-              Message de {{ latest_message.prenom }} {{ latest_message.nom }}
-            </div>
-            <div style="color: var(--gray)">
-              {{ latest_message.email }} · {{ latest_message.telephone }}
-            </div>
-            <div style="margin-top: 0.5rem; color: var(--dark)">
-              {{ latest_message.message|linebreaksbr }}
-            </div>
-          </div>
-          <div style="text-align: right; color: var(--gray)">
-            {{ latest_message.date_envoi|date:"d/m/Y H:i" }}
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      <ul class="data-list">
-        {% for msg in ContactMessage.objects.all|slice:":5" %}
-        <li class="data-item">
-          <div class="data-info">
-            <div class="data-name">{{ msg.prenom }} {{ msg.nom }}</div>
-            <div class="data-meta">{{ msg.email }}</div>
-          </div>
-          <div class="flex items-center">
-            <span
-              class="data-status {{ msg.lu|yesno:'status-read,status-unread' }}"
-            >
-              {{ msg.lu|yesno:"Lu,Non lu" }}
-            </span>
-            <span class="data-date"> {{ msg.date_envoi|date:"d/m/Y" }} </span>
-          </div>
-        </li>
-        {% empty %}
-        <li class="empty-state">
-          <i class="fas fa-inbox"></i>
-          <p>Aucun message pour le moment.</p>
-        </li>
-        {% endfor %}
-      </ul>
+    <!-- Logout Section -->
+    <div class="logout-container">
+        <a href="{% url 'proclean:admin_logout' %}" class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Déconnexion</span>
+        </a>
     </div>
-  </div>
-
-  <!-- Boutons d'action -->
-  <div class="action-buttons">
-    <a href="{% url 'proclean:admin_logout' %}" class="btn-logout">
-      <i class="fas fa-sign-out-alt"></i>
-      Déconnexion
-    </a>
-  </div>
 </div>
-{% endblock %} {% block extra_js %}
+{% endblock %}
+
+{% block extra_js %}
 <script>
-  // Ajout des icônes Font Awesome
-  document.addEventListener("DOMContentLoaded", function () {
-    // Ajouter dynamiquement Font Awesome si non présent
-    if (!document.querySelector('link[href*="font-awesome"]')) {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href =
-        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css";
-      document.head.appendChild(link);
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Loading overlay removal
+        setTimeout(() => {
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.remove();
+                }, 500);
+            }
+        }, 1500);
 
-    // Animation des chiffres des statistiques
-    const statNumbers = document.querySelectorAll(".stat-number");
-    statNumbers.forEach((stat) => {
-      const finalValue = parseInt(stat.textContent);
-      let currentValue = 0;
-      const increment = finalValue / 50;
-      const timer = setInterval(() => {
-        currentValue += increment;
-        if (currentValue >= finalValue) {
-          currentValue = finalValue;
-          clearInterval(timer);
+        // Animate stats cards on load
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+            card.style.opacity = '0';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 500 + (index * 200));
+        });
+
+        // Animate data items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Animate data items
+        document.querySelectorAll('.data-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(20px)';
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            item.style.transitionDelay = `${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Hover effects for cards
+        document.querySelectorAll('.stat-card, .data-section, .latest-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('latest-card')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Button hover effects
+        const logoutBtn = document.querySelector('.btn-logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            logoutBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
         }
-        stat.textContent = Math.floor(currentValue);
-      }, 20);
+
+        // View buttons functionality
+        document.querySelectorAll('.view-profile-btn, .view-message-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Add your modal or page navigation logic here
+                console.log('View details clicked');
+                
+                // Example: Show a notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #9CAF88, #7A8B6F);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    z-index: 1000;
+                    animation: slideInRight 0.3s ease-out;
+                `;
+                notification.innerHTML = `
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Fonctionnalité de visualisation à implémenter
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            });
+        });
+
+        // Real-time updates simulation
+        function updateStats() {
+            // Simulate real-time updates
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const current = parseInt(stat.textContent);
+                const randomIncrement = Math.random() > 0.7 ? 1 : 0;
+                if (randomIncrement) {
+                    const newValue = current + randomIncrement;
+                    stat.textContent = newValue;
+                    
+                    // Add animation
+                    stat.style.animation = 'pulse 0.5s ease';
+                    setTimeout(() => {
+                        stat.style.animation = '';
+                    }, 500);
+                }
+            });
+        }
+
+        // Update stats every 30 seconds
+        setInterval(updateStats, 30000);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+L for logout
+            if (e.ctrlKey && e.key === 'l') {
+                e.preventDefault();
+                logoutBtn.click();
+            }
+            
+            // Escape to clear selections
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.data-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+
+        // Selection functionality for data items
+        document.querySelectorAll('.data-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+                if (this.classList.contains('active')) {
+                    this.style.background = 'rgba(156, 175, 136, 0.15)';
+                    this.style.borderLeft = '4px solid var(--sage-green)';
+                } else {
+                    this.style.background = '';
+                    this.style.borderLeft = '';
+                }
+            });
+        });
+
+        console.log('Dashboard admin chargé avec animations!');
     });
 
-    // Effet de survol sur les cartes
-    const statCards = document.querySelectorAll(".stat-card");
-    statCards.forEach((card) => {
-      card.addEventListener("mouseenter", () => {
-        const progressBar = card.querySelector(".progress-bar");
-        if (progressBar) {
-          progressBar.style.transform = "scaleX(1.05)";
+    // Handle page visibility changes
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            // Restart animations when page becomes visible again
+            const floatingElements = document.querySelectorAll('.section-badge, .admin-badge');
+            floatingElements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = '';
+                }, 10);
+            });
         }
-      });
-
-      card.addEventListener("mouseleave", () => {
-        const progressBar = card.querySelector(".progress-bar");
-        if (progressBar) {
-          progressBar.style.transform = "scaleX(1)";
-        }
-      });
     });
-  });
 </script>
 {% endblock %}
