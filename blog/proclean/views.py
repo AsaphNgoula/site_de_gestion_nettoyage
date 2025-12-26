@@ -95,36 +95,76 @@ def send_message(request):
         {request.build_absolute_uri(reverse('admin:proclean_contactmessage_change', args=[contact_msg.id]))}
         """
         
-        # ENVOI SIMPLE avec send_mail (comme votre fonction qui fonctionne)
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,  # asaphngoula237@gmail.com
-            [settings.EMAIL_HOST_USER],   # asaphngoula237@gmail.com (MÊME ADRESSE !)
-            fail_silently=False,
-        )
-        print(f"✅ Message envoyé à l'admin")
-        
-        # ========== 2. CONFIRMATION À L'UTILISATEUR ==========
+        # ENVOI HTML à l'admin (EmailMultiAlternatives avec alternative HTML)
+        try:
+            html_admin = render_to_string('email/to_admin.html', {
+                'nom_complet': f"{prenom} {nom}",
+                'email': email,
+                'telephone': telephone,
+                'date_envoi': contact_msg.date_envoi,
+                'message': message_text,
+                'admin_url': request.build_absolute_uri(reverse('admin:proclean_contactmessage_change', args=[contact_msg.id]))
+            })
+
+            email_admin = EmailMultiAlternatives(
+                subject=subject,
+                body=body,
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
+                to=[settings.EMAIL_HOST_USER],
+                reply_to=[email],
+            )
+            email_admin.attach_alternative(html_admin, 'text/html')
+            email_admin.send(fail_silently=False)
+            print(f"✅ Message HTML envoyé à l'admin")
+        except Exception as e:
+            print(f"⚠️ Échec envoi HTML admin, fallback texte: {e}")
+            send_mail(
+                subject,
+                body,
+                getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            print(f"✅ Message texte envoyé à l'admin (fallback)")
+
+        # ========== 2. CONFIRMATION À L'UTILISATEUR (HTML) ==========
         confirmation_body = f"""
         Bonjour {prenom},
-        
+
         Nous avons bien reçu votre message et vous en remercions.
-        
+
         Notre équipe vous répondra dans les plus brefs délais.
-        
+
         Cordialement,
         NG Conciergerie
         """
-        
-        send_mail(
-            "✅ Confirmation de votre message - NG Conciergerie",
-            confirmation_body,
-            settings.DEFAULT_FROM_EMAIL,
-            [email],  # À l'utilisateur
-            fail_silently=False,
-        )
-        print(f"✅ Confirmation envoyée à {email}")
+        try:
+            html_user = f"""<html><body>
+                <p>Bonjour {prenom},</p>
+                <p>Nous avons bien reçu votre message et vous en remercions.</p>
+                <p>Notre équipe vous répondra dans les plus brefs délais.</p>
+                <p>Cordialement,<br>NG Conciergerie</p>
+                </body></html>"""
+
+            email_user = EmailMultiAlternatives(
+                subject="✅ Confirmation de votre message - NG Conciergerie",
+                body=strip_tags(html_user),
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
+                to=[email],
+            )
+            email_user.attach_alternative(html_user, 'text/html')
+            email_user.send(fail_silently=False)
+            print(f"✅ Confirmation HTML envoyée à {email}")
+        except Exception as e:
+            print(f"⚠️ Échec envoi confirmation HTML, fallback texte: {e}")
+            send_mail(
+                "✅ Confirmation de votre message - NG Conciergerie",
+                confirmation_body,
+                getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
+                [email],
+                fail_silently=False,
+            )
+            print(f"✅ Confirmation texte envoyée à {email} (fallback)")
         
         messages.success(request, "Votre message a bien été envoyé !")
         
@@ -199,7 +239,8 @@ def galerie(request):
     """
     return render(request, 'galerie.html')
 
-
+def services(request):
+    return render(request, 'services.html')
 
 def recrutement(request):
     """Vue pour la page de recrutement"""
@@ -213,17 +254,21 @@ def recrutement(request):
                 application = form.save(commit=False)
                 
                 # Gérer les disponibilités
-                application.disponibilites = form.cleaned_data['disponibilites']
-                
-                # Convertir les choix radio en booléens
+                application.disponibilites = form.cleaned_data.get('disponibilites', [])
+
+                # Expérience et véhicule : TypedChoiceField renvoie déjà un bool
                 experience_menage = form.cleaned_data.get('experience_menage')
                 vehicule = form.cleaned_data.get('vehicule')
-                
+
                 if experience_menage is not None:
-                    application.experience_menage = (experience_menage == 'True')
-                
+                    application.experience_menage = bool(experience_menage)
+
                 if vehicule is not None:
-                    application.vehicule = (vehicule == 'True')
+                    application.vehicule = bool(vehicule)
+
+                # Forcer la prise en compte de la région saisie (y compris 'autre')
+                application.region = form.cleaned_data.get('region')
+                application.region_autre = form.cleaned_data.get('region_autre')
                 
                 # Sauvegarder
                 application.save()
@@ -296,10 +341,22 @@ def send_application_emails(application, request):
         email_admin = EmailMultiAlternatives(
             subject=subject_admin,
             body=body_admin,
-            from_email=settings.DEFAULT_FROM_EMAIL,
+            from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
             to=[settings.EMAIL_HOST_USER],
             reply_to=[application.email],
         )
+
+        # Préparer la version HTML (template) pour l'admin
+        try:
+            html_admin = render_to_string('email/application_to_admin.html', {
+                'application': application,
+                'admin_url': request.build_absolute_uri(reverse('admin:proclean_jobapplication_changelist')),
+                'site_url': request.build_absolute_uri('/'),
+            })
+            # Joindre l'HTML en alternative
+            email_admin.attach_alternative(html_admin, 'text/html')
+        except Exception as e:
+            print(f"⚠️ Impossible de renderer le template HTML admin: {e}")
         
         # Attacher le CV si il existe
         if application.cv and application.cv.file:
@@ -343,13 +400,16 @@ def send_application_emails(application, request):
                     reply_to=[application.email],
                 )
         
-        # Envoyer l'email admin
-        email_admin.send()
-        print(f"✅ Email admin envoyé à {settings.EMAIL_HOST_USER} avec CV")
-        
-        # 2. Email de confirmation au candidat (sans CV)
+        # Envoyer l'email admin (avec CV et HTML si disponible)
+        try:
+            email_admin.send(fail_silently=False)
+            print(f"✅ Email admin envoyé à {settings.EMAIL_HOST_USER} avec CV")
+        except Exception as e:
+            print(f"❌ Erreur envoi email admin: {e}")
+
+        # 2. Email de confirmation au candidat (HTML)
         subject_candidate = "🎉 Confirmation de votre candidature - NG Conciergerie"
-        
+
         body_candidate = f"""
         Bonjour {application.prenom},
 
@@ -378,16 +438,38 @@ def send_application_emails(application, request):
         Cordialement,
         L'équipe RH de NG Conciergerie
         """
-        
-        # Email simple au candidat
-        send_mail(
-            subject_candidate,
-            body_candidate,
-            settings.DEFAULT_FROM_EMAIL,
-            [application.email],
-            fail_silently=False,
-        )
-        print(f"✅ Email confirmation envoyé à {application.email}")
+
+        try:
+            html_candidate = render_to_string('email/application_confirmation.html', {
+                'candidate_name': f"{application.prenom} {application.nom}",
+                'application': application,
+                'site_name': 'NG Conciergerie',
+                'site_url': request.build_absolute_uri('/'),
+                'contact_email': 'contact@ngconciergerie.com',
+            })
+
+            email_candidate = EmailMultiAlternatives(
+                subject=subject_candidate,
+                body=body_candidate,
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
+                to=[application.email],
+            )
+            email_candidate.attach_alternative(html_candidate, 'text/html')
+            email_candidate.send(fail_silently=False)
+            print(f"✅ Email confirmation (HTML) envoyé à {application.email}")
+        except Exception as e:
+            print(f"⚠️ Erreur envoi confirmation HTML, fallback texte: {e}")
+            try:
+                send_mail(
+                    subject_candidate,
+                    body_candidate,
+                    getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
+                    [application.email],
+                    fail_silently=False,
+                )
+                print(f"✅ Email confirmation texte envoyé à {application.email} (fallback)")
+            except Exception as e2:
+                print(f"❌ Erreur fallback confirmation candidat: {e2}")
         
         print(f"=== EMAILS ENVOYÉS AVEC SUCCÈS ===")
         
@@ -576,10 +658,19 @@ def dashboard(request):
     total_messages = ContactMessage.objects.count()
     total_carousel = CarouselImage.objects.count()
 
+    # Dernière candidature non traitée (ou la plus récente)
+    latest_application = JobApplication.objects.order_by('-date_soumission').first()
+    # Dernier message non lu de contact, sinon la plus récente
+    latest_message = ContactMessage.objects.filter(lu=False).order_by('-date_envoi').first()
+    if not latest_message:
+        latest_message = ContactMessage.objects.order_by('-date_envoi').first()
+
     context = {
         'total_candidatures': total_candidatures,
         'total_messages': total_messages,
         'total_carousel': total_carousel,
+        'latest_application': latest_application,
+        'latest_message': latest_message,
     }
     return render(request, 'dashbord.html', context)
 

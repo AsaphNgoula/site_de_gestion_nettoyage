@@ -1,0 +1,563 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Nos Services - NG Conciergerie{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ===== STYLES POUR LA PAGE SERVICES ===== */
+    :root {
+        --sage-green: #9CAF88;
+        --sage-light: #B8C9A8;
+        --sage-dark: #7A8B6F;
+        --dark-blue: #1A1F2C;
+        --dark-blue-light: #2A3040;
+        --dark-blue-lighter: #3A4154;
+        --white: #FFFFFF;
+        --gray-light: #E8EDF0;
+        --gray-medium: #8C9AA8;
+    }
+
+    .services-hero {
+        background: linear-gradient(135deg, var(--dark-blue) 0%, #0f172a 100%);
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{% static 'images/services-bg.jpg' %}") center/cover no-repeat;
+        opacity: 0.1;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--sage-light), var(--sage-green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: var(--gray-light);
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .services-section {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 6rem 0;
+    }
+
+    .section-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--white);
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.25rem;
+        color: var(--gray-medium);
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+        line-height: 1.6;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+        margin-top: 3rem;
+    }
+
+    .service-card-link {
+        text-decoration: none;
+        display: block;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-card-link:hover {
+        transform: translateY(-10px);
+    }
+
+    .service-card {
+        background: linear-gradient(145deg, var(--dark-blue-light), var(--dark-blue));
+        border: 2px solid rgba(156, 175, 136, 0.2);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+    }
+
+    .service-card:hover {
+        border-color: var(--sage-green);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                    0 0 100px rgba(156, 175, 136, 0.1);
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156, 175, 136, 0.1), transparent);
+        transition: left 0.7s ease;
+    }
+
+    .service-card:hover::before {
+        left: 100%;
+    }
+
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        color: var(--white);
+        font-size: 2rem;
+    }
+
+    .service-badge {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: linear-gradient(135deg, var(--sage-green), var(--sage-dark));
+        color: var(--white);
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .service-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 1rem;
+    }
+
+    .service-description {
+        color: var(--gray-light);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .service-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .service-feature {
+        color: var(--gray-medium);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .service-feature::before {
+        content: '✓';
+        color: var(--sage-green);
+        margin-right: 0.75rem;
+        font-weight: bold;
+    }
+
+    .service-cta {
+        display: flex;
+        align-items: center;
+        color: var(--sage-green);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .service-cta:hover {
+        color: var(--sage-light);
+    }
+
+    .service-cta svg {
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card-link:hover .service-cta svg {
+        transform: translateX(5px);
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, var(--dark-blue) 0%, #0f172a 100%);
+        padding: 6rem 0;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        font-size: 1.25rem;
+        color: var(--gray-medium);
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+    }
+
+    .cta-button {
+        background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-dark) 100%);
+        border: 2px solid var(--sage-green);
+        color: var(--white);
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(156, 175, 136, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .services-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .service-card {
+            padding: 2rem;
+        }
+        
+        .services-section {
+            padding: 4rem 0;
+        }
+        
+        .cta-section {
+            padding: 4rem 0;
+        }
+    }
+
+    /* Animation d'apparition */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .service-card {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out forwards;
+        animation-delay: calc(var(--card-index) * 0.1s);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero">
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="hero-title">Nos Services de Nettoyage</h1>
+            <p class="hero-subtitle">
+                Découvrez notre gamme complète de services de nettoyage professionnel. 
+                De l'entretien régulier au nettoyage industriel, nous avons la solution adaptée à vos besoins.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid Section -->
+<section class="services-section">
+    <div class="container mx-auto px-4">
+        <h2 class="section-title">Services Disponibles</h2>
+        <p class="section-subtitle">
+            Chaque service est exécuté par nos équipes qualifiées avec des produits écologiques 
+            et un équipement professionnel de pointe.
+        </p>
+
+        <div class="services-grid">
+            <!-- Carte 1: Nettoyage Régulier -->
+            <a href="{% url 'proclean:nettoyage_regulier' %}" class="service-card-link" style="--card-index: 1;">
+                <div class="service-card">
+                    <span class="service-badge">Populaire</span>
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage Régulier</h3>
+                    <p class="service-description">
+                        Un nettoyage complet et régulier pour maintenir votre espace toujours propre et accueillant. 
+                        Idéal pour un entretien hebdomadaire ou mensuel.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Nettoyage complet des sols</li>
+                        <li class="service-feature">Dépoussiérage des surfaces</li>
+                        <li class="service-feature">Nettoyage des sanitaires</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte 2: Nettoyage en Profondeur -->
+            <a href="{% url 'proclean:nettoyage_profond' %}" class="service-card-link" style="--card-index: 2;">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage en Profondeur</h3>
+                    <p class="service-description">
+                        Un nettoyage intensif qui atteint les moindres recoins pour une propreté maximale. 
+                        Parfait pour le nettoyage de printemps.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Nettoyage derrière les appareils</li>
+                        <li class="service-feature">Décrasser joints et recoins</li>
+                        <li class="service-feature">Dégreissage complet cuisine</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte 3: Nettoyage Industriel -->
+            <a href="{% url 'proclean:nettoyage_industriel' %}" class="service-card-link" style="--card-index: 3;">
+                <div class="service-card">
+                    <span class="service-badge">Spécialisé</span>
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage Industriel</h3>
+                    <p class="service-description">
+                        Service spécialisé pour les industries, nettoyage complet avant et après travaux. 
+                        Équipements professionnels.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Nettoyage post-travaux</li>
+                        <li class="service-feature">Dégraissage industriel</li>
+                        <li class="service-feature">Équipement professionnel</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte 4: Nettoyage Airbnb -->
+            <a href="{% url 'proclean:nettoyage_airbnb' %}" class="service-card-link" style="--card-index: 4;">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage Airbnb</h3>
+                    <p class="service-description">
+                        Service de nettoyage professionnel spécialement conçu pour les locations Airbnb. 
+                        Garantie de propreté entre chaque location.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Changement draps/serviettes</li>
+                        <li class="service-feature">Nettoyage rapide et efficace</li>
+                        <li class="service-feature">Restockage des produits</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte 5: Nettoyage de Tapis -->
+            <a href="{% url 'proclean:nettoyage_tapis' %}" class="service-card-link" style="--card-index: 5;">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage de Tapis</h3>
+                    <p class="service-description">
+                        Service spécialisé de nettoyage de tapis avec équipement professionnel. 
+                        Élimination des taches, odeurs et allergènes.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Prétraitement des taches</li>
+                        <li class="service-feature">Nettoyage à la vapeur</li>
+                        <li class="service-feature">Désodorisation complète</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Carte 6: Nettoyage Commercial -->
+            <a href="{% url 'proclean:nettoyage_commercial' %}" class="service-card-link" style="--card-index: 6;">
+                <div class="service-card">
+                    <span class="service-badge">Entreprise</span>
+                    <div class="service-icon">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Nettoyage Commercial</h3>
+                    <p class="service-description">
+                        Services de nettoyage professionnel pour bureaux, commerces et établissements. 
+                        Programmes flexibles selon vos horaires.
+                    </p>
+                    <ul class="service-features">
+                        <li class="service-feature">Nettoyage quotidien bureaux</li>
+                        <li class="service-feature">Entretien espaces communs</li>
+                        <li class="service-feature">Contrat personnalisé</li>
+                    </ul>
+                    <div class="service-cta">
+                        <span>En savoir plus</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container mx-auto px-4">
+        <h2 class="cta-title">Vous avez un projet spécifique ?</h2>
+        <p class="cta-text">
+            Nos équipes sont formées pour répondre à tous vos besoins en nettoyage. 
+            Contactez-nous pour un devis personnalisé adapté à votre situation.
+        </p>
+        <a href="{% url 'proclean:contact' %}" class="cta-button">
+            <span>Demander un Devis</span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animation d'apparition des cartes
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.opacity = '1'; // Pour les navigateurs qui ne supportent pas l'animation
+        });
+
+        // Effet hover amélioré
+        const serviceLinks = document.querySelectorAll('.service-card-link');
+        serviceLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Scroll smooth pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#') && this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        console.log('Page services chargée avec succès!');
+    });
+</script>
+{% endblock %}

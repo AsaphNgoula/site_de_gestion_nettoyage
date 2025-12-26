@@ -359,8 +359,11 @@
               >
             </li>
             <li>
-              <a href="#services" class="navbar-item">Services</a>
-            </li>
+              <a href="{% url 'proclean:services' %}" 
+                 class="navbar-item {% if request.resolver_match.url_name == 'services' %}active{% endif %}">
+                  Services
+              </a>
+          </li>
             <li>
               <a href="{% url 'proclean:about' %}" class="navbar-item">À propos</a>
             </li>
@@ -428,12 +431,12 @@
             >
           </li>
           <li>
-            <a
-              href="#services"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
-              >Services</a
-            >
-          </li>
+            <a href="{% url 'proclean:services' %}" 
+               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300">
+                Services
+            </a>
+        </li>
+        
           <li>
             <a
               href="{% url 'proclean:about' %}"
@@ -556,7 +559,7 @@
                 <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
                 </svg>
-                <a href="#services" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                <a href="{% url 'proclean:services' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
                   Services
                 </a>
               </li>

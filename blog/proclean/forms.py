@@ -20,17 +20,23 @@ class JobApplicationForm(forms.ModelForm):
         label="Disponibilités *"
     )
     
-    # Champs radio personnalisés
-    experience_menage = forms.ChoiceField(
-        choices=[(True, 'Oui'), (False, 'Non')],
+    # Champs radio personnalisés (TypedChoiceField -> coerce en bool)
+    BOOL_CHOICES = [('True', 'Oui'), ('False', 'Non')]
+
+    experience_menage = forms.TypedChoiceField(
+        choices=BOOL_CHOICES,
         widget=forms.RadioSelect,
+        coerce=lambda x: x == 'True',
+        empty_value=False,
         required=True,
         label="Avez-vous de l'expérience en entretien ménager ? *"
     )
-    
-    vehicule = forms.ChoiceField(
-        choices=[(True, 'Oui'), (False, 'Non')],
+
+    vehicule = forms.TypedChoiceField(
+        choices=BOOL_CHOICES,
         widget=forms.RadioSelect,
+        coerce=lambda x: x == 'True',
+        empty_value=False,
         required=True,
         label="Possédez-vous un véhicule ou moyen de transport fiable ? *"
     )
@@ -77,14 +83,7 @@ class JobApplicationForm(forms.ModelForm):
         if region == 'autre' and not region_autre:
             self.add_error('region_autre', "Veuillez préciser votre région.")
         
-        # Conversion des choix radio en booléens
-        experience_menage = cleaned_data.get('experience_menage')
-        vehicule = cleaned_data.get('vehicule')
-        
-        if experience_menage is not None:
-            cleaned_data['experience_menage'] = (experience_menage == 'True')
-        
-        if vehicule is not None:
-            cleaned_data['vehicule'] = (vehicule == 'True')
+        # Les TypedChoiceField ci-dessus coerceront déjà les valeurs en bool
+        # Aucun post-traitement nécessaire ici pour ces champs
         
         return cleaned_data

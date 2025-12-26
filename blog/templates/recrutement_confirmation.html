@@ -1,32 +1,44 @@
 <!-- blog/templates/confirmation.html -->
-{% extends "_base.html" %}
-{% load static %}
-
-{% block title %}Message envoyé — NG Conciergerie{% endblock %}
-
-{% block content %}
-<div class="min-h-[70vh] flex items-center justify-center px-4 py-12 bg-gradient-to-b from-white to-gray-50">
+{% extends "_base.html" %} {% load static %} {% block title %}Message envoyé —
+NG Conciergerie{% endblock %} {% block content %}
+<div
+  class="min-h-[70vh] flex items-center justify-center px-4 py-12 bg-gradient-to-b from-white to-gray-50"
+>
   <div class="max-w-2xl w-full mx-auto">
     <!-- Carte de confirmation -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-      
+    <div
+      class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+    >
       <!-- En-tête verte -->
       <div class="bg-[#9CAF88] p-8 text-center">
         <div class="flex justify-center mb-4">
-          <div class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-            <svg class="w-12 h-12 text-[#9CAF88]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          <div
+            class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg"
+          >
+            <svg
+              class="w-12 h-12 text-[#9CAF88]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
             </svg>
           </div>
         </div>
         <h1 class="text-2xl md:text-3xl font-bold text-white font-montserrat">
-          Merci {{ prenom }} !
+          Merci {{ candidate_name }} !
         </h1>
         <p class="text-white/90 mt-2 font-montserrat">
           Votre message a été envoyé avec succès
         </p>
       </div>
-      
+
       <!-- Contenu -->
       <div class="p-6 md:p-8">
         <!-- Message principal -->
@@ -34,55 +46,98 @@
           <p class="text-lg text-gray-700 font-montserrat mb-6">
             Nous avons bien reçu votre message et nous vous en remercions.
           </p>
-          
+
           <!-- Ligne décorative -->
           <div class="relative my-10">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-gray-200"></div>
             </div>
             <div class="relative flex justify-center">
-              <span class="px-4 bg-white text-gray-500 font-montserrat text-sm font-medium">
+              <span
+                class="px-4 bg-white text-gray-500 font-montserrat text-sm font-medium"
+              >
                 Nous vous répondrons sous peu
               </span>
             </div>
           </div>
         </div>
-        
+
         <!-- Informations de contact -->
         <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
-              <svg class="w-6 h-6 text-[#9CAF88]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              <svg
+                class="w-6 h-6 text-[#9CAF88]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
               </svg>
             </div>
             <div>
-              <h3 class="text-lg font-semibold text-gray-800 font-montserrat mb-2">
+              <h3
+                class="text-lg font-semibold text-gray-800 font-montserrat mb-2"
+              >
                 Réponse par email
               </h3>
               <p class="text-gray-600 font-montserrat mb-3">
-                Nous vous répondrons à l'adresse suivante : {{ email }}
+                Nous vous répondrons à l'adresse suivante :
+                <span class="text-blue-800 font-medium"
+                  >{{ candidate_email }}</span
+                >
               </p>
-              <div class="inline-flex items-center bg-[#9CAF88]/10 px-4 py-3 rounded-lg border border-[#9CAF88]/20">
-                <svg class="w-5 h-5 text-[#9CAF88] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+              <div
+                class="inline-flex items-center bg-[#9CAF88]/10 px-4 py-3 rounded-lg border border-[#9CAF88]/20"
+              >
+                <svg
+                  class="w-5 h-5 text-[#9CAF88] mr-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                  ></path>
                 </svg>
-                <span class="text-[#9CAF88] font-medium font-montserrat text-lg">{{ email }}</span>
+                <span class="text-blue-800 font-medium font-montserrat text-lg"
+                  >{{ candidate_email }}</span
+                >
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- Délai estimé -->
         <div class="text-center text-gray-500 text-sm font-montserrat mb-10">
           <div class="inline-flex items-center space-x-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
             </svg>
-            <span>Nous traitons votre demande sous 24 à 48 heures ouvrables.</span>
+            <span
+              >Nous traitons votre demande sous 24 à 48 heures ouvrables.</span
+            >
           </div>
         </div>
-        
+
         <!-- Boutons d'action -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
@@ -98,7 +153,7 @@
             Envoyer un autre message
           </a>
         </div>
-        
+
         <!-- Message de confirmation -->
         <div class="mt-10 pt-6 border-t border-gray-100 text-center">
           <p class="text-gray-500 text-sm font-montserrat">

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de candidature</title>
+</head>
+<body style="margin:0; padding:0; background:#f5f5f5; font-family:Arial, sans-serif;">
+    <div style="max-width:600px; margin:0 auto; background:white;">
+        <!-- Header -->
+        <div style="background:#1A1F2C; color:white; padding:30px; text-align:center;">
+            <h1 style="margin:0; color:#9CAF88; font-size:28px;">🎉 Confirmation de candidature</h1>
+            <p style="margin-top:10px; font-size:16px; opacity:0.9;">NG Conciergerie</p>
+        </div>
+        
+        <!-- Content -->
+        <div style="padding:30px;">
+            <p style="font-size:16px; line-height:1.6;">Bonjour <strong>{{ candidate_name }}</strong>,</p>
+            
+            <p style="font-size:16px; line-height:1.6; color:#333;">
+                Nous avons bien reçu votre candidature et nous vous en remercions !
+            </p>
+            
+            <div style="background:#f8f9fa; border-left:4px solid #9CAF88; padding:20px; margin:25px 0; border-radius:0 8px 8px 0;">
+                <p style="margin:0; font-size:16px; color:#1A1F2C; font-weight:bold;">
+                    ✅ Votre candidature est confirmée
+                </p>
+                <p style="margin:10px 0 0 0; font-size:15px; color:#555;">
+                    Nous examinerons votre profil dans les plus brefs délais.
+                </p>
+            </div>
+            
+            <!-- INFOS SIMPLES - PAS DE FILTRES COMPLEXES -->
+            <div style="margin:30px 0; padding:20px; background:#f8fafc; border-radius:8px;">
+                <h3 style="color:#1A1F2C; margin-top:0; margin-bottom:15px;">📋 Récapitulatif</h3>
+                <p style="margin:10px 0;"><strong>• Date :</strong> Aujourd'hui</p>
+                <p style="margin:10px 0;"><strong>• Votre CV :</strong> Bien reçu ✓</p>
+                <p style="margin:10px 0;"><strong>• Statut :</strong> En attente d'examen</p>
+            </div>
+            
+            <div style="border-top:1px solid #eee; padding-top:25px; margin-top:30px;">
+                <p style="font-size:16px; line-height:1.6;">
+                    Cordialement,<br>
+                    <strong style="color:#1A1F2C;">L'équipe RH de NG Conciergerie</strong>
+                </p>
+                <p style="font-size:14px; color:#666; margin-top:10px;">
+                    Pour toute question : contact@ngconciergerie.com
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="background:#1A1F2C; color:white; padding:20px; text-align:center; font-size:12px;">
+            <p style="margin:5px 0;">NG Conciergerie - ngconciergerie.com</p>
+            <p style="margin:5px 0; opacity:0.7;">Email automatique - Ne pas répondre</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[33m3df2d31[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestore-20251203-1607[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to origin/main
+[33m413778b[m[33m ([m[1;31morigin/restore-20251203-1607[m[33m)[m HEAD@{1}: commit: update_detail_nettoyage_tapis
+[33m4845543[m HEAD@{2}: commit: add_detail_nettoyage_tapis
+[33mf3ff373[m HEAD@{3}: commit: add_detail_nettoyage_industriel
+[33mc7654c8[m HEAD@{4}: commit: add_detail_nettoyage_regulier_and_profondeur
+[33maf3a212[m HEAD@{5}: commit: dashbord_admin
+[33m40e8129[m HEAD@{6}: commit: dashbord_admin
+[33medc0aab[m HEAD@{7}: commit: update_recrute_and_gallerry
+[33mcecc034[m HEAD@{8}: commit: update_form
+[33m9710f95[m HEAD@{9}: commit: update_card
+[33m029c1b3[m HEAD@{10}: reset: moving to 029c1b3
+[33m3df2d31[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestore-20251203-1607[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{11}: reset: moving to origin/main
+[33m029c1b3[m HEAD@{12}: commit: add send_email
+[33m722df67[m HEAD@{13}: commit: update picture_gallery
+[33m6c53d54[m HEAD@{14}: commit: update picture_gallery
+[33m370c025[m HEAD@{15}: commit: add picture_gallery
+[33md57fe72[m HEAD@{16}: commit: add gallery
+[33med77009[m HEAD@{17}: commit: add footer
+[33mc146e71[m HEAD@{18}: commit: page accueil
+[33mfdea08c[m HEAD@{19}: commit: email smtp
+[33m3df2d31[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestore-20251203-1607[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{20}: checkout: moving from main to restore-20251203-1607
+[33m3df2d31[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestore-20251203-1607[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{21}: reset: moving to HEAD
+[33m3df2d31[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrestore-20251203-1607[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{22}: commit: update card
+[33mc923dfd[m HEAD@{23}: commit: add card
+[33ma2a4ad7[m HEAD@{24}: commit: Create_NavBar
+[33m8acf002[m HEAD@{25}: commit: mon projet
+[33m8a725d9[m HEAD@{26}: commit: Initialisation

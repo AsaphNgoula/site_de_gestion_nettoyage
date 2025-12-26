@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Email</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .success { background: #d4edda; color: #155724; padding: 20px; border-radius: 5px; }
+        .error { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px; }
+        .back-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #1A1F2C; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    {% if success %}
+    <div class="success">
+        <h2>✅ Test réussi !</h2>
+        <p>{{ message }}</p>
+        <p>Vérifiez votre boîte email (Gmail) pour voir l'email de test.</p>
+    </div>
+    {% else %}
+    <div class="error">
+        <h2>❌ Erreur</h2>
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+    
+    <a href="/" class="back-link">← Retour à l'accueil</a>
+</body>
+</html>
