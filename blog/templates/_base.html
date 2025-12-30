@@ -83,11 +83,11 @@
             background-color: #9caf88 !important;
         }
 
-        /* Style pour le menu mobile */
+        /* Style pour le menu mobile - CORRIGÉ */
         .mobile-nav-item {
             font-family: "Montserrat", sans-serif;
             font-weight: 500;
-            color: #374151 !important;
+            color: white !important; /* Changé de #374151 à white */
             transition: all 0.3s ease;
         }
 
@@ -420,57 +420,56 @@
         </div>
       </div>
 
-      <!-- Menu Mobile -->
+      <!-- Menu Mobile - CORRIGÉ -->
       <div class="lg:hidden hidden" id="mobile-menu">
-        <ul class="flex flex-col mt-4 font-medium border-t border-gray-600">
+        <ul class="flex flex-col mt-4 font-medium border-t border-gray-600 bg-gray-800">
           <li>
             <a
               href="{% url 'proclean:home' %}"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700"
               >Accueil</a
             >
           </li>
           <li>
             <a href="{% url 'proclean:services' %}" 
-               class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300">
+               class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700">
                 Services
             </a>
-        </li>
-        
+          </li>
           <li>
             <a
               href="{% url 'proclean:about' %}"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700"
               >À propos</a
             >
           </li>
-            <li>
-              <a
-                href="{% url 'proclean:galerie' %}"
-                class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
-                >Galerie</a
-              >
-            </li>
+          <li>
+            <a
+              href="{% url 'proclean:galerie' %}"
+              class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700"
+              >Galerie</a
+            >
+          </li>
           <li>
             <a
               href="{% url 'proclean:contact' %}"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300"
+              class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700"
               >Contact</a
             >
           </li>
           <li>
             <a
               href="{% url 'proclean:recrutement' %}"
-              class="mobile-nav-item block py-3 px-4 hover:bg-gray-700 transition duration-300 border-b border-gray-600"
+              class="mobile-nav-item block py-3 px-4 hover:bg-[#9CAF88] transition duration-300 border-b border-gray-700"
               >Recrutement</a
             >
           </li>
           
           <!-- Bouton Admin mobile -->
-          <li class="mt-4">
+          <li class="mt-4 px-4 pb-4">
             <a 
               href="{% url 'proclean:admin_login' %}" 
-              class="mobile-admin-btn block py-3 px-4 text-center font-semibold hover:bg-gray-100 transition duration-300"
+              class="mobile-admin-btn block py-3 px-4 text-center font-semibold hover:bg-gray-100 transition duration-300 rounded-lg"
             >
               <span class="flex items-center justify-center">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -575,7 +574,7 @@
                 <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
                 </svg>
-                <a href="#gallery" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                <a href="{% url 'proclean:galerie' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
                   Galerie
                 </a>
               </li>
@@ -592,7 +591,7 @@
                 <svg class="w-4 h-4 mr-2 text-gray-400 group-hover:text-[#9CAF88] transition duration-200" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
                 </svg>
-                <a href="#recruitment" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
+                <a href="{% url 'proclean:recrutement' %}" class="text-gray-300 hover:text-[#9CAF88] font-montserrat transition duration-200">
                   Recrutement
                 </a>
               </li>
@@ -733,15 +732,7 @@
           item.style.fontWeight = "500";
         });
 
-        // Ajouter la couleur blanche au texte mobile au hover
-        document.querySelectorAll(".mobile-nav-item").forEach((item) => {
-          item.addEventListener("mouseenter", function () {
-            this.style.color = "white";
-          });
-          item.addEventListener("mouseleave", function () {
-            this.style.color = "#374151";
-          });
-        });
+        // Les couleurs sont maintenant définies dans le CSS
       }
 
       // Détecter la page active pour mettre en surbrillance le lien correspondant

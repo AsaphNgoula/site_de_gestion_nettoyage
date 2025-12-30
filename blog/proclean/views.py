@@ -408,7 +408,7 @@ def send_application_emails(application, request):
             print(f"❌ Erreur envoi email admin: {e}")
 
         # 2. Email de confirmation au candidat (HTML)
-        subject_candidate = "🎉 Confirmation de votre candidature - NG Conciergerie"
+        subject_candidate = "🎉 Confirmation de votre candidature - N&G Conciergerie"
 
         body_candidate = f"""
         Bonjour {application.prenom},
@@ -436,16 +436,16 @@ def send_application_emails(application, request):
         contact@ngconciergerie.com
 
         Cordialement,
-        L'équipe RH de NG Conciergerie
+        L'équipe RH de N&G Conciergerie
         """
 
         try:
             html_candidate = render_to_string('email/application_confirmation.html', {
                 'candidate_name': f"{application.prenom} {application.nom}",
                 'application': application,
-                'site_name': 'NG Conciergerie',
+                'site_name': 'N&G Conciergerie',
                 'site_url': request.build_absolute_uri('/'),
-                'contact_email': 'contact@ngconciergerie.com',
+                'contact_email': 'ng@ngconciergeriecom.com',
             })
 
             email_candidate = EmailMultiAlternatives(
