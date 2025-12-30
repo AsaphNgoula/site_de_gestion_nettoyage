@@ -136,14 +136,14 @@ def send_message(request):
         Notre équipe vous répondra dans les plus brefs délais.
 
         Cordialement,
-        NG Conciergerie
+        N&G Conciergerie
         """
         try:
             html_user = f"""<html><body>
                 <p>Bonjour {prenom},</p>
                 <p>Nous avons bien reçu votre message et vous en remercions.</p>
                 <p>Notre équipe vous répondra dans les plus brefs délais.</p>
-                <p>Cordialement,<br>NG Conciergerie</p>
+                <p>Cordialement,<br>N&G Conciergerie</p>
                 </body></html>"""
 
             email_user = EmailMultiAlternatives(
@@ -158,7 +158,7 @@ def send_message(request):
         except Exception as e:
             print(f"⚠️ Échec envoi confirmation HTML, fallback texte: {e}")
             send_mail(
-                "✅ Confirmation de votre message - NG Conciergerie",
+                "✅ Confirmation de votre message - N&G Conciergerie",
                 confirmation_body,
                 getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
                 [email],
