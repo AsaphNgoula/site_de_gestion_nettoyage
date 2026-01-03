@@ -511,6 +511,9 @@ def recrutement_confirmation(request):
     context = {
         'candidate_name': request.session.get('candidate_name', ''),
         'candidate_email': request.session.get('candidate_email', ''),
+        # Debug info to help diagnose email display issues
+        'candidate_email_debug': repr(request.session.get('candidate_email', '')),
+        'candidate_email_length': len(request.session.get('candidate_email', '') or ''),
     }
     
     # Nettoyer la session
