@@ -1,4 +1,8 @@
-Django
+aiosmtpd
+backports.tarfile
+django-compressor
+importlib-metadata
+jaraco.collections
 packaging
 pillow
 pip-chill
