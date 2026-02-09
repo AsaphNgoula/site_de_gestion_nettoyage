@@ -3,7 +3,7 @@ packaging
 pillow
 pip-chill
 platformdirs
-psycopg2
+psycopg2-binary
 python-decouple
 requests
 tomli
