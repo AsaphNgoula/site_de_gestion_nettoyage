@@ -112,6 +112,12 @@ NG Conciergerie{% endblock %} {% block content %}
                   >{{ candidate_email }}</span
                 >
               </div>
+              <!-- DEBUG: affichage brut de la valeur reçue en session -->
+              <div style="margin-top: 8px; font-size: 12px; color: #666">
+                <strong>DEBUG:</strong>
+                valeur brute = <code>{{ candidate_email_debug }}</code>
+                (longueur = {{ candidate_email_length }})
+              </div>
             </div>
           </div>
         </div>

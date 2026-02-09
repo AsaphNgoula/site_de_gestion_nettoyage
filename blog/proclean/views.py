@@ -136,14 +136,14 @@ def send_message(request):
         Notre équipe vous répondra dans les plus brefs délais.
 
         Cordialement,
-        NG Conciergerie
+        N&G Conciergerie
         """
         try:
             html_user = f"""<html><body>
                 <p>Bonjour {prenom},</p>
                 <p>Nous avons bien reçu votre message et vous en remercions.</p>
                 <p>Notre équipe vous répondra dans les plus brefs délais.</p>
-                <p>Cordialement,<br>NG Conciergerie</p>
+                <p>Cordialement,<br>N&G Conciergerie</p>
                 </body></html>"""
 
             email_user = EmailMultiAlternatives(
@@ -158,7 +158,7 @@ def send_message(request):
         except Exception as e:
             print(f"⚠️ Échec envoi confirmation HTML, fallback texte: {e}")
             send_mail(
-                "✅ Confirmation de votre message - NG Conciergerie",
+                "✅ Confirmation de votre message - N&G Conciergerie",
                 confirmation_body,
                 getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST),
                 [email],
@@ -408,7 +408,7 @@ def send_application_emails(application, request):
             print(f"❌ Erreur envoi email admin: {e}")
 
         # 2. Email de confirmation au candidat (HTML)
-        subject_candidate = "🎉 Confirmation de votre candidature - NG Conciergerie"
+        subject_candidate = "🎉 Confirmation de votre candidature - N&G Conciergerie"
 
         body_candidate = f"""
         Bonjour {application.prenom},
@@ -436,16 +436,16 @@ def send_application_emails(application, request):
         contact@ngconciergerie.com
 
         Cordialement,
-        L'équipe RH de NG Conciergerie
+        L'équipe RH de N&G Conciergerie
         """
 
         try:
             html_candidate = render_to_string('email/application_confirmation.html', {
                 'candidate_name': f"{application.prenom} {application.nom}",
                 'application': application,
-                'site_name': 'NG Conciergerie',
+                'site_name': 'N&G Conciergerie',
                 'site_url': request.build_absolute_uri('/'),
-                'contact_email': 'contact@ngconciergerie.com',
+                'contact_email': 'ng@ngconciergeriecom.com',
             })
 
             email_candidate = EmailMultiAlternatives(
@@ -511,6 +511,9 @@ def recrutement_confirmation(request):
     context = {
         'candidate_name': request.session.get('candidate_name', ''),
         'candidate_email': request.session.get('candidate_email', ''),
+        # Debug info to help diagnose email display issues
+        'candidate_email_debug': repr(request.session.get('candidate_email', '')),
+        'candidate_email_length': len(request.session.get('candidate_email', '') or ''),
     }
     
     # Nettoyer la session
